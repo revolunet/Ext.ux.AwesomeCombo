@@ -10,7 +10,7 @@
  * @param {Object} config Configuration options
  * @xtype beecombo
  */
-Ext.ux.BeeCombo = Ext.extend(Ext.form.ComboBox, {
+Ext.ux.BeeCombo = {
 	/**
 	 * @cfg {Boolean} enableTooltip
 	 * True to enable tooltip on field
@@ -36,23 +36,23 @@ Ext.ux.BeeCombo = Ext.extend(Ext.form.ComboBox, {
 	paging: true,
 
 	/**
-	 * @cfg {String} output
+	 * @cfg {String} format
 	 * If value is set to "string" the getValue method will return
 	 * selected value(s) as string.
 	 * Else if value is set to "object" the getValue method will return
 	 * selected value(s) as object.
-	 * Defaults to string.
+	 * Defaults to "string".
 	 */
-	output: 'string',
+	format: 'string',
 
 	/**
-	 * @cfg {String} outputSeparator
-	 * This parameter is only used if {@link Ext.ux.BeeCombo#output}
+	 * @cfg {String} formatSeparator
+	 * This parameter is only used if {@link Ext.ux.BeeCombo#format format}
 	 * is set to "string".
 	 * Defines separator used to split {@link Ext.ux.BeeCombo#setValue setValue}
 	 * given arg and to join {@link Ext.ux.BeeCombo#getValue getValue} return.
 	 */
-	outputSeparator: ',',
+	formatSeparator: ',',
 
 	/**
 	 * @cfg {Ext.XTemplate} tpl
@@ -84,10 +84,11 @@ Ext.ux.BeeCombo = Ext.extend(Ext.form.ComboBox, {
 
 	// private
 	initComponent: function() {
+		Ext.ux.BeeCombo.superclass.initComponent.call(this);
 		var config = {
 			tpl: new Ext.XTemplate(
 			'<tpl for="."><div class="beecombo-item {checked}">',
-			'{[this.wordwrap(values.', this.displayField, ')]}',
+			'{[this.wordwrap(values.', this.displayField || 'field1', ')]}',
 			'</div></tpl>', {
 				compiled: true,
 				wordwrap: function(value) {
@@ -98,65 +99,64 @@ Ext.ux.BeeCombo = Ext.extend(Ext.form.ComboBox, {
 				}
 			})
 		};
-		Ext.apply(this, Ext.applyIf(this.initialConfig, config));
-		Ext.ux.BeeCombo.superclass.initComponent.apply(this);
+		Ext.applyIf(this, Ext.applyIf(this.initialConfig, config));
 		this.addEvents(
-		/**
-		 * @event beforeentrycheck
-		 * Fires before an entry is checked. Return false to cancel the action.
-		 * @param {Ext.ux.BeeCombo} combo This combo box
-		 * @param {Ext.data.Record} record The data record returned from the underlying store
-		 * @param {Number} index The index of the selected item in the dropdown list
-		 */
-		'beforeentrycheck',
+			/**
+			 * @event beforeentrycheck
+			 * Fires before an entry is checked. Return false to cancel the action.
+			 * @param {Ext.ux.BeeCombo} combo This combo box
+			 * @param {Ext.data.Record} record The data record returned from the underlying store
+			 * @param {Number} index The index of the selected item in the dropdown list
+			 */
+			'beforeentrycheck',
 
-		/**
-		 * @event entrycheck
-		 * Fires when an entry is checked.
-		 * @param {Ext.ux.BeeCombo} combo This combo box
-		 * @param {Ext.data.Record} record The data record returned from the underlying store
-		 * @param {Number} index The index of the selected item in the dropdown list
-		 */
-		'entrycheck',
+			/**
+			 * @event entrycheck
+			 * Fires when an entry is checked.
+			 * @param {Ext.ux.BeeCombo} combo This combo box
+			 * @param {Ext.data.Record} record The data record returned from the underlying store
+			 * @param {Number} index The index of the selected item in the dropdown list
+			 */
+			'entrycheck',
 
-		/**
-		 * @event beforeentryuncheck
-		 * Fires before an entry is unchecked. Return false to cancel the action.
-		 * @param {Ext.ux.BeeCombo} combo This combo box
-		 * @param {Ext.data.Record} record The data record returned from the underlying store
-		 * @param {Number} index The index of the selected item in the dropdown list
-		 */
-		'beforeentryuncheck',
+			/**
+			 * @event beforeentryuncheck
+			 * Fires before an entry is unchecked. Return false to cancel the action.
+			 * @param {Ext.ux.BeeCombo} combo This combo box
+			 * @param {Ext.data.Record} record The data record returned from the underlying store
+			 * @param {Number} index The index of the selected item in the dropdown list
+			 */
+			'beforeentryuncheck',
 
-		/**
-		 * @event entryuncheck
-		 * Fires when an entry is unchecked.
-		 * @param {Ext.ux.BeeCombo} combo This combo box
-		 * @param {Ext.data.Record} record The data record returned from the underlying store
-		 * @param {Number} index The index of the selected item in the dropdown list
-		 */
-		'entryuncheck',
+			/**
+			 * @event entryuncheck
+			 * Fires when an entry is unchecked.
+			 * @param {Ext.ux.BeeCombo} combo This combo box
+			 * @param {Ext.data.Record} record The data record returned from the underlying store
+			 * @param {Number} index The index of the selected item in the dropdown list
+			 */
+			'entryuncheck',
 
-		/**
-		 * @event beforetooltipshow
-		 * Fires before tooltip show. Return false to cancel the action.
-		 * @param {Ext.ux.BeeCombo} combo This combo box
-		 * @param {Ext.Tooltip} tooltip This combo box tooltip
-		 * @param {String} title The tooltip title
-		 * @param {String} content The tooltip content
-		 */
-		'beforetooltipshow',
+			/**
+			 * @event beforetooltipshow
+			 * Fires before tooltip show. Return false to cancel the action.
+			 * @param {Ext.ux.BeeCombo} combo This combo box
+			 * @param {Ext.Tooltip} tooltip This combo box tooltip
+			 * @param {String} title The tooltip title
+			 * @param {String} content The tooltip content
+			 */
+			'beforetooltipshow',
 
-		/**
-		 * @event tooltipshow
-		 * Fires when tooltip show.
-		 * @param {Ext.ux.BeeCombo} combo This combo box
-		 * @param {Ext.Tooltip} tooltip This combo box tooltip
-		 * @param {String} title The tooltip title
-		 * @param {String} content The tooltip content
-		 */
-		'tooltipshow'
-	);
+			/**
+			 * @event tooltipshow
+			 * Fires when tooltip show.
+			 * @param {Ext.ux.BeeCombo} combo This combo box
+			 * @param {Ext.Tooltip} tooltip This combo box tooltip
+			 * @param {String} title The tooltip title
+			 * @param {String} content The tooltip content
+			 */
+			'tooltipshow'
+		);
 		this.internal = {};
 		this.hasPageTbButton = false;
 		this.getStore().on('beforeload', this.onStoreBeforeLoad, this);
@@ -169,10 +169,13 @@ Ext.ux.BeeCombo = Ext.extend(Ext.form.ComboBox, {
 
 	/**
 	 * @method isChecked
+	 * Check if given record is checked.
+	 * @param {Ext.data.Record} record The record to check
+	 * @return {Boolean} True if record is checked else false
 	 */
 	isChecked: function(record) {
 		var index = record.get(this.valueField).toString();
-		return (Ext.isDefined(this.internal[this.valueField]));
+		return (Ext.isDefined(this.internal[index]));
 	},
 
 	/**
@@ -185,16 +188,32 @@ Ext.ux.BeeCombo = Ext.extend(Ext.form.ComboBox, {
 			var record = null;
 			for (var i in this.internal) {
 				if (Ext.isString(i)) {
-					record = this.getStore().getById(i);
+					record = this.findRecord(this.valueField, this.internal[i][this.valueField]);
+					delete this.internal[i];
 					break;
 				}
 			}
 			if (Ext.isObject(record)) {
-				record.set('checked', 'non-checked');
+				record.set('checked', 'unchecked');
 				record.commit(true);
 			}
 		}
-		this.internal = {};
+	},
+
+	// private
+	findAndCheckRecord: function(internalObj, value) {
+		var record = this.findRecord(this.valueField, value);
+		if (Ext.isObject(record)) {
+			if (this.isChecked(record)) {
+				internalObj[this.displayField] = record.get(this.displayField);
+				record.set('checked', 'checked');
+				record.commit(true);
+			} else {
+				internalObj[this.displayField] = record.get(this.displayField);
+				record.set('checked', 'unchecked');
+				record.commit(true);
+			}
+		}
 	},
 
 	/**
@@ -222,6 +241,7 @@ Ext.ux.BeeCombo = Ext.extend(Ext.form.ComboBox, {
 			this.uncheckCurrentValue();
 		}
 		var index = record.get(this.valueField).toString();
+		this.internal[index] = {};
 		this.internal[index][this.valueField] = record.get(this.valueField);
 		this.internal[index][this.displayField] = record.get(this.displayField);
 		record.set('checked', 'checked');
@@ -234,29 +254,25 @@ Ext.ux.BeeCombo = Ext.extend(Ext.form.ComboBox, {
 	 * Returns the currently selected field value or empty string if no value is set.
 	 * @return {Mixed} value
 	 * The selected value(s) corresponding to
-	 * {@link Ext.ux.BeeCombo#outputType outputType} parameter value.
+	 * {@link Ext.ux.BeeCombo#format format} parameter value.
 	 */
 	getValue: function() {
-		var values = new Array();
-		for (i in this.internal) {
-			if (Ext.isEmpty(i) == false && this.internal[i] !== false) {
-				var index = i.toString();
-				if (this.output === 'object') {
-					var value = {};
-					value[this.valueField] = index;
-					if (Ext.isDefined(value[this.displayField])) {
-						value[this.displayField] = this.internal[i];
-					}
-				} else {
-					var value = index;
-				}
-				values.push(value);
+		if (this.format === 'object') {
+			return (this.getObjectValue());
+		} else {
+			return (this.getStringValue());
+		}
+	},
+
+	// private
+	defaultCheckRecords: function() {
+		var records = this.getStore().getRange();
+		for (var i in records) {
+			if (Ext.isFunction(records[i]) === false) {
+				var isChecked = this.isChecked(records[i]);
+				records[i].set('checked', (isChecked ? 'checked' : 'unchecked'));
 			}
 		}
-		if (this.output !== 'object') {
-			return (values.join(','));
-		}
-		return (values);
 	},
 
 	/**
@@ -264,16 +280,19 @@ Ext.ux.BeeCombo = Ext.extend(Ext.form.ComboBox, {
 	 */
 	setValue: function(value) {
 		if (Ext.isArray(value)) {
-			for (i = 0; i < value.length; ++i) {
-				if (parseInt(value[i][this.valueField]) > 0) {
-					this.internal[value[i][this.valueField].toString()] = value[i][this.displayField];
-				}
-			}
+			this.setArrayValue(value);
+		} else if (Ext.isObject(value)) {
+			this.setObjectValue(value);
+		} else if (Ext.isString(value)) {
+			this.setStringValue(value);
+		} else {
+			this.setStringValue(value.toString());
 		}
 		this.refreshDisplay();
 		return (this);
 	},
 
+	// private
 	refreshDisplay: function() {
 		if (this.rendered === false || this.isExpanded()) {
 			return (false);
@@ -281,22 +300,22 @@ Ext.ux.BeeCombo = Ext.extend(Ext.form.ComboBox, {
 		var nb = 0;
 		var selectedValue = '';
 		for (i in this.internal) {
-			if (Ext.isString(i) == false && Ext.isDefined(this.internal[i])) {
+			if (Ext.isObject(this.internal[i]) && Ext.isDefined(this.internal[i][this.displayField])) {
 				nb = nb + 1;
-				selectedValue = this.internal[i];
+				selectedValue = this.internal[i][this.displayField];
 			}
 		}
+		console.log(nb);
 		var text = '';
 		if (nb > 0) {
 			if (nb == 1) {
 				text = selectedValue;
 			} else {
-				text = nb + ' ' + this.displayName + (nb > 1 ? 's' : '') + ' selected';
+				text = nb + ' item' + (nb > 1 ? 's' : '') + ' selected';
 			}
 		} else {
-			text = 'Select ' + this.displayName + '(s)...';
+			text = 'Select item' + (this.enableMultiSelect ? '(s)' : '') + '...';
 		}
+		this.setRawValue(text);
 	}
-});
-
-Ext.reg('beecombo', Ext.ux.BeeCombo);
+};

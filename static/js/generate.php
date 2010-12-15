@@ -13,9 +13,11 @@ $files = array(
 	'core.js',
 	'events.js',
 	'tooltip.js',
-	'paging.js'
+	'paging.js',
+	'format.js'
 );
 
+ob_start();
 echo '<pre>';
 if (file_exists($root.$output)) {
 	unlink($root.$output);
@@ -30,3 +32,6 @@ foreach ($files as $file) {
 }
 
 echo '[+] "', $root, $output, '" generated.', chr(10), '</pre>';
+$debug = ob_get_clean();
+
+header('Location: ../js/'.$output);

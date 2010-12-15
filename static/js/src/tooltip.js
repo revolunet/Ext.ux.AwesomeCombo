@@ -4,7 +4,7 @@
  * @author
  * @version
  */
-Ext.apply(Ext.ux.BeeCombo, {
+Ext.ux.BeeCombo = Ext.applyIf(Ext.ux.BeeCombo, {
 	// private
 	getTooltip: function() {
 		if (Ext.isObject(this.tooltip) === false) {

@@ -4,7 +4,7 @@
  * @author
  * @version
  */
-Ext.apply(Ext.ux.BeeCombo, {
+Ext.ux.BeeCombo = Ext.applyIf(Ext.ux.BeeCombo, {
 	// private
 	customizePageToolbar: function() {
 		this.pageTb.get(0).setIconClass('icon-arrow-stop-180');

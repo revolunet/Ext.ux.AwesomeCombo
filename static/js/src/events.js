@@ -4,7 +4,7 @@
  * @author
  * @version
  */
-Ext.apply(Ext.ux.BeeCombo, {
+Ext.ux.BeeCombo = Ext.applyIf(Ext.ux.BeeCombo, {
 	// private
 	onBeforeSelect: function(combo, record, index) {
 		if (this.isChecked(record)) {
@@ -34,31 +34,36 @@ Ext.apply(Ext.ux.BeeCombo, {
 	onExpand: function(combo) {
 		if (this.hasPageTbButton == false) {
 			this.hasPageTbButton = true;
+			this.defaultCheckRecords();
 			this.customizePageToolbar();
 		}
+		/*
 		if (this.getRawValue() == this.getInternalValue()) {
-			if (this.paging === false) {
+			if (this.pageSize) {
 				this.getStore().clearFilter();
 			}
 		}
+		*/
 	},
 
 	// private
 	onCollapse: function(combo) {
-		this.setInternalValue();
+		this.refreshDisplay();
 	},
 
 	// private
-	onBeforeLoad: function(store, options) {
+	onStoreBeforeLoad: function(store, options) {
+		/*
 		if (this.getInternalValue() == this.combo.getRawValue()) {
 			if (this.pageSize) {
 				this.getStore().setBaseParam('query', '');
 			}
 		}
+		*/
 	},
 
 	// private
-	onLoad: function(store, records, options) {
+	onStoreLoad: function(store, records, options) {
 		for (i in records) {
 			if (Ext.isObject(records[i])) {
 				if (this.isChecked(records[i])) {

@@ -1,7 +1,13 @@
 body {
     padding:20px;
+    font-size:13px;
+    font-family: helvetica,tahoma,verdana,sans-serif;
 }
 
 .example {
     margin-bottom:20px;
+}
+
+.example p {
+    margin:5px 0;
 }

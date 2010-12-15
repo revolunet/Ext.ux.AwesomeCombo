@@ -52,7 +52,7 @@
     <script type="text/javascript" src="http://office.revolunet.com/gary/lib/ext/adapter/ext/ext-base.js"></script>
     <script type="text/javascript" src="http://office.revolunet.com/gary/lib/ext/ext-all-debug.js"></script>
 		<script type="text/javascript" src="../static/js/Ext.ux.PagingMemoryProxy.js"></script>
-		<script type="text/javascript" src="../static/js/generate.php?ts=<?php echo time(); ?>"></script>
+		<script type="text/javascript" src="../static/js/Ext.ux.BeeCombo.js"></script>
 		<script type="text/javascript" src="static/js/script-real.js"></script>
   </body>
 

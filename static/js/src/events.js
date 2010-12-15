@@ -28,6 +28,7 @@ Ext.ux.BeeCombo = Ext.applyIf(Ext.ux.BeeCombo, {
 		if (this.enableTooltip) {
 			this.getTooltip();
 		}
+		this.refreshDisplay();
 	},
 
 	// private

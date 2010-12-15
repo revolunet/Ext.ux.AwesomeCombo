@@ -39,7 +39,6 @@ Ext.ux.BeeCombo = Ext.applyIf(Ext.ux.BeeCombo, {
 			}
 			this.tooltipContent += ' - ' + value + '<br />';
 		}, this);
-		console.log('onTooltipShow: ', nb, this.tooltipTitle, this.tooltipContent);
 		if (nb == 0) {
 			return (false);
 		}

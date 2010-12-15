@@ -254,12 +254,12 @@ Ext.ux.BeeCombo = {
 		} else {
 			this.setStringValue(value.toString());
 		}
+		this.clearValue();
 		return (this);
 	},
 
 	// private
 	refreshDisplay: function() {
-		console.log('refreshDisplay: ', this.internal);
 		if (this.rendered === false || this.isExpanded()) {
 			return (false);
 		}
@@ -269,7 +269,7 @@ Ext.ux.BeeCombo = {
 			nb = length;
 			selectedValue = item[this.displayField];
 		}, this);
-		console.log(nb);
+		console.log('refreshDisplay: ', nb, selectedValue);
 		var text = '';
 		if (nb > 0) {
 			if (nb == 1) {
@@ -280,9 +280,9 @@ Ext.ux.BeeCombo = {
 		} else {
 			text = 'Select item' + (this.enableMultiSelect ? '(s)' : '') + '...';
 		}
+		this.clearValue();
 		this.emptyText = text;
 		this.applyEmptyText();
-		//this.setRawValue(text);
 	}
 };
 
@@ -317,6 +317,7 @@ Ext.ux.BeeCombo = Ext.applyIf(Ext.ux.BeeCombo, {
 		if (this.enableTooltip) {
 			this.getTooltip();
 		}
+		this.refreshDisplay();
 	},
 
 	// private
@@ -438,7 +439,6 @@ Ext.ux.BeeCombo = Ext.applyIf(Ext.ux.BeeCombo, {
 			}
 			this.tooltipContent += ' - ' + value + '<br />';
 		}, this);
-		console.log('onTooltipShow: ', nb, this.tooltipTitle, this.tooltipContent);
 		if (nb == 0) {
 			return (false);
 		}

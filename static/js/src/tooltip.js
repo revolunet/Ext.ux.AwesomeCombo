@@ -29,15 +29,19 @@ Ext.ux.BeeCombo = Ext.applyIf(Ext.ux.BeeCombo, {
 			return (false);
 		}
 		var nb = 0;
+		this.tooltipTitle = ' ';
 		this.tooltipContent = ' ';
-		for (var i in this.internal) {
-			if (Ext.isEmpty(i) == false && this.internal[i] !== false) {
-				this.tooltipContent += ' - ' + this.internal[i] + '<br />';
-				nb += 1;
+		this.internal.each(function(item, index, length) {
+			nb = length;
+			var value = item[this.displayField];
+			if (Ext.isDefined(value) === false) {
+				value = item[this.valueField];
 			}
-		}
+			this.tooltipContent += ' - ' + value + '<br />';
+		}, this);
+		console.log('onTooltipShow: ', nb, this.tooltipTitle, this.tooltipContent);
 		if (nb == 0) {
-			this.getTooltip().hide();
+			return (false);
 		}
 		this.tooltipTitle = nb.toString() + ' item' + (nb > 1 ? 's' : '') + ' selected: ';
 		if (this.fireEvent('beforetooltipshow', this, this.getTooltip(),

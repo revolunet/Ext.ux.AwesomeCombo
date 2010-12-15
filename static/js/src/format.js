@@ -11,74 +11,75 @@ Ext.ux.BeeCombo = Ext.applyIf(Ext.ux.BeeCombo, {
 		var length = values.length;
 		for (var i = 0; i < length; ++i) {
 			var index = values[i].toString();
-			this.internal[index] = {};
-			this.internal[index][this.valueField] = values[i];
-			this.findAndCheckRecord(this.internal[index], values[i]);
-			if (this.enableMultiSelect !== true) {
-				break;
+			if (Ext.isEmpty(index) === false) {
+				var item = {};
+				item[this.valueField] = values[i];
+				this.internal.add(index, item);
+				if (this.enableMultiSelect !== true) {
+					break;
+				}
 			}
 		}
 	},
 
 	// private
 	setArrayValue: function(value) {
+		var success = false;
 		for (var i in value) {
 			if (i == this.valueField) {
-				this.setObjectValue(value);
+				success = this.setObjectValue(value);
 			} else if (Ext.isObject(value[i])) {
-				this.setObjectValue(value[i]);
+				success = this.setObjectValue(value[i]);
 			} else if (Ext.isArray(value[i])) {
-				this.setArrayValue(value[i]);
+				success = this.setArrayValue(value[i]);
 			}
-			if (this.enableMultiSelect !== true) {
+			if (this.enableMultiSelect !== true && success) {
 				break;
 			}
 		}
+		return (success);
 	},
 
 	// private
 	setObjectValue: function(value) {
 		if (Ext.isDefined(value[this.valueField])) {
 			var index = value[this.valueField].toString();
-			this.internal[index] = {};
-			this.internal[index][this.valueField] = value[this.valueField];
-			this.findAndCheckRecord(this.internal[index], value[this.valueField]);
-			if (Ext.isDefined(value[this.displayField])) {
-				this.internal[index][this.displayField] = value[this.displayField];
+			if (Ext.isEmpty(index) === false) {
+				var item = {};
+				item[this.valueField] = value[this.valueField];
+				this.internal.add(index, item);
+				if (Ext.isDefined(value[this.displayField])) {
+					this.internal.get(index)[this.displayField] = value[this.displayField];
+				}
+				return (true);
 			}
 		}
+		return (false);
 	},
 
 	// private
 	getStringValue: function() {
 		var values = new Array();
-		for (i in this.internal) {
-			if (Ext.isString(i) && Ext.isDefined(this.internal[i][this.valueField])) {
-				values.push(i.toString());
-				if (this.enableMultiSelect !== true) {
-					break;
-				}
+		this.internal.eachKey(function(key, item) {
+			if (this.enableMultiSelect) {
+				values.push(key);
+			} else if (values.length == 0) {
+				values.push(key);
 			}
-		}
+		}, this);
 		return (values.join(this.formatSeparator));
 	},
 
 	// private
 	getObjectValue: function() {
 		var values = new Array();
-		for (i in this.internal) {
-			if (Ext.isString(i) && Ext.isDefined(this.internal[i][this.valueField])) {
-				var value = {};
-				value[this.valueField] = i;
-				if (Ext.isDefined(this.internal[i][this.displayField])) {
-					value[this.displayField] = this.internal[i][this.displayField];
-				}
-				values.push(value);
-				if (this.enableMultiSelect !== true) {
-					break;
-				}
+		this.internal.eachKey(function(key, item) {
+			if (this.enableMultiSelect) {
+				values.push(item);
+			} else if (values.length == 0) {
+				values.push(item);
 			}
-		}
+		}, this);
 		return (values);
 	}
 });

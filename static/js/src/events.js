@@ -75,5 +75,35 @@ Ext.ux.BeeCombo = Ext.applyIf(Ext.ux.BeeCombo, {
 				}
 			}
 		}
+	},
+
+	// private
+	onInternalAdd: function(index, obj, key) {
+		var record = this.findRecord(this.valueField, key);
+		if (Ext.isObject(record)) {
+			obj[this.displayField] = record.get(this.displayField);
+			record.set('checked', 'checked');
+			record.commit(true);
+		}
+		this.refreshDisplay();
+	},
+
+	// private
+	onInternalClear: function() {
+		this.getStore().each(function(record) {
+			record.set('checked', 'unchecked');
+			record.commit(true);
+		});
+		this.refreshDisplay();
+	},
+
+	// private
+	onInternalRemove: function(obj, key) {
+		var record = this.findRecord(this.valueField, key);
+		if (Ext.isObject(record)) {
+			record.set('checked', 'unchecked');
+			record.commit(true);
+		}
+		this.refreshDisplay();
 	}
 });

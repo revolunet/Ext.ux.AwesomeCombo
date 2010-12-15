@@ -24,7 +24,7 @@ Ext.ux.BeeCombo = {
 	 * True to enable this component to handle multiple items selections.
 	 * Defaults to false.
 	 */
-	enableMultiSelection: false,
+	enableMultiSelection: true,
 
 	/**
 	 * @cfg {Mixed} paging
@@ -157,7 +157,10 @@ Ext.ux.BeeCombo = {
 			 */
 			'tooltipshow'
 		);
-		this.internal = {};
+		this.internal = new Ext.util.MixedCollection();
+		this.internal.addListener('add', this.onInternalAdd, this);
+		this.internal.addListener('clear', this.onInternalClear, this);
+		this.internal.addListener('remove', this.onInternalRemove, this);
 		this.hasPageTbButton = false;
 		this.getStore().on('beforeload', this.onStoreBeforeLoad, this);
 		this.getStore().on('load', this.onStoreLoad, this);
@@ -175,45 +178,15 @@ Ext.ux.BeeCombo = {
 	 */
 	isChecked: function(record) {
 		var index = record.get(this.valueField).toString();
-		return (Ext.isDefined(this.internal[index]));
+		return (this.internal.containsKey(index));
 	},
 
 	/**
-	 * @method uncheckCurrentValue
-	 * Uncheck the given record and remove it from values.
-	 * @param {Ext.data.Record} record The record to uncheck
+	 * @method reset
+	 * Flush all values.
 	 */
-	uncheckCurrentValue: function() {
-		if (Ext.isObject(this.internal)) {
-			var record = null;
-			for (var i in this.internal) {
-				if (Ext.isString(i)) {
-					record = this.findRecord(this.valueField, this.internal[i][this.valueField]);
-					delete this.internal[i];
-					break;
-				}
-			}
-			if (Ext.isObject(record)) {
-				record.set('checked', 'unchecked');
-				record.commit(true);
-			}
-		}
-	},
-
-	// private
-	findAndCheckRecord: function(internalObj, value) {
-		var record = this.findRecord(this.valueField, value);
-		if (Ext.isObject(record)) {
-			if (this.isChecked(record)) {
-				internalObj[this.displayField] = record.get(this.displayField);
-				record.set('checked', 'checked');
-				record.commit(true);
-			} else {
-				internalObj[this.displayField] = record.get(this.displayField);
-				record.set('checked', 'unchecked');
-				record.commit(true);
-			}
-		}
+	reset: function() {
+		this.internal.clear();
 	},
 
 	/**
@@ -223,12 +196,7 @@ Ext.ux.BeeCombo = {
 	 */
 	uncheckRecord: function(record) {
 		var index = record.get(this.valueField).toString();
-		if (Ext.isDefined(this.internal[index])) {
-			delete this.internal[index];
-		}
-		record.set('checked', 'unchecked');
-		record.commit(true);
-		this.refreshDisplay();
+		this.internal.removeKey(index);
 	},
 
 	/**
@@ -238,20 +206,18 @@ Ext.ux.BeeCombo = {
 	 */
 	checkRecord: function(record) {
 		if (this.enableMultiSelection !== true) {
-			this.uncheckCurrentValue();
+			this.reset();
 		}
 		var index = record.get(this.valueField).toString();
-		this.internal[index] = {};
-		this.internal[index][this.valueField] = record.get(this.valueField);
-		this.internal[index][this.displayField] = record.get(this.displayField);
-		record.set('checked', 'checked');
-		record.commit(true);
-		this.refreshDisplay();
+		var item = {};
+		item[this.valueField] = record.get(this.valueField);
+		this.internal.add(index, item);
 	},
 
 	/**
 	 * @method getValue
-	 * Returns the currently selected field value or empty string if no value is set.
+	 * Returns the currently selected field value or
+	 * empty string if no value is set.
 	 * @return {Mixed} value
 	 * The selected value(s) corresponding to
 	 * {@link Ext.ux.BeeCombo#format format} parameter value.
@@ -288,23 +254,21 @@ Ext.ux.BeeCombo = {
 		} else {
 			this.setStringValue(value.toString());
 		}
-		this.refreshDisplay();
 		return (this);
 	},
 
 	// private
 	refreshDisplay: function() {
+		console.log('refreshDisplay: ', this.internal);
 		if (this.rendered === false || this.isExpanded()) {
 			return (false);
 		}
 		var nb = 0;
 		var selectedValue = '';
-		for (i in this.internal) {
-			if (Ext.isObject(this.internal[i]) && Ext.isDefined(this.internal[i][this.displayField])) {
-				nb = nb + 1;
-				selectedValue = this.internal[i][this.displayField];
-			}
-		}
+		this.internal.each(function(item, index, length) {
+			nb = length;
+			selectedValue = item[this.displayField];
+		}, this);
 		console.log(nb);
 		var text = '';
 		if (nb > 0) {

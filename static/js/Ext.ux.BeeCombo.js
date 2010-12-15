@@ -316,7 +316,9 @@ Ext.ux.BeeCombo = {
 		} else {
 			text = 'Select item' + (this.enableMultiSelect ? '(s)' : '') + '...';
 		}
-		this.setRawValue(text);
+		this.emptyText = text;
+		this.applyEmptyText();
+		//this.setRawValue(text);
 	}
 };
 

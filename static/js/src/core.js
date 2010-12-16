@@ -204,7 +204,12 @@ Ext.ux.BeeCombo = {
 	 */
 	isChecked: function(record) {
 		var index = record.get(this.valueField).toString();
-		return (this.internal.containsKey(index));
+		var success = this.internal.containsKey(index);
+		if (success) {
+			var item = this.internal.get(index);
+			item[this.displayField] = record.get(this.displayField);
+		}
+		return (success);
 	},
 
 	/**

@@ -204,7 +204,12 @@ Ext.ux.BeeCombo = {
 	 */
 	isChecked: function(record) {
 		var index = record.get(this.valueField).toString();
-		return (this.internal.containsKey(index));
+		var success = this.internal.containsKey(index);
+		if (success) {
+			var item = this.internal.get(index);
+			item[this.displayField] = record.get(this.displayField);
+		}
+		return (success);
 	},
 
 	/**
@@ -463,20 +468,11 @@ Ext.ux.BeeCombo = Ext.apply(Ext.ux.BeeCombo, {
 			this.defaultCheckRecords();
 			this.customizePageToolbar();
 		}
-		if (this.getDisplayValue() == this.getRawValue()) {
-			if (this.mode == 'local') {
-				this.getStore().clearFilter();
-			}
-		}
 	},
 
 	// private
 	onStoreBeforeLoad: function(store, options) {
-		if (this.getDisplayValue() == this.getRawValue()) {
-			if (this.model == 'remote') {
-				this.getStore().setBaseParam('query', '');
-			}
-		}
+		//
 	},
 
 	// private

@@ -16,10 +16,12 @@ Ext.onReady(function() {
 
     new Ext.form.ComboBox({
         store:arrayData
+        ,emptyText:"select a name..."
     }).render("combo1");
 
     new Ext.ux.BeeCombo({
         store:arrayData
+        ,emptyText:"select a name..."
     }).render("combo2");
 
     /*******************************************************************/
@@ -27,15 +29,15 @@ Ext.onReady(function() {
     /*******************************************************************/
 
     var combo3 = new Ext.form.ComboBox({
-        store:Ext.exampledata.states,
-        width:100
+        store:Ext.exampledata.states
+        ,emptyText:"select a country..."
     }).render("combo3");
 
     combo3.setValue("NY");
 
     var combo4 = new Ext.ux.BeeCombo({
-        store:Ext.exampledata.states,
-        width:100
+        store:Ext.exampledata.states
+        ,emptyText:"select a country..."
     }).render("combo4");
 
     combo4.setValue("NY");
@@ -49,6 +51,7 @@ Ext.onReady(function() {
         ,valueField:"id"
         ,triggerAction:"all"
         ,pageSize:5
+        ,emptyText:"select a country..."
         ,store:new Ext.data.Store({
             reader:new Ext.data.ArrayReader({}, ["id", "name"])
             ,proxy:new Ext.ux.data.PagingMemoryProxy(Ext.exampledata.states)
@@ -58,6 +61,7 @@ Ext.onReady(function() {
 	var combo6 = new Ext.ux.BeeCombo({
         triggerAction:"all"
         ,pageSize:5
+        ,emptyText:"select a country..."
         ,store:Ext.exampledata.states
     }).render("combo6");
 
@@ -69,6 +73,7 @@ Ext.onReady(function() {
         displayField:"name"
         ,valueField:"id"
         ,triggerAction:"all"
+        ,emptyText:"select a country..."
         ,store:new Ext.data.JsonStore({
             url:"php/data.php"
             ,fields:["id", "name"]
@@ -79,6 +84,7 @@ Ext.onReady(function() {
         displayField:"name"
         ,valueField:"id"
         ,triggerAction:"all"
+        ,emptyText:"select a country..."
         ,store:new Ext.data.JsonStore({
             url:"php/data.php"
             ,fields:["id", "name"]
@@ -93,6 +99,7 @@ Ext.onReady(function() {
         displayField:"name"
         ,valueField:"id"
         ,triggerAction:"all"
+        ,emptyText:"select a country..."
         ,store:{
             xtype:"jsonstore"
             ,url:"php/data.php"
@@ -104,6 +111,7 @@ Ext.onReady(function() {
         displayField:"name"
         ,valueField:"id"
         ,triggerAction:"all"
+        ,emptyText:"select a country..."
         ,store:{
             xtype:"jsonstore"
             ,url:"php/data.php"
@@ -112,13 +120,14 @@ Ext.onReady(function() {
     }).render("combo10");
 
     /*******************************************************************/
-    /**** MULTISELECT & LOCAL PAGING STORE *******************************************/
+    /**** MULTISELECT & LOCAL PAGING STORE *****************************/
     /*******************************************************************/
 
 	var combo11 = new Ext.ux.BeeCombo({
         triggerAction:"all"
         ,pageSize:5
         ,enableMultiSelect:true
+        ,emptyText:"select a country..."
         ,store:Ext.exampledata.states
     }).render("combo11");
 
@@ -126,6 +135,7 @@ Ext.onReady(function() {
         displayField:"name"
         ,valueField:"id"
         ,triggerAction:"all"
+        ,emptyText:"select a country..."
         ,enableMultiSelect:true
         ,store:{
             xtype:"jsonstore"

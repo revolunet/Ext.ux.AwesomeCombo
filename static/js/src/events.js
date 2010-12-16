@@ -38,20 +38,11 @@ Ext.ux.BeeCombo = Ext.apply(Ext.ux.BeeCombo, {
 			this.defaultCheckRecords();
 			this.customizePageToolbar();
 		}
-		if (this.getDisplayValue() == this.getRawValue()) {
-			if (this.mode == 'local') {
-				this.getStore().clearFilter();
-			}
-		}
 	},
 
 	// private
 	onStoreBeforeLoad: function(store, options) {
-		if (this.getDisplayValue() == this.getRawValue()) {
-			if (this.model == 'remote') {
-				this.getStore().setBaseParam('query', '');
-			}
-		}
+		//
 	},
 
 	// private

@@ -104,7 +104,14 @@ Ext.ux.BeeCombo = {
 		};
 		this.onTrigger2Click = this.onTriggerClick;
 		this.onTrigger1Click = this.reset;
-		if (this.store) this.store = this.setMemoryStore(this.store);
+		var minListWidth = this.minListWidth;
+		if (this.pageSize && minListWidth < 222) {
+			minListWidth = 222;
+		}
+		Ext.apply(this, Ext.apply(this.initialConfig, {
+			minListWidth: minListWidth
+		}));
+        if (this.store) this.store = this.setMemoryStore(this.store);
 		Ext.ux.BeeCombo.superclass.initComponent.call(this);
 		var config = {
 			tpl: new Ext.XTemplate(
@@ -198,7 +205,12 @@ Ext.ux.BeeCombo = {
 	 */
 	isChecked: function(record) {
 		var index = record.get(this.valueField).toString();
-		return (this.internal.containsKey(index));
+		var success = this.internal.containsKey(index);
+		if (success) {
+			var item = this.internal.get(index);
+			item[this.displayField] = record.get(this.displayField);
+		}
+		return (success);
 	},
 
 	/**

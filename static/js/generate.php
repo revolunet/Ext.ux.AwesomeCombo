@@ -34,5 +34,6 @@ foreach ($files as $file) {
 
 echo '[+] "', $root, $output, '" generated.', chr(10), '</pre>';
 $debug = ob_get_clean();
+echo $debug;
 
-header('Location: ../js/'.$output);
+//header('Location: ../js/'.$output);

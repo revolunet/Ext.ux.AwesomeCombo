@@ -25,13 +25,15 @@ Ext.onReady(function() {
     /*******************************************************************/
 
     var combo3 = new Ext.form.ComboBox({
-        store:arrayData
+        store:arrayData,
+				width:100
     }).render("combo3");
 
     combo3.setValue(1);
 
     var combo4 = new Ext.ux.BeeCombo({
-        store:arrayData
+        store:arrayData,
+				width:100
     }).render("combo4");
 
     combo4.setValue(1);

@@ -24,7 +24,7 @@ Ext.ux.BeeCombo = {
 	 * True to enable this component to handle multiple items selections.
 	 * Defaults to false.
 	 */
-	enableMultiSelection: true,
+	enableMultiSelection: false,
 
 	/**
 	 * @cfg {String} format
@@ -61,9 +61,9 @@ Ext.ux.BeeCombo = {
 
 	/**
 	 * @cfg {Int} pageSize
-	 * Defaults to 10.
+	 * Defaults to 0.
 	 */
-	pageSize: 10,
+	pageSize: 0,
 
 	/**
 	 * @cfg {String} loadingText

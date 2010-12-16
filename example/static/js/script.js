@@ -10,11 +10,13 @@ var objectData = [
 
 Ext.onReady(function() {
 
+		Ext.QuickTips.init();
+
     new Ext.form.ComboBox({
         store:simpleArrayData
     }).render("combo1");
 
-    new Ext.form.ComboBox({
+    new Ext.ux.BeeCombo({
         store:simpleArrayData
     }).render("combo2");
 
@@ -23,13 +25,15 @@ Ext.onReady(function() {
     /*******************************************************************/
 
     var combo3 = new Ext.form.ComboBox({
-        store:arrayData
+        store:arrayData,
+        width:100
     }).render("combo3");
 
     combo3.setValue(1);
 
-    var combo4 = new Ext.form.ComboBox({
-        store:arrayData
+    var combo4 = new Ext.ux.BeeCombo({
+        store:arrayData,
+        width:100
     }).render("combo4");
 
     combo4.setValue(1);
@@ -41,37 +45,54 @@ Ext.onReady(function() {
     var combo5 = new Ext.form.ComboBox({
         displayField:"name"
         ,valueField:"id"
-        ,mode:"remote"
+        // ,mode:"remote"
         ,triggerAction:"all"
         ,pageSize:2
         ,store:new Ext.data.Store({
-            // autoLoad:true
-            reader:new Ext.data.JsonReader({}, ["id", "name"])
-            ,proxy:new Ext.ux.data.PagingMemoryProxy(objectData)
+            reader:new Ext.data.ArrayReader({}, ["id", "name"])
+            ,proxy:new Ext.ux.data.PagingMemoryProxy(arrayData)
         })
     }).render("combo5");
 
-    combo5.store.load();
-
-    combo5.store.each(function(record) {
-        console.log("record", record);
-    });
-
-    console.log("combo5", combo5.store);
-
-    // combo3.setValue(1);
-
-    // var combo6 = new Ext.form.ComboBox({
-    //     store:arrayData
-    // }).render("combo6");
-
-    // combo4.setValue(1);
+	var combo6 = new Ext.ux.BeeCombo({
+        // displayField:"name"
+        // ,valueField:"id"
+        // ,mode:"remote"
+        triggerAction:"all"
+        ,pageSize:2
+        ,store:arrayData
+        // ,store:new Ext.data.Store({
+        //     // autoLoad:true
+        //     reader:new Ext.data.JsonReader({}, ["id", "name"])
+        //     ,proxy:new Ext.ux.data.PagingMemoryProxy(objectData)
+        // })
+    }).render("combo6");
 
     /*******************************************************************/
     /*******************************************************************/
     /*******************************************************************/
 
-    // var combo5 = new Ext.form.ComboBox({
+    var combo7 = new Ext.form.ComboBox({
+        displayField:"name"
+        ,valueField:"id"
+        ,triggerAction:"all"
+        ,store:new Ext.data.JsonStore({
+            url:"php/data.php"
+            ,fields:["id", "name"]
+        })
+    }).render("combo7");
+
+    var combo7 = new Ext.ux.BeeCombo({
+        displayField:"name"
+        ,valueField:"id"
+        ,triggerAction:"all"
+        ,store:new Ext.data.JsonStore({
+            url:"php/data.php"
+            ,fields:["id", "name"]
+        })
+    }).render("combo8");
+
+    // var combo5 = new Ext.ux.BeeCombo({
     //     displayField:"name"
     //     ,valueField:"id"
     //     ,triggerAction:"all"

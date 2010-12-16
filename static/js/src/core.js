@@ -104,6 +104,7 @@ Ext.ux.BeeCombo = {
 		};
 		this.onTrigger2Click = this.onTriggerClick;
 		this.onTrigger1Click = this.reset;
+		if (this.store) this.store = this.setMemoryStore(this.store);
 		Ext.ux.BeeCombo.superclass.initComponent.call(this);
 		var config = {
 			tpl: new Ext.XTemplate(
@@ -331,4 +332,23 @@ Ext.ux.BeeCombo = {
 		this.clearValue();
 		return (true);
 	}
+
+    ,setMemoryStore:function(store) {
+        if (this.pageSize > 0 && Ext.isArray(store)) {
+            this.valueField = this.displayField = "field1";
+            var fields = [this.valueField]; 
+            if (Ext.isArray(store[0])) {
+                this.displayField = "field2";
+                for (var i = 2, len = store[0].length; i <= len; ++i) {
+                    fields.push('field' + i);
+                }
+            }
+            store = new Ext.data.Store({
+                reader:new Ext.data.ArrayReader({}, fields)
+                ,proxy:new Ext.ux.data.PagingMemoryProxy(store)
+            });
+        }
+        return store;
+    }
+
 };

@@ -7,7 +7,7 @@
 Ext.ux.BeeCombo = Ext.apply(Ext.ux.BeeCombo, {
 	// private
 	onBeforeSelect: function(combo, record, index) {
-		if (this.isChecked(record) && this.enableMultiSelection === true) {
+		if (this.isChecked(record) && this.enableMultiSelect === true) {
 			if (this.fireEvent('beforeentryuncheck', this, record, index) === false) {
 				return (false);
 			}
@@ -18,7 +18,7 @@ Ext.ux.BeeCombo = Ext.apply(Ext.ux.BeeCombo, {
 				return (false);
 			}
 			this.checkRecord(record);
-			if (this.enableMultiSelection !== true) {
+			if (this.enableMultiSelect !== true) {
 				this.collapse();
 				this.refreshDisplay();
 			}

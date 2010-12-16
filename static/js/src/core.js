@@ -116,21 +116,21 @@ Ext.ux.BeeCombo = {
 		Ext.apply(this, Ext.apply(this.initialConfig, {
 			minListWidth: minListWidth
 		}));
-        if (this.store) this.store = this.setMemoryStore(this.store);
+		if (this.store) this.store = this.setMemoryStore(this.store);
 		Ext.ux.BeeCombo.superclass.initComponent.call(this);
 		var config = {
 			tpl: new Ext.XTemplate(
-			'<tpl for="."><div class="beecombo-item {checked}">',
-			'{[this.wordwrap(values.', this.displayField || 'field1', ')]}',
-			'</div></tpl>', {
-				compiled: true,
-				wordwrap: function(value) {
-					if (value.length > 45) {
-						return (value.substr(0, 45) + '...');
+				'<tpl for="."><div class="beecombo-item {checked}">',
+				'{[this.wordwrap(values.', this.displayField || 'field1', ')]}',
+				'</div></tpl>', {
+					compiled: true,
+					wordwrap: function(value) {
+						if (value.length > 45) {
+							return (value.substr(0, 45) + '...');
+						}
+						return (value);
 					}
-					return (value);
-				}
-			})
+				})
 		};
 		Ext.applyIf(this, Ext.applyIf(this.initialConfig, config));
 		this.addEvents(
@@ -207,7 +207,7 @@ Ext.ux.BeeCombo = {
 			 * @param {String} text The generated text
 			 */
 			'displayrefresh'
-		);
+			);
 		this.internal = new Ext.util.MixedCollection();
 		this.internal.addListener('add', this.onInternalAdd, this);
 		this.internal.addListener('clear', this.onInternalClear, this);
@@ -242,6 +242,10 @@ Ext.ux.BeeCombo = {
 	 */
 	reset: function() {
 		this.internal.clear();
+		if (this.isExpanded()) {
+			this.refreshDisplay(true);
+			this.doQuery('', true);
+		}
 	},
 
 	/**
@@ -339,8 +343,12 @@ Ext.ux.BeeCombo = {
 	},
 
 	// private
-	refreshDisplay: function() {
-		if (this.rendered === false || this.isExpanded() || this.isSettingValue) {
+	refreshDisplay: function(forced) {
+		forced = forced || false;
+		if (this.rendered === false ||
+			(forced === false &&
+			(this.isExpanded() ||
+			this.isSettingValue))) {
 			return (false);
 		}
 		this.generateDisplayText();
@@ -352,6 +360,8 @@ Ext.ux.BeeCombo = {
 				this.triggers[0].show();
 				this.el.removeClass(this.emptyClass);
 				this.setRawValue(this.displayText);
+				this.fireEvent('displayrefresh', this, this.displayNb, this.displayText);
+				return (true);
 			} else if (this.displayNb > 0) {
 				this.triggers[0].show();
 			} else {
@@ -381,29 +391,29 @@ Ext.ux.BeeCombo = {
 				this.displayText = selectedValue;
 			} else {
 				this.displayText = this.displayNb + ' item' +
-					(this.displayNb > 1 ? 's' : '') + ' selected';
+				(this.displayNb > 1 ? 's' : '') + ' selected';
 			}
 		} else {
 			this.displayText = this.emptyText;
 		}
 	}
 
-    ,setMemoryStore:function(store) {
-        if (this.pageSize > 0 && Ext.isArray(store)) {
-            this.valueField = this.displayField = "field1";
-            var fields = [this.valueField]; 
-            if (Ext.isArray(store[0])) {
-                this.displayField = "field2";
-                for (var i = 2, len = store[0].length; i <= len; ++i) {
-                    fields.push('field' + i);
-                }
-            }
-            store = new Ext.data.Store({
-                reader:new Ext.data.ArrayReader({}, fields)
-                ,proxy:new Ext.ux.data.PagingMemoryProxy(store)
-            });
-        }
-        return store;
-    }
-
+	,setMemoryStore:function(store) {
+		if (this.pageSize > 0 && Ext.isArray(store)) {
+			this.valueField = this.displayField = "field1";
+			var fields = [this.valueField];
+			if (Ext.isArray(store[0])) {
+				this.displayField = "field2";
+				for (var i = 2, len = store[0].length; i <= len; ++i) {
+					fields.push('field' + i);
+				}
+			}
+			store = new Ext.data.Store({
+				reader:new Ext.data.ArrayReader({}, fields)
+				,
+				proxy:new Ext.ux.data.PagingMemoryProxy(store)
+			});
+		}
+		return store;
+	}
 };

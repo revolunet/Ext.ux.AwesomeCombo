@@ -46,7 +46,7 @@
 	<div class="example">
 		<h2>Ajax/Json ExtJS combobox</h2>
 		<p>This is a ExtJS combobox with data loaded from an Ajax request.</p>
-    	<div id="combo5"></div>
+    	<div id="combo7"></div>
 	</div>
 
     <script type="text/javascript" src="http://office.revolunet.com/gary/lib/ext/adapter/ext/ext-base.js"></script>

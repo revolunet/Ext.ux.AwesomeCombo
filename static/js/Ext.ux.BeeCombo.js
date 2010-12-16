@@ -762,26 +762,30 @@ Ext.ux.BeeCombo = Ext.apply(Ext.ux.BeeCombo, {
 	// private
 	getStringValue: function() {
 		var values = new Array();
-		this.internal.eachKey(function(key, item) {
-			if (this.enableMultiSelect) {
-				values.push(key);
-			} else if (values.length == 0) {
-				values.push(key);
-			}
-		}, this);
+		if (this.internal.getCount()) {
+			this.internal.eachKey(function(key, item) {
+				if (this.enableMultiSelect) {
+					values.push(key);
+				} else if (values.length == 0) {
+					values.push(key);
+				}
+			}, this);
+		}
 		return (values.join(this.formatSeparator));
 	},
 
 	// private
 	getObjectValue: function() {
 		var values = new Array();
-		this.internal.eachKey(function(key, item) {
-			if (this.enableMultiSelect) {
-				values.push(item);
-			} else if (values.length == 0) {
-				values.push(item);
-			}
-		}, this);
+		if (this.internal.getCount()) {
+			this.internal.eachKey(function(key, item) {
+				if (this.enableMultiSelect) {
+					values.push(item);
+				} else if (values.length == 0) {
+					values.push(item);
+				}
+			}, this);
+		}
 		return (values);
 	}
 });

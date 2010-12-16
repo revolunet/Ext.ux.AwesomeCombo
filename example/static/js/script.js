@@ -111,4 +111,27 @@ Ext.onReady(function() {
         }
     }).render("combo10");
 
+    /*******************************************************************/
+    /**** MULTISELECT & LOCAL PAGING STORE *******************************************/
+    /*******************************************************************/
+
+	var combo11 = new Ext.ux.BeeCombo({
+        triggerAction:"all"
+        ,pageSize:5
+        ,enableMultiSelect:true
+        ,store:Ext.exampledata.states
+    }).render("combo11");
+
+    var combo12 = new Ext.ux.BeeCombo({
+        displayField:"name"
+        ,valueField:"id"
+        ,triggerAction:"all"
+        ,enableMultiSelect:true
+        ,store:{
+            xtype:"jsonstore"
+            ,url:"php/data.php"
+            ,fields:["id", "name"]
+        }
+    }).render("combo12");
+
 });

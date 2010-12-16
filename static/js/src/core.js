@@ -149,7 +149,8 @@ Ext.ux.BeeCombo = {
 				itemSelector: 'div.beecombo-item'
 		};
 		if (this.enableMultiSelect && Ext.isDefined(this.tpl) === false) {
-			Ext.apply(this, Ext.apply(this.initialConfig, config));
+			Ext.apply(this, config);
+            Ext.apply(this.initialConfig, config);
 		}
 		this.addEvents(
 			/**
@@ -233,7 +234,7 @@ Ext.ux.BeeCombo = {
 		this.internal.addListener('clear', this.onInternalClear, this);
 		this.internal.addListener('remove', this.onInternalRemove, this);
 		this.hasPageTbButton = false;
-		this.getStore().on('load', this.onStoreLoad, this);
+		this.store.on('load', this.onStoreLoad, this);
 		this.on('beforeselect', this.onBeforeSelect, this);
 		this.on('afterrender', this.onAfterRender, this);
 		this.on('expand', this.onExpand, this);

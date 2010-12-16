@@ -104,6 +104,13 @@ Ext.ux.BeeCombo = {
 		};
 		this.onTrigger2Click = this.onTriggerClick;
 		this.onTrigger1Click = this.reset;
+		var minListWidth = this.minListWidth;
+		if (this.pageSize && minListWidth < 222) {
+			minListWidth = 222;
+		}
+		Ext.apply(this, Ext.apply(this.initialConfig, {
+			minListWidth: minListWidth
+		}));
 		Ext.ux.BeeCombo.superclass.initComponent.call(this);
 		var config = {
 			tpl: new Ext.XTemplate(

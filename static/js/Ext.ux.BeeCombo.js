@@ -46,6 +46,13 @@ Ext.ux.BeeCombo = {
 	formatSeparator: ',',
 
 	/**
+	 * @cfg {Boolean} disableClearButton
+	 * Set this parameter to true to hide trigger clear button.
+	 * Defaults to false.
+	 */
+	disableClearButton: false,
+
+	/**
 	 * @cfg {Ext.XTemplate} tpl
 	 * Override template.
 	 */
@@ -365,7 +372,9 @@ Ext.ux.BeeCombo = {
 			return (false);
 		} else {
 			if (this.displayNb == 1) {
-				this.triggers[0].show();
+				if (this.disableClearButton === false) {
+					this.triggers[0].show();
+				}
 				if (this.valueFound) {
 					this.el.removeClass(this.emptyClass);
 					this.setRawValue(this.displayText);
@@ -377,14 +386,18 @@ Ext.ux.BeeCombo = {
 					this.displayText, this.valueFound);
 				return (true);
 			} else if (this.displayNb > 0) {
-				this.triggers[0].show();
+				if (this.disableClearButton === false) {
+					this.triggers[0].show();
+				}
 			} else {
 				if (Ext.isString(this.hasEmptyText)) {
 					this.displayText = this.hasEmptyText;
 				} else {
 					this.displayText = '';
 				}
-				this.triggers[0].hide();
+				if (this.disableClearButton === false) {
+					this.triggers[0].hide();
+				}
 			}
 		}
 		this.emptyText = this.displayText;
@@ -556,6 +569,9 @@ Ext.ux.BeeCombo = Ext.apply(Ext.ux.BeeCombo, {
 	onAfterRender: function(cmp) {
 		if (this.enableTooltip) {
 			this.getTooltip();
+		}
+		if (this.disableClearButton) {
+			this.triggers[0].hide();
 		}
 		this.refreshDisplay();
 	},

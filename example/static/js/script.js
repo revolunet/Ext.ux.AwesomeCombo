@@ -52,6 +52,7 @@ Ext.onReady(function() {
     }).render("combo5");
 
     combo5.store.load();
+
     combo5.store.each(function(record) {
         console.log("record", record);
     });

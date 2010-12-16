@@ -12,7 +12,7 @@
 .checked {
 	font-weight: bold;
 	width: 100%;
-	background: url(../img/tick.png) center left no-repeat !important;
+	background: url(../img/tick.png) no-repeat scroll 1px center transparent;
 }
 
 /**

@@ -55,9 +55,11 @@ Ext.ux.BeeCombo = {
 	 * @cfg {String} itemSelection
 	 * Override this parameter according to template given via
 	 * {@link Ext.ux.BeeCombo#tpl tpl} config.
-	 * Defaults to "div.beecombo".
+	 * Defaults to "div.beecombo" if
+	 * {@link Ext.ux.BeeCombo#enableMultiSelect enableMultiSelect} config is set
+	 * to true, else default comboBox value.
 	 */
-	itemSelector: 'div.beecombo-item',
+	//itemSelector: 'div.beecombo-item',
 
 	/**
 	 * @cfg {Int} pageSize
@@ -110,8 +112,8 @@ Ext.ux.BeeCombo = {
 		this.onTrigger2Click = this.onTriggerClick;
 		this.onTrigger1Click = this.reset;
 		var minListWidth = this.minListWidth;
-		if (this.pageSize && minListWidth < 222) {
-			minListWidth = 222;
+		if (this.pageSize && minListWidth < 227) {
+			minListWidth = 227;
 		}
 		Ext.apply(this, Ext.apply(this.initialConfig, {
 			minListWidth: minListWidth
@@ -130,9 +132,12 @@ Ext.ux.BeeCombo = {
 						}
 						return (value);
 					}
-				})
+				}),
+				itemSelector: 'div.beecombo-item'
 		};
-		Ext.applyIf(this, Ext.applyIf(this.initialConfig, config));
+		if (this.enableMultiSelect && Ext.isDefined(this.tpl) === false) {
+			Ext.apply(this, Ext.apply(this.initialConfig, config));
+		}
 		this.addEvents(
 			/**
 			 * @event beforeentrycheck
@@ -196,6 +201,7 @@ Ext.ux.BeeCombo = {
 			 * @param {Ext.ux.BeeCombo} combo This combo box
 			 * @param {Number} nb Number of selected items
 			 * @param {String} text The generated value
+			 * @param {Boolean} valueFound True if value was found else false
 			 */
 			'beforedisplayrefresh',
 
@@ -205,6 +211,7 @@ Ext.ux.BeeCombo = {
 			 * @param {Ext.ux.BeeCombo} combo This combo box
 			 * @param {Number} nb Number of selected items
 			 * @param {String} text The generated text
+			 * @param {Boolean} valueFound True if value was found else false
 			 */
 			'displayrefresh'
 			);
@@ -213,8 +220,7 @@ Ext.ux.BeeCombo = {
 		this.internal.addListener('clear', this.onInternalClear, this);
 		this.internal.addListener('remove', this.onInternalRemove, this);
 		this.hasPageTbButton = false;
-		this.store.on('beforeload', this.onStoreBeforeLoad, this);
-		this.store.on('load', this.onStoreLoad, this);
+		this.getStore().on('load', this.onStoreLoad, this);
 		this.on('beforeselect', this.onBeforeSelect, this);
 		this.on('afterrender', this.onAfterRender, this);
 		this.on('expand', this.onExpand, this);
@@ -265,7 +271,7 @@ Ext.ux.BeeCombo = {
 	 */
 	checkRecord: function(record) {
 		if (this.enableMultiSelect !== true) {
-			this.reset();
+			this.internal.clear();
 		}
 		var index = record.get(this.valueField).toString();
 		var item = {};
@@ -285,8 +291,10 @@ Ext.ux.BeeCombo = {
 	 * {@link Ext.ux.BeeCombo#format format} parameter value.
 	 */
 	getValue: function(forcedFormat) {
-		forcedFormat = forcedFormat || this.format;
-		if (this.format === 'object') {
+		if (Ext.isDefined(forcedFormat) === false) {
+			forcedFormat = this.format;
+		}
+		if (forcedFormat === 'object') {
 			return (this.getObjectValue());
 		} else {
 			return (this.getStringValue());
@@ -353,14 +361,20 @@ Ext.ux.BeeCombo = {
 		}
 		this.generateDisplayText();
 		if (this.fireEvent('beforedisplayrefresh', this,
-			this.displayNb, this.displayText) === false) {
+			this.displayNb, this.displayText, this.valueFound) === false) {
 			return (false);
 		} else {
 			if (this.displayNb == 1) {
 				this.triggers[0].show();
-				this.el.removeClass(this.emptyClass);
-				this.setRawValue(this.displayText);
-				this.fireEvent('displayrefresh', this, this.displayNb, this.displayText);
+				if (this.valueFound) {
+					this.el.removeClass(this.emptyClass);
+					this.setRawValue(this.displayText);
+				} else {
+					this.emptyText = '1 item selected';
+					this.clearValue();
+				}
+				this.fireEvent('displayrefresh', this, this.displayNb,
+					this.displayText, this.valueFound);
 				return (true);
 			} else if (this.displayNb > 0) {
 				this.triggers[0].show();
@@ -375,16 +389,22 @@ Ext.ux.BeeCombo = {
 		}
 		this.emptyText = this.displayText;
 		this.clearValue();
-		this.fireEvent('displayrefresh', this, this.displayNb, this.displayText);
+		this.fireEvent('displayrefresh', this, this.displayNb,
+			this.displayText, this.valueFound);
 		return (true);
 	},
 
+	// private
 	generateDisplayText: function() {
 		this.displayNb = this.internal.getCount();
 		this.displayText = '';
+		this.valueFound = false;
 		var selectedValue = '';
 		this.internal.each(function(item, index, length) {
-			selectedValue = item[this.displayField];
+			if (Ext.isDefined(item[this.displayField])) {
+				selectedValue = item[this.displayField];
+				this.valueFound = true;
+			}
 		}, this);
 		if (this.displayNb > 0) {
 			if (this.displayNb == 1) {
@@ -398,6 +418,7 @@ Ext.ux.BeeCombo = {
 		}
 	}
 
+	// private
 	,setMemoryStore:function(store) {
 		if (this.pageSize > 0 && Ext.isArray(store)) {
 			this.valueField = this.displayField = "field1";
@@ -510,7 +531,7 @@ Ext.apply(Ext.ux.BeeCombo, {
 Ext.ux.BeeCombo = Ext.apply(Ext.ux.BeeCombo, {
 	// private
 	onBeforeSelect: function(combo, record, index) {
-		if (this.isChecked(record) && this.enableMultiSelect === true) {
+		if (this.isChecked(record) && this.enableMultiSelect) {
 			if (this.fireEvent('beforeentryuncheck', this, record, index) === false) {
 				return (false);
 			}
@@ -549,21 +570,12 @@ Ext.ux.BeeCombo = Ext.apply(Ext.ux.BeeCombo, {
 	},
 
 	// private
-	onStoreBeforeLoad: function(store, options) {
-		//
-	},
-
-	// private
 	onStoreLoad: function(store, records, options) {
 		for (i in records) {
 			if (Ext.isObject(records[i])) {
-				if (this.isChecked(records[i])) {
-					records[i].set('checked', 'checked');
-					records[i].commit(true);
-				} else {
-					records[i].set('checked', 'non-checked');
-					records[i].commit(true);
-				}
+				records[i].set('checked',
+					(this.isChecked(records[i]) ? 'checked' : 'unchecked'));
+				records[i].commit(true);
 			}
 		}
 	},

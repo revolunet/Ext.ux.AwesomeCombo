@@ -7,7 +7,7 @@
 Ext.ux.BeeCombo = Ext.apply(Ext.ux.BeeCombo, {
 	// private
 	onBeforeSelect: function(combo, record, index) {
-		if (this.isChecked(record) && this.enableMultiSelect === true) {
+		if (this.isChecked(record) && this.enableMultiSelect) {
 			if (this.fireEvent('beforeentryuncheck', this, record, index) === false) {
 				return (false);
 			}
@@ -46,21 +46,12 @@ Ext.ux.BeeCombo = Ext.apply(Ext.ux.BeeCombo, {
 	},
 
 	// private
-	onStoreBeforeLoad: function(store, options) {
-		//
-	},
-
-	// private
 	onStoreLoad: function(store, records, options) {
 		for (i in records) {
 			if (Ext.isObject(records[i])) {
-				if (this.isChecked(records[i])) {
-					records[i].set('checked', 'checked');
-					records[i].commit(true);
-				} else {
-					records[i].set('checked', 'non-checked');
-					records[i].commit(true);
-				}
+				records[i].set('checked',
+					(this.isChecked(records[i]) ? 'checked' : 'unchecked'));
+				records[i].commit(true);
 			}
 		}
 	},

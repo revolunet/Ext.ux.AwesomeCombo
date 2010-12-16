@@ -87,6 +87,11 @@ Ext.ux.BeeCombo = {
 
 	// private
 	initComponent: function() {
+		if (Ext.isString(this.emptyText)) {
+			this.hasEmptyText = this.emptyText;
+		} else {
+			this.hasEmptyText = false;
+		}
 		this.triggerConfig = {
 			tag: 'span',
 			cls: 'x-form-twin-triggers',
@@ -182,7 +187,25 @@ Ext.ux.BeeCombo = {
 			 * @param {String} title The tooltip title
 			 * @param {String} content The tooltip content
 			 */
-			'tooltipshow'
+			'tooltipshow',
+
+			/**
+			 * @event beforedisplayrefresh
+			 * Fires before display is refreshed. Return false to cancel the action.
+			 * @param {Ext.ux.BeeCombo} combo This combo box
+			 * @param {Number} nb Number of selected items
+			 * @param {String} text The generated value
+			 */
+			'beforedisplayrefresh',
+
+			/**
+			 * @event displayrefresh
+			 * Fires when display is refreshed.
+			 * @param {Ext.ux.BeeCombo} combo This combo box
+			 * @param {Number} nb Number of selected items
+			 * @param {String} text The generated text
+			 */
+			'displayrefresh'
 		);
 		this.internal = new Ext.util.MixedCollection();
 		this.internal.addListener('add', this.onInternalAdd, this);
@@ -319,28 +342,48 @@ Ext.ux.BeeCombo = {
 		if (this.rendered === false || this.isExpanded() || this.isSettingValue) {
 			return (false);
 		}
-		var nb = this.internal.getCount();
+		this.generateDisplayText();
+		if (this.fireEvent('beforedisplayrefresh', this,
+			this.displayNb, this.displayText) === false) {
+			return (false);
+		} else {
+			if (this.displayNb == 1) {
+				this.triggers[0].show();
+				this.el.removeClass(this.emptyClass);
+				this.setRawValue(this.displayText);
+			} else if (this.displayNb > 0) {
+				this.triggers[0].show();
+			} else {
+				if (this.hasEmptyText) {
+					this.displayText = this.hasEmptyText;
+				} else {
+					this.displayText = '';
+				}
+				this.triggers[0].hide();
+			}
+		}
+		this.emptyText = this.displayText;
+		this.clearValue();
+		this.fireEvent('displayrefresh', this, this.displayNb, this.displayText);
+		return (true);
+	},
+
+	generateDisplayText: function() {
+		this.displayNb = this.internal.getCount();
+		this.displayText = '';
 		var selectedValue = '';
 		this.internal.each(function(item, index, length) {
 			selectedValue = item[this.displayField];
 		}, this);
-		var text = '';
-		if (nb > 0) {
-			this.triggers[0].show();
-			if (nb == 1) {
-				text = selectedValue;
-				this.el.removeClass(this.emptyClass);
-				this.setRawValue(text);
-				return (true);
+		if (this.displayNb > 0) {
+			if (this.displayNb == 1) {
+				this.displayText = selectedValue;
 			} else {
-				text = nb + ' item' + (nb > 1 ? 's' : '') + ' selected';
+				this.displayText = this.displayNb + ' item' +
+					(this.displayNb > 1 ? 's' : '') + ' selected';
 			}
 		} else {
-			this.triggers[0].hide();
-			text = 'Select item' + (this.enableMultiSelect ? '(s)' : '') + '...';
+			this.displayText = this.emptyText;
 		}
-		this.emptyText = text;
-		this.clearValue();
-		return (true);
 	}
 };

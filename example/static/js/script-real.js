@@ -10,7 +10,9 @@ var objectData = [
 
 Ext.onReady(function() {
 
-    new Ext.ux.BeeCombo({
+		Ext.QuickTips.init();
+
+    new Ext.form.ComboBox({
         store:simpleArrayData
     }).render("combo1");
 
@@ -22,7 +24,7 @@ Ext.onReady(function() {
     /*******************************************************************/
     /*******************************************************************/
 
-    var combo3 = new Ext.ux.BeeCombo({
+    var combo3 = new Ext.form.ComboBox({
         store:arrayData
     }).render("combo3");
 
@@ -38,7 +40,7 @@ Ext.onReady(function() {
     /*******************************************************************/
     /*******************************************************************/
 
-    var combo5 = new Ext.ux.BeeCombo({
+    var combo5 = new Ext.form.ComboBox({
         displayField:"name"
         ,valueField:"id"
         ,mode:"remote"
@@ -52,11 +54,21 @@ Ext.onReady(function() {
     }).render("combo5");
 
     combo5.store.load();
-    combo5.store.each(function(record) {
-        console.log("record", record);
-    });
 
-    console.log("combo5", combo5.store);
+		var combo6 = new Ext.ux.BeeCombo({
+        displayField:"name"
+        ,valueField:"id"
+        ,mode:"remote"
+        ,triggerAction:"all"
+        ,pageSize:2
+        ,store:new Ext.data.Store({
+            // autoLoad:true
+            reader:new Ext.data.JsonReader({}, ["id", "name"])
+            ,proxy:new Ext.ux.data.PagingMemoryProxy(objectData)
+        })
+    }).render("combo6");
+
+    combo6.store.load();
 
     // combo3.setValue(1);
 

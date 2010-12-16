@@ -27,15 +27,6 @@ Ext.ux.BeeCombo = {
 	enableMultiSelection: true,
 
 	/**
-	 * @cfg {Mixed} paging
-	 * True to let component handle paging dynamicly.
-	 * False to disable paging toolbar.
-	 * A number to enable paging and configure pageSize to given value.
-	 * Defaults to true.
-	 */
-	paging: true,
-
-	/**
 	 * @cfg {String} format
 	 * If value is set to "string" the getValue method will return
 	 * selected value(s) as string.
@@ -70,8 +61,6 @@ Ext.ux.BeeCombo = {
 
 	/**
 	 * @cfg {Int} pageSize
-	 * If {@link Ext.ux.BeeCombo#paging paging} config parameter value is a
-	 * number, pageSize will be override with {@link Ext.ux#paging paging} value.
 	 * Defaults to 10.
 	 */
 	pageSize: 10,
@@ -82,8 +71,39 @@ Ext.ux.BeeCombo = {
 	 */
 	loadingText: 'Searching...',
 
+	/**
+	 * @cfg {String} trigger1Class (optional)
+	 * Css class for clear button.
+	 * Defaults to "x-form-clear-trigger".
+	 */
+	trigger1Class: 'x-form-clear-trigger',
+
+	/**
+	 * @cfg {String} trigger2Class (optional)
+	 * Css class for expand button.
+	 * Defaults to "x-form-trigger".
+	 */
+	trigger2Class: 'x-form-trigger',
+
 	// private
 	initComponent: function() {
+		this.triggerConfig = {
+			tag: 'span',
+			cls: 'x-form-twin-triggers',
+			cn: [{
+				tag: 'img',
+				src: Ext.BLANK_IMAGE_URL,
+				alt: '',
+				cls: 'x-form-trigger ' + this.trigger1Class
+			}, {
+				tag: 'img',
+				src: Ext.BLANK_IMAGE_URL,
+				alt: '',
+				cls: 'x-form-trigger ' + this.trigger2Class
+			}]
+		};
+		this.onTrigger2Click = this.onTriggerClick;
+		this.onTrigger1Click = this.reset;
 		Ext.ux.BeeCombo.superclass.initComponent.call(this);
 		var config = {
 			tpl: new Ext.XTemplate(
@@ -162,12 +182,11 @@ Ext.ux.BeeCombo = {
 		this.internal.addListener('clear', this.onInternalClear, this);
 		this.internal.addListener('remove', this.onInternalRemove, this);
 		this.hasPageTbButton = false;
-		this.getStore().on('beforeload', this.onStoreBeforeLoad, this);
-		this.getStore().on('load', this.onStoreLoad, this);
+		this.store.on('beforeload', this.onStoreBeforeLoad, this);
+		this.store.on('load', this.onStoreLoad, this);
 		this.on('beforeselect', this.onBeforeSelect, this);
 		this.on('afterrender', this.onAfterRender, this);
 		this.on('expand', this.onExpand, this);
-		this.on('collapse', this.onCollapse, this);
 	},
 
 	/**
@@ -212,21 +231,39 @@ Ext.ux.BeeCombo = {
 		var item = {};
 		item[this.valueField] = record.get(this.valueField);
 		this.internal.add(index, item);
+		this.internal.get(index)[this.displayField] = record.get(this.displayField);
 	},
 
 	/**
 	 * @method getValue
 	 * Returns the currently selected field value or
 	 * empty string if no value is set.
+	 * @param {String} forcedFormat (optional) Force output format.
+	 * Defaults to {@link Ext.ux.BeeCombo#format format} parameter value.
 	 * @return {Mixed} value
 	 * The selected value(s) corresponding to
 	 * {@link Ext.ux.BeeCombo#format format} parameter value.
 	 */
-	getValue: function() {
+	getValue: function(forcedFormat) {
+		forcedFormat = forcedFormat || this.format;
 		if (this.format === 'object') {
 			return (this.getObjectValue());
 		} else {
 			return (this.getStringValue());
+		}
+	},
+
+	// private
+	getDisplayValue: function() {
+		if (this.internal.getCount()) {
+			var item = this.internal.get(0);
+			if (Ext.isDefined(item[this.displayField])) {
+				return (item[this.displayField]);
+			} else {
+				return (item[this.valueField]);
+			}
+		} else {
+			return (false);
 		}
 	},
 
@@ -245,6 +282,12 @@ Ext.ux.BeeCombo = {
 	 * @method setValue
 	 */
 	setValue: function(value) {
+		if (value == this.getRawValue()) {
+			this.refreshDisplay();
+			return (this);
+		}
+		this.reset();
+		this.isSettingValue = true;
 		if (Ext.isArray(value)) {
 			this.setArrayValue(value);
 		} else if (Ext.isObject(value)) {
@@ -254,34 +297,38 @@ Ext.ux.BeeCombo = {
 		} else {
 			this.setStringValue(value.toString());
 		}
-		this.clearValue();
+		this.isSettingValue = false;
+		this.refreshDisplay();
 		return (this);
 	},
 
 	// private
 	refreshDisplay: function() {
-		if (this.rendered === false || this.isExpanded()) {
+		if (this.rendered === false || this.isExpanded() || this.isSettingValue) {
 			return (false);
 		}
-		var nb = 0;
+		var nb = this.internal.getCount();
 		var selectedValue = '';
 		this.internal.each(function(item, index, length) {
-			nb = length;
 			selectedValue = item[this.displayField];
 		}, this);
-		console.log('refreshDisplay: ', nb, selectedValue);
 		var text = '';
 		if (nb > 0) {
+			this.triggers[0].show();
 			if (nb == 1) {
 				text = selectedValue;
+				this.el.removeClass(this.emptyClass);
+				this.setRawValue(text);
+				return (true);
 			} else {
 				text = nb + ' item' + (nb > 1 ? 's' : '') + ' selected';
 			}
 		} else {
+			this.triggers[0].hide();
 			text = 'Select item' + (this.enableMultiSelect ? '(s)' : '') + '...';
 		}
-		this.clearValue();
 		this.emptyText = text;
-		this.applyEmptyText();
+		this.clearValue();
+		return (true);
 	}
 };

@@ -4,7 +4,7 @@
  * @author
  * @version
  */
-Ext.ux.BeeCombo = Ext.applyIf(Ext.ux.BeeCombo, {
+Ext.ux.BeeCombo = Ext.apply(Ext.ux.BeeCombo, {
 	// private
 	setStringValue: function(value) {
 		var values = value.split(this.formatSeparator);
@@ -85,4 +85,5 @@ Ext.ux.BeeCombo = Ext.applyIf(Ext.ux.BeeCombo, {
 });
 
 Ext.ux.BeeCombo = Ext.extend(Ext.form.ComboBox, Ext.ux.BeeCombo);
+
 Ext.reg('beecombo', Ext.ux.BeeCombo);

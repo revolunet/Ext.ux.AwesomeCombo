@@ -11,6 +11,7 @@ $output = 'Ext.ux.BeeCombo.js';
 
 $files = array(
 	'core.js',
+	'override.js',
 	'events.js',
 	'tooltip.js',
 	'paging.js',

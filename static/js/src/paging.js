@@ -4,7 +4,7 @@
  * @author
  * @version
  */
-Ext.ux.BeeCombo = Ext.applyIf(Ext.ux.BeeCombo, {
+Ext.ux.BeeCombo = Ext.apply(Ext.ux.BeeCombo, {
 	// private
 	customizePageToolbar: function() {
 		this.pageTb.get(0).setIconClass('icon-arrow-stop-180');
@@ -21,7 +21,7 @@ Ext.ux.BeeCombo = Ext.applyIf(Ext.ux.BeeCombo, {
 				click: this.onPageTbButtonUncheck
 			}
 		});
-		if (this.paging === false) {
+		if (this.pageSize < 1) {
 			for (var i = 0; i < 12; ++i) {
 				this.pageTb.get(i).hide();
 			}

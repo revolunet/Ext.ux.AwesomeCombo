@@ -33,6 +33,9 @@ Ext.ux.BeeCombo = Ext.apply(Ext.ux.BeeCombo, {
 		if (this.enableTooltip) {
 			this.getTooltip();
 		}
+		if (this.disableClearButton) {
+			this.triggers[0].hide();
+		}
 		this.refreshDisplay();
 	},
 

@@ -17,7 +17,7 @@ Ext.ux.BeeCombo = {
 	 * hover, false to disable it.
 	 * Defaults to true.
 	 */
-	enableTooltip: false,
+	enableTooltip: true,
 
 	/**
 	 * @cfg {Boolean} enableMultiSelection

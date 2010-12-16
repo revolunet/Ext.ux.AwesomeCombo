@@ -126,6 +126,12 @@ Ext.ux.BeeCombo = {
 			minListWidth: minListWidth
 		}));
 		if (this.store) this.store = this.setMemoryStore(this.store);
+		if (this.enableMultiSelect === false) {
+			Ext.apply(this, Ext.apply(this.initialConfig, {
+				enableKeyEvents: true
+			}));
+			this.on('keyup', this.onFieldKeyUp, this);
+		}
 		Ext.ux.BeeCombo.superclass.initComponent.call(this);
 		var config = {
 			tpl: new Ext.XTemplate(

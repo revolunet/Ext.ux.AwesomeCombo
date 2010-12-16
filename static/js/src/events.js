@@ -40,6 +40,16 @@ Ext.ux.BeeCombo = Ext.apply(Ext.ux.BeeCombo, {
 	},
 
 	// private
+	onFieldKeyUp: function(textfield, event) {
+		if (this.enableMultiSelect === false) {
+			var rawValue = this.getRawValue();
+			if (rawValue.length == 0) {
+				this.reset();
+			}
+		}
+	},
+
+	// private
 	onExpand: function(combo) {
 		if (this.hasPageTbButton == false) {
 			this.hasPageTbButton = true;

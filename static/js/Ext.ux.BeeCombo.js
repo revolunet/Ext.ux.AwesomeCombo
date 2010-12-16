@@ -126,6 +126,12 @@ Ext.ux.BeeCombo = {
 			minListWidth: minListWidth
 		}));
 		if (this.store) this.store = this.setMemoryStore(this.store);
+		if (this.enableMultiSelect === false) {
+			Ext.apply(this, Ext.apply(this.initialConfig, {
+				enableKeyEvents: true
+			}));
+			this.on('keyup', this.onFieldKeyUp, this);
+		}
 		Ext.ux.BeeCombo.superclass.initComponent.call(this);
 		var config = {
 			tpl: new Ext.XTemplate(
@@ -574,6 +580,16 @@ Ext.ux.BeeCombo = Ext.apply(Ext.ux.BeeCombo, {
 			this.triggers[0].hide();
 		}
 		this.refreshDisplay();
+	},
+
+	// private
+	onFieldKeyUp: function(textfield, event) {
+		if (this.enableMultiSelect === false) {
+			var rawValue = this.getRawValue();
+			if (rawValue.length == 0) {
+				this.reset();
+			}
+		}
 	},
 
 	// private

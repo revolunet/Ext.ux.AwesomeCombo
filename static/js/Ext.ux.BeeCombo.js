@@ -20,11 +20,11 @@ Ext.ux.BeeCombo = {
 	enableTooltip: true,
 
 	/**
-	 * @cfg {Boolean} enableMultiSelection
+	 * @cfg {Boolean} enableMultiSelect
 	 * True to enable this component to handle multiple items selections.
 	 * Defaults to false.
 	 */
-	enableMultiSelection: false,
+	enableMultiSelect: false,
 
 	/**
 	 * @cfg {String} format
@@ -264,7 +264,7 @@ Ext.ux.BeeCombo = {
 	 * @param {Ext.data.Record} record The record to check
 	 */
 	checkRecord: function(record) {
-		if (this.enableMultiSelection !== true) {
+		if (this.enableMultiSelect !== true) {
 			this.reset();
 		}
 		var index = record.get(this.valueField).toString();
@@ -365,7 +365,7 @@ Ext.ux.BeeCombo = {
 			} else if (this.displayNb > 0) {
 				this.triggers[0].show();
 			} else {
-				if (this.hasEmptyText) {
+				if (Ext.isString(this.hasEmptyText)) {
 					this.displayText = this.hasEmptyText;
 				} else {
 					this.displayText = '';
@@ -510,7 +510,7 @@ Ext.apply(Ext.ux.BeeCombo, {
 Ext.ux.BeeCombo = Ext.apply(Ext.ux.BeeCombo, {
 	// private
 	onBeforeSelect: function(combo, record, index) {
-		if (this.isChecked(record) && this.enableMultiSelection === true) {
+		if (this.isChecked(record) && this.enableMultiSelect === true) {
 			if (this.fireEvent('beforeentryuncheck', this, record, index) === false) {
 				return (false);
 			}
@@ -521,7 +521,7 @@ Ext.ux.BeeCombo = Ext.apply(Ext.ux.BeeCombo, {
 				return (false);
 			}
 			this.checkRecord(record);
-			if (this.enableMultiSelection !== true) {
+			if (this.enableMultiSelect !== true) {
 				this.collapse();
 				this.refreshDisplay();
 			}

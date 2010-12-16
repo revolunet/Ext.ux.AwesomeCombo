@@ -4,6 +4,11 @@ body {
     font-family: helvetica,tahoma,verdana,sans-serif;
 }
 
+h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
 .example {
     margin-bottom:20px;
 }

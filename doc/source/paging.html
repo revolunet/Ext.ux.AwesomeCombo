@@ -1,0 +1,28 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
+  <title>The source code</title>
+    <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+</head>
+<body  onload="prettyPrint();">
+    <pre class="prettyprint lang-js"><div id="prop-Ext.ux.BeeCombo-BeeCombo"></div>/**
+ * BeeCombo paging.
+ *
+ * @author
+ * @version
+ */
+Ext.ux.BeeCombo = Ext.apply(Ext.ux.BeeCombo, {
+	// private
+	customizePageToolbar: function() {
+		if (this.pageSize) {
+			this.pageTb.get(0).setIconClass('icon-arrow-stop-180');
+			this.pageTb.get(1).setIconClass('icon-arrow-180');
+			this.pageTb.get(7).setIconClass('icon-arrow');
+			this.pageTb.get(8).setIconClass('icon-arrow-stop');
+			this.pageTb.get(10).setIconClass('icon-arrow-circle-double-135');
+		}
+	}
+});</pre>    
+</body>
+</html>

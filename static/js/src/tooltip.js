@@ -13,28 +13,38 @@
 					show: this.onTooltipShow
 				}
 			});
+            if (Ext.isDefined(this.tooltipContentTpl) === false) {
+                this.tooltipContentTpl =
+                    new Ext.XTemplate('<tpl for="data">',
+                                      ' - {', this.displayField || 'field1', '} <br />',
+                                      '</tpl>', {compiled: true});
+            }
+            if (Ext.isDefined(this.tooltipTitleTpl) === false) {
+                this.tooltipTitleTpl = new Ext.XTemplate('<tpl for=".">',
+                                                         '<tpl if="count == 0">',
+                                                         'No item selected.',
+                                                         '</tpl>',
+                                                         '<tpl if="count &gt; 0">',
+                                                         '{count} item',
+                                                         '<tpl if="count &gt; 1">',
+                                                         's',
+                                                         '</tpl>',
+                                                         ' selected: ',
+                                                         '</tpl>',
+                                                         '</tpl>', {compiled: true});
+            }
 		}
 		return (this.itooltip);
 	},
 
 	// private
 	generateTooltipContent: function() {
-		this.tooltipTitle = ' ';
-		this.tooltipContent = ' ';
-		this.internal.each(function(item, index, length) {
-			var value = item[this.displayField];
-			if (Ext.isDefined(value) === false) {
-				value = item[this.valueField];
-			}
-			this.tooltipContent += ' - ' + value.toString() + '<br />';
-		}, this);
-		var len = this.internal.getCount();
-		if (len) {
-			this.tooltipTitle = len.toString() + ' item' +
-				(len > 1 ? 's' : '') + ' selected: ';
-		} else {
-			return (false);
-		}
+        var data = {
+            data: this.internal.getRange(),
+            count: this.internal.getCount()
+        };
+		this.tooltipTitle = this.tooltipTitleTpl.apply(data);
+        this.tooltipContent = this.tooltipContentTpl.apply(data);
 		return (true);
 	},
 

@@ -58,6 +58,20 @@
 	 */
 	tpl: undefined,
 
+    /**
+     * @cfg {Ext.XTemplate} tooltipTitleTpl (optional)
+     * Tooltip title template.
+     * Combo will pass mixed collection to this template.
+     */
+    tooltipTitleTpl: undefined,
+
+    /**
+     * @cfg {Ext.XTemplate} tooltipContentTpl (optional)
+     * Tooltip content template.
+     * Combo will pass mixed collection to this template.
+     */
+    tooltipContentTpl: undefined,
+
 	/**
 	 * @cfg {String} itemSelection
 	 * Override this parameter according to template given via

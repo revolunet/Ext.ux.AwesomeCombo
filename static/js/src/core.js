@@ -4,13 +4,13 @@
  *
  * @author
  * @version
- * @class Ext.ux.BeeCombo
+ * @class {{classname}}
  * @extends Ext.form.ComboBox
  * @constructor
  * @param {Object} config Configuration options
- * @xtype beecombo
+ * @xtype {{xtype}}
  */
-Ext.ux.BeeCombo = {
+{{classname}} = {
 	/**
 	 * @cfg {Boolean} enableTooltip
 	 * True to enable tooltip on field
@@ -38,10 +38,10 @@ Ext.ux.BeeCombo = {
 
 	/**
 	 * @cfg {String} formatSeparator
-	 * This parameter is only used if {@link Ext.ux.BeeCombo#format format}
+	 * This parameter is only used if {@link {{classname}}#format format}
 	 * is set to "string".
-	 * Defines separator used to split {@link Ext.ux.BeeCombo#setValue setValue}
-	 * given arg and to join {@link Ext.ux.BeeCombo#getValue getValue} return.
+	 * Defines separator used to split {@link {{classname}}#setValue setValue}
+	 * given arg and to join {@link {{classname}}#getValue getValue} return.
 	 */
 	formatSeparator: ',',
 
@@ -61,12 +61,12 @@ Ext.ux.BeeCombo = {
 	/**
 	 * @cfg {String} itemSelection
 	 * Override this parameter according to template given via
-	 * {@link Ext.ux.BeeCombo#tpl tpl} config.
-	 * Defaults to "div.beecombo" if
-	 * {@link Ext.ux.BeeCombo#enableMultiSelect enableMultiSelect} config is set
+	 * {@link {{classname}}#tpl tpl} config.
+	 * Defaults to "div.{{xtype}}" if
+	 * {@link {{classname}}#enableMultiSelect enableMultiSelect} config is set
 	 * to true, else default comboBox value.
 	 */
-	//itemSelector: 'div.beecombo-item',
+	//itemSelector: 'div.{{xtype}}-item',
 
 	/**
 	 * @cfg {Int} pageSize
@@ -132,10 +132,10 @@ Ext.ux.BeeCombo = {
 			}));
 			this.on('keyup', this.onFieldKeyUp, this);
 		}
-		Ext.ux.BeeCombo.superclass.initComponent.call(this);
+		{{classname}}.superclass.initComponent.call(this);
 		var config = {
 			tpl: new Ext.XTemplate(
-				'<tpl for="."><div class="beecombo-item {checked}">',
+				'<tpl for="."><div class="{{xtype}}-item {checked}">',
 				'{[this.wordwrap(values.', this.displayField || 'field1', ')]}',
 				'</div></tpl>', {
 					compiled: true,
@@ -146,7 +146,7 @@ Ext.ux.BeeCombo = {
 						return (value);
 					}
 				}),
-				itemSelector: 'div.beecombo-item'
+				itemSelector: 'div.{{xtype}}-item'
 		};
 		if (this.enableMultiSelect && Ext.isDefined(this.tpl) === false) {
 			Ext.apply(this, config);
@@ -156,7 +156,7 @@ Ext.ux.BeeCombo = {
 			/**
 			 * @event beforeentrycheck
 			 * Fires before an entry is checked. Return false to cancel the action.
-			 * @param {Ext.ux.BeeCombo} combo This combo box
+			 * @param {{{classname}}} combo This combo box
 			 * @param {Ext.data.Record} record The data record returned from the underlying store
 			 * @param {Number} index The index of the selected item in the dropdown list
 			 */
@@ -165,7 +165,7 @@ Ext.ux.BeeCombo = {
 			/**
 			 * @event entrycheck
 			 * Fires when an entry is checked.
-			 * @param {Ext.ux.BeeCombo} combo This combo box
+			 * @param {{{classname}}} combo This combo box
 			 * @param {Ext.data.Record} record The data record returned from the underlying store
 			 * @param {Number} index The index of the selected item in the dropdown list
 			 */
@@ -174,7 +174,7 @@ Ext.ux.BeeCombo = {
 			/**
 			 * @event beforeentryuncheck
 			 * Fires before an entry is unchecked. Return false to cancel the action.
-			 * @param {Ext.ux.BeeCombo} combo This combo box
+			 * @param {{{classname}}} combo This combo box
 			 * @param {Ext.data.Record} record The data record returned from the underlying store
 			 * @param {Number} index The index of the selected item in the dropdown list
 			 */
@@ -183,7 +183,7 @@ Ext.ux.BeeCombo = {
 			/**
 			 * @event entryuncheck
 			 * Fires when an entry is unchecked.
-			 * @param {Ext.ux.BeeCombo} combo This combo box
+			 * @param {{{classname}}} combo This combo box
 			 * @param {Ext.data.Record} record The data record returned from the underlying store
 			 * @param {Number} index The index of the selected item in the dropdown list
 			 */
@@ -192,7 +192,7 @@ Ext.ux.BeeCombo = {
 			/**
 			 * @event beforetooltipshow
 			 * Fires before tooltip show. Return false to cancel the action.
-			 * @param {Ext.ux.BeeCombo} combo This combo box
+			 * @param {{{classname}}} combo This combo box
 			 * @param {Ext.Tooltip} tooltip This combo box tooltip
 			 * @param {String} title The tooltip title
 			 * @param {String} content The tooltip content
@@ -202,7 +202,7 @@ Ext.ux.BeeCombo = {
 			/**
 			 * @event tooltipshow
 			 * Fires when tooltip show.
-			 * @param {Ext.ux.BeeCombo} combo This combo box
+			 * @param {{{classname}}} combo This combo box
 			 * @param {Ext.Tooltip} tooltip This combo box tooltip
 			 * @param {String} title The tooltip title
 			 * @param {String} content The tooltip content
@@ -212,7 +212,7 @@ Ext.ux.BeeCombo = {
 			/**
 			 * @event beforedisplayrefresh
 			 * Fires before display is refreshed. Return false to cancel the action.
-			 * @param {Ext.ux.BeeCombo} combo This combo box
+			 * @param {{{classname}}} combo This combo box
 			 * @param {Number} nb Number of selected items
 			 * @param {String} text The generated value
 			 * @param {Boolean} valueFound True if value was found else false
@@ -222,7 +222,7 @@ Ext.ux.BeeCombo = {
 			/**
 			 * @event displayrefresh
 			 * Fires when display is refreshed.
-			 * @param {Ext.ux.BeeCombo} combo This combo box
+			 * @param {{{classname}}} combo This combo box
 			 * @param {Number} nb Number of selected items
 			 * @param {String} text The generated text
 			 * @param {Boolean} valueFound True if value was found else false
@@ -241,7 +241,6 @@ Ext.ux.BeeCombo = {
 	},
 
 	/**
-	 * @method isChecked
 	 * Check if given record is checked.
 	 * @param {Ext.data.Record} record The record to check
 	 * @return {Boolean} True if record is checked else false
@@ -257,7 +256,6 @@ Ext.ux.BeeCombo = {
 	},
 
 	/**
-	 * @method reset
 	 * Flush all values.
 	 */
 	reset: function() {
@@ -269,7 +267,6 @@ Ext.ux.BeeCombo = {
 	},
 
 	/**
-	 * @method uncheckRecord
 	 * Uncheck the given record and remove it from values.
 	 * @param {Ext.data.Record} record The record to uncheck
 	 */
@@ -279,7 +276,6 @@ Ext.ux.BeeCombo = {
 	},
 
 	/**
-	 * @method checkRecord
 	 * Check the given record and add it to values.
 	 * @param {Ext.data.Record} record The record to check
 	 */
@@ -295,14 +291,13 @@ Ext.ux.BeeCombo = {
 	},
 
 	/**
-	 * @method getValue
 	 * Returns the currently selected field value or
 	 * empty string if no value is set.
 	 * @param {String} forcedFormat (optional) Force output format.
-	 * Defaults to {@link Ext.ux.BeeCombo#format format} parameter value.
+	 * Defaults to {@link {{classname}}#format format} parameter value.
 	 * @return {Mixed} value
 	 * The selected value(s) corresponding to
-	 * {@link Ext.ux.BeeCombo#format format} parameter value.
+	 * {@link {{classname}}#format format} parameter value.
 	 */
 	getValue: function(forcedFormat) {
 		if (Ext.isDefined(forcedFormat) === false) {
@@ -341,7 +336,10 @@ Ext.ux.BeeCombo = {
 	},
 
 	/**
-	 * @method setValue
+     * Set value.
+     * @param {Mixed} value
+     * - Could be single/multiple valueField values separate by {@link {{classname}}#formatSeparator}
+     * - Could be single/multiple javascript object values
 	 */
 	setValue: function(value) {
 		if (value == this.getRawValue()) {

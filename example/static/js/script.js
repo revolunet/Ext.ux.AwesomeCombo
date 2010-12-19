@@ -13,39 +13,39 @@ Ext.onReady(function() {
         /*******************************************************************/
         /**** SIMPLE *******************************************************/
         /*******************************************************************/
-    
+
         new Ext.form.ComboBox({
             store:arrayData
             ,emptyText:"select a name..."
         }).render("combo1");
-    
-        new Ext.ux.BeeCombo({
+
+        new Ext.ux.AwesomeCombo({
             store:arrayData
             ,emptyText:"select a name..."
         }).render("combo2");
-    
+
         /*******************************************************************/
         /**** MULTIDIMENSIONAL ARRAY ***************************************/
         /*******************************************************************/
-    
+
         var combo3 = new Ext.form.ComboBox({
             store:Ext.exampledata.states
             ,emptyText:"select a country..."
         }).render("combo3");
-    
+
         combo3.setValue("NY");
-    
-        var combo4 = new Ext.ux.BeeCombo({
+
+        var combo4 = new Ext.ux.AwesomeCombo({
             store:Ext.exampledata.states
             ,emptyText:"select a country..."
         }).render("combo4");
-    
+
         combo4.setValue("NY");
-    
+
         /*******************************************************************/
         /**** LOCAL PAGING STORE *******************************************/
         /*******************************************************************/
-    
+
         var combo5 = new Ext.form.ComboBox({
             displayField:"name"
             ,valueField:"id"
@@ -57,18 +57,18 @@ Ext.onReady(function() {
                 ,proxy:new Ext.ux.data.PagingMemoryProxy(Ext.exampledata.states)
             })
         }).render("combo5");
-    
-    var combo6 = new Ext.ux.BeeCombo({
+
+    var combo6 = new Ext.ux.AwesomeCombo({
             triggerAction:"all"
             ,pageSize:5
             ,emptyText:"select a country..."
             ,store:Ext.exampledata.states
         }).render("combo6");
-    
+
         /*******************************************************************/
         /**** AJAX LOAD ****************************************************/
         /*******************************************************************/
-    
+
         var combo7 = new Ext.form.ComboBox({
             displayField:"name"
             ,valueField:"id"
@@ -79,8 +79,8 @@ Ext.onReady(function() {
                 ,fields:["id", "name"]
             })
         }).render("combo7");
-    
-        var combo8 = new Ext.ux.BeeCombo({
+
+        var combo8 = new Ext.ux.AwesomeCombo({
             displayField:"name"
             ,valueField:"id"
             ,triggerAction:"all"
@@ -90,11 +90,11 @@ Ext.onReady(function() {
                 ,fields:["id", "name"]
             })
         }).render("combo8");
-    
+
         /*******************************************************************/
         /**** XTYPE STORE **************************************************/
         /*******************************************************************/
-    
+
         var combo9 = new Ext.form.ComboBox({
             displayField:"name"
             ,valueField:"id"
@@ -106,8 +106,8 @@ Ext.onReady(function() {
                 ,fields:["id", "name"]
             }
         }).render("combo9");
-    
-        var combo10 = new Ext.ux.BeeCombo({
+
+        var combo10 = new Ext.ux.AwesomeCombo({
             displayField:"name"
             ,valueField:"id"
             ,triggerAction:"all"
@@ -123,7 +123,7 @@ Ext.onReady(function() {
     /**** MULTISELECT & LOCAL PAGING STORE *****************************/
     /*******************************************************************/
 
-	var combo11 = new Ext.ux.BeeCombo({
+	var combo11 = new Ext.ux.AwesomeCombo({
         triggerAction:"all"
         ,pageSize:5
         ,enableMultiSelect:true
@@ -131,7 +131,7 @@ Ext.onReady(function() {
         ,store:Ext.exampledata.states
     }).render("combo11");
 
-    var combo12 = new Ext.ux.BeeCombo({
+    var combo12 = new Ext.ux.AwesomeCombo({
         displayField:"name"
         ,valueField:"id"
         ,triggerAction:"all"

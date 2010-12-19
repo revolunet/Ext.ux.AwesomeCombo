@@ -6,8 +6,11 @@ $data = array(
 	'@author' => (empty($_GET['author']) ? 'Revolunet' : $_GET['author'])
 );
 
+$replace = array('{{classname}}' => 'Ext.ux.AwesomeCombo',
+                 '{{xtype}}' => 'awesomecombo');
+
 $root = dirname(__FILE__).'/';
-$output = 'Ext.ux.BeeCombo.js';
+$output = 'Ext.ux.AwesomeCombo.js';
 
 $files = array(
 	'core.js',
@@ -18,22 +21,17 @@ $files = array(
 	'format.js'
 );
 
-ob_start();
-echo '<pre>';
-if (file_exists($root.$output)) {
-	unlink($root.$output);
-	echo '[-] "', $root, $output, '" deleted.', chr(10);
-}
+$src = array();
 foreach ($files as $file) {
-	$content = file_get_contents($root.'src/'.$file).chr(10).chr(10);
-	foreach ($data as $key => $value) {
-		$content = str_replace($key, $key.' '.$value, $content);
-	}
-	file_put_contents($root.$output, $content, FILE_APPEND);
+  $content = file_get_contents($root.'src/'.$file);
+  foreach ($data as $key => $value) {
+    $content = str_replace($key, $key.' '.$value, $content);
+  }
+  foreach ($replace as $key => $value) {
+    $content = str_replace($key, $value, $content);
+  }
+  $src[] = $content;
 }
 
-echo '[+] "', $root, $output, '" generated.', chr(10), '</pre>';
-$debug = ob_get_clean();
-echo $debug;
-
-//header('Location: ../js/'.$output);
+file_put_contents($root.$output, implode(chr(10), $src));
+echo '[+] "', $root, $output, '" generated.', chr(10);

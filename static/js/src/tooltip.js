@@ -1,10 +1,5 @@
-/**
- * BeeCombo tooltip.
- *
- * @author
- * @version
- */
-Ext.ux.BeeCombo = Ext.apply(Ext.ux.BeeCombo, {
+// private BeeCombo tooltip.
+{{classname}} = Ext.apply({{classname}}, {
 	// private
 	getTooltip: function() {
 		if (Ext.isDefined(this.itooltip) === false &&

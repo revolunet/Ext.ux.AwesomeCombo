@@ -1,10 +1,5 @@
-/**
- * BeeCombo paging.
- *
- * @author
- * @version
- */
-Ext.ux.BeeCombo = Ext.apply(Ext.ux.BeeCombo, {
+// private BeeCombo paging.
+{{classname}} = Ext.apply({{classname}}, {
 	// private
 	customizePageToolbar: function() {
 		if (this.pageSize) {

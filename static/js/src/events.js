@@ -1,10 +1,5 @@
-/**
- * BeeCombo events.
- *
- * @author
- * @version
- */
-Ext.ux.BeeCombo = Ext.apply(Ext.ux.BeeCombo, {
+// private BeeCombo events.
+{{classname}} = Ext.apply({{classname}}, {
 	// private
 	onBeforeSelect: function(combo, record, index) {
 		if (this.isChecked(record) && this.enableMultiSelect) {

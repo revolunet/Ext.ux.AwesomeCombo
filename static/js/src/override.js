@@ -1,10 +1,5 @@
-/**
- * BeeCombo override.
- *
- * @author
- * @version
- */
-Ext.apply(Ext.ux.BeeCombo, {
+// private BeeCombo override.
+Ext.apply({{classname}}, {
 	// private
 	beforeBlur: function() {
 		this.refreshDisplay();
@@ -17,7 +12,7 @@ Ext.apply(Ext.ux.BeeCombo, {
 
 	// private
 	afterRender: function(){
-		Ext.ux.BeeCombo.superclass.afterRender.call(this);
+		{{classname}}.superclass.afterRender.call(this);
 		var triggers = this.triggers,
 		i = 0,
 		len = triggers.length;
@@ -76,6 +71,6 @@ Ext.apply(Ext.ux.BeeCombo, {
 	// private
 	onDestroy : function() {
 		Ext.destroy(this.triggers);
-		Ext.ux.BeeCombo.superclass.onDestroy.call(this);
+		{{classname}}.superclass.onDestroy.call(this);
 	}
 });

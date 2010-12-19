@@ -1,10 +1,5 @@
-/**
- * Ext.ux.BeeCombo format.
- *
- * @author
- * @version
- */
-Ext.ux.BeeCombo = Ext.apply(Ext.ux.BeeCombo, {
+// private BeeCombo format.
+{{classname}} = Ext.apply({{classname}}, {
 	// private
 	setStringValue: function(value) {
 		var values = value.split(this.formatSeparator);
@@ -88,6 +83,6 @@ Ext.ux.BeeCombo = Ext.apply(Ext.ux.BeeCombo, {
 	}
 });
 
-Ext.ux.BeeCombo = Ext.extend(Ext.form.ComboBox, Ext.ux.BeeCombo);
+{{classname}} = Ext.extend(Ext.form.ComboBox, {{classname}});
 
-Ext.reg('beecombo', Ext.ux.BeeCombo);
+Ext.reg('{{xtype}}', {{classname}});

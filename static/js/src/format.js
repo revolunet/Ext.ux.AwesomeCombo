@@ -11,6 +11,7 @@
 				item[this.valueField] = values[i];
 				this.internal.add(index, item);
 				if (this.enableMultiSelect !== true) {
+                    {{classname}}.superclass.setValue.call(this, values[i]);
 					break;
 				}
 			}

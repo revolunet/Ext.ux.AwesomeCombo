@@ -272,8 +272,12 @@
 	 * @param {Ext.data.Record} record The record to uncheck
 	 */
 	uncheckRecord: function(record) {
-		var index = record.get(this.valueField).toString();
-		this.internal.removeKey(index);
+        if (this.enableMultiSelect !== true) {
+            this.internal.clear();
+        } else {
+            var index = record.get(this.valueField).toString();
+            this.internal.removeKey(index);
+        }
 	},
 
 	/**
@@ -281,14 +285,16 @@
 	 * @param {Ext.data.Record} record The record to check
 	 */
 	checkRecord: function(record) {
-		if (this.enableMultiSelect !== true) {
+        if (this.enableMultiSelect !== true) {
 			this.internal.clear();
-		}
-		var index = record.get(this.valueField).toString();
-		var item = {};
-		item[this.valueField] = record.get(this.valueField);
-		this.internal.add(index, item);
-		this.internal.get(index)[this.displayField] = record.get(this.displayField);
+            this.setValue(record.get(this.valueField));
+        } else {
+            var index = record.get(this.valueField).toString();
+            var item = {};
+            item[this.valueField] = record.get(this.valueField);
+            item[this.displayField] = record.get(this.displayField);
+            this.internal.add(index, item);
+        }
 	},
 
 	/**
@@ -327,13 +333,10 @@
 
 	// private
 	defaultCheckRecords: function() {
-		var records = this.getStore().getRange();
-		for (var i in records) {
-			if (Ext.isFunction(records[i]) === false) {
-				var isChecked = this.isChecked(records[i]);
-				records[i].set('checked', (isChecked ? 'checked' : 'unchecked'));
-			}
-		}
+        this.getStore().each(function(record) {
+            record.set('checked', (this.isChecked(record) ? 'checked' : 'unchecked'));
+            record.commit(true);
+        }, this);
 	},
 
 	/**

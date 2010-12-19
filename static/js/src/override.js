@@ -1,4 +1,4 @@
-// private BeeCombo override.
+// private {{classname}} override.
 Ext.apply({{classname}}, {
 	// private
 	beforeBlur: function() {

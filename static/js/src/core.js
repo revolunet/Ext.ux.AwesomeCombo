@@ -125,11 +125,12 @@
 		Ext.apply(this, Ext.apply(this.initialConfig, {
 			minListWidth: minListWidth
 		}));
-		if (this.store) this.store = this.setMemoryStore(this.store);
+		if (this.store) {
+            this.store = this.setMemoryStore(this.store);
+        }
 		if (this.enableMultiSelect === false) {
-			Ext.apply(this, Ext.apply(this.initialConfig, {
-				enableKeyEvents: true
-			}));
+            Ext.apply(this, { enableKeyEvents: true });
+			Ext.apply(this.initialConfig, { enableKeyEvents: true });
 			this.on('keyup', this.onFieldKeyUp, this);
 		}
 		{{classname}}.superclass.initComponent.call(this);
@@ -448,8 +449,9 @@
 				}
 			}
 			store = new Ext.data.Store({
-				reader:new Ext.data.ArrayReader({}, fields)
-				,
+                autoCreated: false,
+                autoDestroy: true,
+                reader:new Ext.data.ArrayReader({}, fields),
 				proxy:new Ext.ux.data.PagingMemoryProxy(store)
 			});
 		}

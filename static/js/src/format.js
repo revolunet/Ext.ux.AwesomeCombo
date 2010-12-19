@@ -1,4 +1,4 @@
-// private BeeCombo format.
+// private {{classname}} format.
 {{classname}} = Ext.apply({{classname}}, {
 	// private
 	setStringValue: function(value) {

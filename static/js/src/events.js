@@ -1,4 +1,4 @@
-// private BeeCombo events.
+// private {{classname}} events.
 {{classname}} = Ext.apply({{classname}}, {
 	// private
 	onBeforeSelect: function(combo, record, index) {

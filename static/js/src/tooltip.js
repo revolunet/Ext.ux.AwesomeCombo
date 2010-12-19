@@ -1,4 +1,4 @@
-// private BeeCombo tooltip.
+// private {{classname}} tooltip.
 {{classname}} = Ext.apply({{classname}}, {
 	// private
 	getTooltip: function() {

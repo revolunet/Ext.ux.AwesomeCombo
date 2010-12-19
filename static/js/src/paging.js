@@ -1,4 +1,4 @@
-// private BeeCombo paging.
+// private {{classname}} paging.
 {{classname}} = Ext.apply({{classname}}, {
 	// private
 	customizePageToolbar: function() {

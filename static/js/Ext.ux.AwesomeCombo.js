@@ -125,11 +125,12 @@ Ext.ux.AwesomeCombo = {
 		Ext.apply(this, Ext.apply(this.initialConfig, {
 			minListWidth: minListWidth
 		}));
-		if (this.store) this.store = this.setMemoryStore(this.store);
+		if (this.store) {
+            this.store = this.setMemoryStore(this.store);
+        }
 		if (this.enableMultiSelect === false) {
-			Ext.apply(this, Ext.apply(this.initialConfig, {
-				enableKeyEvents: true
-			}));
+            Ext.apply(this, { enableKeyEvents: true });
+			Ext.apply(this.initialConfig, { enableKeyEvents: true });
 			this.on('keyup', this.onFieldKeyUp, this);
 		}
 		Ext.ux.AwesomeCombo.superclass.initComponent.call(this);
@@ -448,8 +449,9 @@ Ext.ux.AwesomeCombo = {
 				}
 			}
 			store = new Ext.data.Store({
-				reader:new Ext.data.ArrayReader({}, fields)
-				,
+                autoCreated: false,
+                autoDestroy: true,
+                reader:new Ext.data.ArrayReader({}, fields),
 				proxy:new Ext.ux.data.PagingMemoryProxy(store)
 			});
 		}
@@ -457,7 +459,7 @@ Ext.ux.AwesomeCombo = {
 	}
 };
 
-// private BeeCombo override.
+// private Ext.ux.AwesomeCombo override.
 Ext.apply(Ext.ux.AwesomeCombo, {
 	// private
 	beforeBlur: function() {
@@ -533,7 +535,7 @@ Ext.apply(Ext.ux.AwesomeCombo, {
 		Ext.ux.AwesomeCombo.superclass.onDestroy.call(this);
 	}
 });
-// private BeeCombo events.
+// private Ext.ux.AwesomeCombo events.
 Ext.ux.AwesomeCombo = Ext.apply(Ext.ux.AwesomeCombo, {
 	// private
 	onBeforeSelect: function(combo, record, index) {
@@ -629,7 +631,7 @@ Ext.ux.AwesomeCombo = Ext.apply(Ext.ux.AwesomeCombo, {
 		this.refreshDisplay();
 	}
 });
-// private BeeCombo tooltip.
+// private Ext.ux.AwesomeCombo tooltip.
 Ext.ux.AwesomeCombo = Ext.apply(Ext.ux.AwesomeCombo, {
 	// private
 	getTooltip: function() {
@@ -693,7 +695,7 @@ Ext.ux.AwesomeCombo = Ext.apply(Ext.ux.AwesomeCombo, {
 			this.tooltipTitle, this.tooltipContent);
 	}
 });
-// private BeeCombo paging.
+// private Ext.ux.AwesomeCombo paging.
 Ext.ux.AwesomeCombo = Ext.apply(Ext.ux.AwesomeCombo, {
 	// private
 	customizePageToolbar: function() {
@@ -706,7 +708,7 @@ Ext.ux.AwesomeCombo = Ext.apply(Ext.ux.AwesomeCombo, {
 		}
 	}
 });
-// private BeeCombo format.
+// private Ext.ux.AwesomeCombo format.
 Ext.ux.AwesomeCombo = Ext.apply(Ext.ux.AwesomeCombo, {
 	// private
 	setStringValue: function(value) {

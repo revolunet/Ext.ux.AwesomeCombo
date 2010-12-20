@@ -391,8 +391,6 @@ Ext.ux.AwesomeCombo = {
 			this.setObjectValue(value);
 		} else if (Ext.isString(value)) {
 			this.setStringValue(value);
-		} else {
-			this.setStringValue(value.toString());
 		}
 		this.isSettingValue = false;
 		this.refreshDisplay();

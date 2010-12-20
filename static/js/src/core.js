@@ -242,7 +242,21 @@
 		 * @param {String} text The generated text
 		 * @param {Boolean} valueFound True if value was found else false
 		 */
-		'displayrefresh'
+		'displayrefresh',
+
+		/**
+		 * @event beforereset
+		 * Fires before reset is called. Return false to cancel the action.
+		 * @param {{{classname}}} combo This combo box
+		 */
+		'beforereset',
+
+		/**
+		 * @event reset
+		 * Fires when reset is called.
+		 * @param {{{classname}}} combo This combo box
+		 */
+		'reset'
 		);
 		this.internal = new Ext.util.MixedCollection();
 		this.internal.addListener('add', this.onInternalAdd, this);
@@ -274,11 +288,16 @@
 	 * Flush all values.
 	 */
 	reset: function() {
+		if (this.fireEvent('beforereset', this) === false) {
+			return (false);
+		}
 		this.internal.clear();
 		if (this.isExpanded()) {
 			this.refreshDisplay(true);
+			this.lastQuery = undefined;
 			this.doQuery('', true);
 		}
+		this.fireEvent('reset', this);
 	},
 
 	/**

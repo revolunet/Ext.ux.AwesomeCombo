@@ -57,9 +57,15 @@
 	onStoreLoad: function(store, records, options) {
 		for (i in records) {
 			if (Ext.isObject(records[i])) {
+				if (this.enableMultiSelect !== true) {
+					records[i].beginEdit();
+				}
 				records[i].set('checked',
 					(this.isChecked(records[i]) ? 'checked' : 'unchecked'));
 				records[i].commit(true);
+				if (this.enableMultiSelect !== true) {
+					records[i].endEdit();
+				}
 			}
 		}
 	},
@@ -69,8 +75,14 @@
 		var record = this.findRecord(this.valueField, key);
 		if (Ext.isObject(record)) {
 			obj[this.displayField] = record.get(this.displayField);
+			if (this.enableMultiSelect !== true) {
+				record.beginEdit();
+			}
 			record.set('checked', 'checked');
 			record.commit(true);
+			if (this.enableMultiSelect !== true) {
+				record.endEdit();
+			}
 		}
 		this.refreshDisplay();
 	},
@@ -78,8 +90,14 @@
 	// private
 	onInternalClear: function() {
 		this.getStore().each(function(record) {
+			if (this.enableMultiSelect !== true) {
+				record.beginEdit();
+			}
 			record.set('checked', 'unchecked');
 			record.commit(true);
+			if (this.enableMultiSelect !== true) {
+				record.endEdit();
+			}
 		});
 		this.refreshDisplay();
 	},
@@ -88,8 +106,14 @@
 	onInternalRemove: function(obj, key) {
 		var record = this.findRecord(this.valueField, key);
 		if (Ext.isObject(record)) {
+			if (this.enableMultiSelect !== true) {
+				record.beginEdit();
+			}
 			record.set('checked', 'unchecked');
 			record.commit(true);
+			if (this.enableMultiSelect !== true) {
+				record.endEdit();
+			}
 		}
 		this.refreshDisplay();
 	}

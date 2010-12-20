@@ -615,9 +615,15 @@ Ext.ux.AwesomeCombo = Ext.apply(Ext.ux.AwesomeCombo, {
 	onStoreLoad: function(store, records, options) {
 		for (i in records) {
 			if (Ext.isObject(records[i])) {
+				if (this.enableMultiSelect !== true) {
+					records[i].beginEdit();
+				}
 				records[i].set('checked',
 					(this.isChecked(records[i]) ? 'checked' : 'unchecked'));
 				records[i].commit(true);
+				if (this.enableMultiSelect !== true) {
+					records[i].endEdit();
+				}
 			}
 		}
 	},
@@ -627,8 +633,14 @@ Ext.ux.AwesomeCombo = Ext.apply(Ext.ux.AwesomeCombo, {
 		var record = this.findRecord(this.valueField, key);
 		if (Ext.isObject(record)) {
 			obj[this.displayField] = record.get(this.displayField);
+			if (this.enableMultiSelect !== true) {
+				record.beginEdit();
+			}
 			record.set('checked', 'checked');
 			record.commit(true);
+			if (this.enableMultiSelect !== true) {
+				record.endEdit();
+			}
 		}
 		this.refreshDisplay();
 	},
@@ -636,8 +648,14 @@ Ext.ux.AwesomeCombo = Ext.apply(Ext.ux.AwesomeCombo, {
 	// private
 	onInternalClear: function() {
 		this.getStore().each(function(record) {
+			if (this.enableMultiSelect !== true) {
+				record.beginEdit();
+			}
 			record.set('checked', 'unchecked');
 			record.commit(true);
+			if (this.enableMultiSelect !== true) {
+				record.endEdit();
+			}
 		});
 		this.refreshDisplay();
 	},
@@ -646,8 +664,14 @@ Ext.ux.AwesomeCombo = Ext.apply(Ext.ux.AwesomeCombo, {
 	onInternalRemove: function(obj, key) {
 		var record = this.findRecord(this.valueField, key);
 		if (Ext.isObject(record)) {
+			if (this.enableMultiSelect !== true) {
+				record.beginEdit();
+			}
 			record.set('checked', 'unchecked');
 			record.commit(true);
+			if (this.enableMultiSelect !== true) {
+				record.endEdit();
+			}
 		}
 		this.refreshDisplay();
 	}
@@ -752,7 +776,7 @@ Ext.ux.AwesomeCombo = Ext.apply(Ext.ux.AwesomeCombo, {
 				item[this.valueField] = values[i];
 				this.internal.add(index, item);
 				if (this.enableMultiSelect !== true) {
-                    Ext.ux.AwesomeCombo.superclass.setValue.call(this, values[i]);
+					Ext.ux.AwesomeCombo.superclass.setValue.call(this, values[i]);
 					break;
 				}
 			}
@@ -806,6 +830,9 @@ Ext.ux.AwesomeCombo = Ext.apply(Ext.ux.AwesomeCombo, {
 				}
 			}, this);
 		}
+		if (this.enableMultiSelect !== true) {
+			return (values.pop());
+		}
 		return (values.join(this.formatSeparator));
 	},
 
@@ -820,6 +847,9 @@ Ext.ux.AwesomeCombo = Ext.apply(Ext.ux.AwesomeCombo, {
 					values.push(item);
 				}
 			}, this);
+		}
+		if (this.enableMultiSelect !== true) {
+			return (values.pop());
 		}
 		return (values);
 	}

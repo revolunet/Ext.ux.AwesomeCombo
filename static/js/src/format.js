@@ -11,7 +11,7 @@
 				item[this.valueField] = values[i];
 				this.internal.add(index, item);
 				if (this.enableMultiSelect !== true) {
-                    {{classname}}.superclass.setValue.call(this, values[i]);
+					{{classname}}.superclass.setValue.call(this, values[i]);
 					break;
 				}
 			}
@@ -65,6 +65,9 @@
 				}
 			}, this);
 		}
+		if (this.enableMultiSelect !== true) {
+			return (values.pop());
+		}
 		return (values.join(this.formatSeparator));
 	},
 
@@ -79,6 +82,9 @@
 					values.push(item);
 				}
 			}, this);
+		}
+		if (this.enableMultiSelect !== true) {
+			return (values.pop());
 		}
 		return (values);
 	}

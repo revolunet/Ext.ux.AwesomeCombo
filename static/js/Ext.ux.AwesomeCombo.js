@@ -521,6 +521,11 @@ Ext.apply(Ext.ux.AwesomeCombo, {
 	},
 
 	// private
+	onResize: function() {
+
+	},
+
+	// private
 	initTrigger : function(){
 		var ts = this.trigger.select('.x-form-trigger', true),
 		triggerField = this;
@@ -530,16 +535,20 @@ Ext.apply(Ext.ux.AwesomeCombo, {
 			t.hide = function(){
 				var w = triggerField.wrap.getWidth();
 				this.dom.style.display = 'none';
-				if (w) {
-					triggerField.el.setWidth(w-triggerField.trigger.getWidth());
+				var width = w - triggerField.trigger.getWidth();
+				console.log('hide: ', width, this.width);
+				if (width) {
+					triggerField.el.setWidth(width);
 				}
 				triggerField['hidden' + triggerIndex] = true;
 			};
 			t.show = function(){
 				var w = triggerField.wrap.getWidth();
 				this.dom.style.display = '';
-				if (w) {
-					triggerField.el.setWidth(w-triggerField.trigger.getWidth());
+				var width = w - triggerField.trigger.getWidth();
+				console.log('show: ', width, this.width);
+				if (width) {
+					triggerField.el.setWidth(width);
 				}
 				triggerField['hidden' + triggerIndex] = false;
 			};

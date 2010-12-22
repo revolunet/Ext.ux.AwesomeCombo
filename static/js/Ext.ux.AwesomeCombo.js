@@ -536,7 +536,6 @@ Ext.apply(Ext.ux.AwesomeCombo, {
 				var w = triggerField.wrap.getWidth();
 				this.dom.style.display = 'none';
 				var width = w - triggerField.trigger.getWidth();
-				console.log('hide: ', width, this.width);
 				if (width) {
 					triggerField.el.setWidth(width);
 				}
@@ -546,7 +545,6 @@ Ext.apply(Ext.ux.AwesomeCombo, {
 				var w = triggerField.wrap.getWidth();
 				this.dom.style.display = '';
 				var width = w - triggerField.trigger.getWidth();
-				console.log('show: ', width, this.width);
 				if (width) {
 					triggerField.el.setWidth(width);
 				}

@@ -263,7 +263,9 @@
 		this.internal.addListener('clear', this.onInternalClear, this);
 		this.internal.addListener('remove', this.onInternalRemove, this);
 		this.hasPageTbButton = false;
-		if (this.store) this.store.on('load', this.onStoreLoad, this);
+		if (Ext.isDefined(this.store)) {
+			this.store.on('load', this.onStoreLoad, this);
+		}
 		this.on('beforeselect', this.onBeforeSelect, this);
 		this.on('afterrender', this.onAfterRender, this);
 		this.on('expand', this.onExpand, this);

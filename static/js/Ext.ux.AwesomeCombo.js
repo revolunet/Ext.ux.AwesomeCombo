@@ -263,7 +263,9 @@ Ext.ux.AwesomeCombo = {
 		this.internal.addListener('clear', this.onInternalClear, this);
 		this.internal.addListener('remove', this.onInternalRemove, this);
 		this.hasPageTbButton = false;
-		if (this.store) this.store.on('load', this.onStoreLoad, this);
+		if (Ext.isDefined(this.store)) {
+			this.store.on('load', this.onStoreLoad, this);
+		}
 		this.on('beforeselect', this.onBeforeSelect, this);
 		this.on('afterrender', this.onAfterRender, this);
 		this.on('expand', this.onExpand, this);
@@ -521,11 +523,6 @@ Ext.apply(Ext.ux.AwesomeCombo, {
 	},
 
 	// private
-	onResize: function() {
-
-	},
-
-	// private
 	initTrigger : function(){
 		var ts = this.trigger.select('.x-form-trigger', true),
 		triggerField = this;
@@ -536,18 +533,14 @@ Ext.apply(Ext.ux.AwesomeCombo, {
 				var w = triggerField.wrap.getWidth();
 				this.dom.style.display = 'none';
 				var width = w - triggerField.trigger.getWidth();
-				// if (width) {
-				// 	triggerField.el.setWidth(width);
-				// }
+				triggerField.el.setWidth(width);
 				triggerField['hidden' + triggerIndex] = true;
 			};
 			t.show = function() {
 				var w = triggerField.wrap.getWidth();
 				this.dom.style.display = '';
 				var width = w - triggerField.trigger.getWidth();
-				// if (width) {
-				// 	triggerField.el.setWidth(width);
-				// }
+				triggerField.el.setWidth(width);
 				triggerField['hidden' + triggerIndex] = false;
 			};
 			this.mon(t, 'click', this['on'+triggerIndex+'Click'], this, {

@@ -26,11 +26,6 @@ Ext.apply({{classname}}, {
 	},
 
 	// private
-	onResize: function() {
-
-	},
-
-	// private
 	initTrigger : function(){
 		var ts = this.trigger.select('.x-form-trigger', true),
 		triggerField = this;
@@ -41,18 +36,14 @@ Ext.apply({{classname}}, {
 				var w = triggerField.wrap.getWidth();
 				this.dom.style.display = 'none';
 				var width = w - triggerField.trigger.getWidth();
-				// if (width) {
-				// 	triggerField.el.setWidth(width);
-				// }
+				triggerField.el.setWidth(width);
 				triggerField['hidden' + triggerIndex] = true;
 			};
 			t.show = function() {
 				var w = triggerField.wrap.getWidth();
 				this.dom.style.display = '';
 				var width = w - triggerField.trigger.getWidth();
-				// if (width) {
-				// 	triggerField.el.setWidth(width);
-				// }
+				triggerField.el.setWidth(width);
 				triggerField['hidden' + triggerIndex] = false;
 			};
 			this.mon(t, 'click', this['on'+triggerIndex+'Click'], this, {

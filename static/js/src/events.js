@@ -1,10 +1,5 @@
-/**
- * BeeCombo events.
- *
- * @author
- * @version
- */
-Ext.ux.BeeCombo = Ext.apply(Ext.ux.BeeCombo, {
+// private {{classname}} events.
+{{classname}} = Ext.apply({{classname}}, {
 	// private
 	onBeforeSelect: function(combo, record, index) {
 		if (this.isChecked(record) && this.enableMultiSelect) {
@@ -62,9 +57,15 @@ Ext.ux.BeeCombo = Ext.apply(Ext.ux.BeeCombo, {
 	onStoreLoad: function(store, records, options) {
 		for (i in records) {
 			if (Ext.isObject(records[i])) {
+				if (this.enableMultiSelect !== true) {
+					records[i].beginEdit();
+				}
 				records[i].set('checked',
 					(this.isChecked(records[i]) ? 'checked' : 'unchecked'));
 				records[i].commit(true);
+				if (this.enableMultiSelect !== true) {
+					records[i].endEdit();
+				}
 			}
 		}
 	},
@@ -74,8 +75,14 @@ Ext.ux.BeeCombo = Ext.apply(Ext.ux.BeeCombo, {
 		var record = this.findRecord(this.valueField, key);
 		if (Ext.isObject(record)) {
 			obj[this.displayField] = record.get(this.displayField);
+			if (this.enableMultiSelect !== true) {
+				record.beginEdit();
+			}
 			record.set('checked', 'checked');
 			record.commit(true);
+			if (this.enableMultiSelect !== true) {
+				record.endEdit();
+			}
 		}
 		this.refreshDisplay();
 	},
@@ -83,8 +90,14 @@ Ext.ux.BeeCombo = Ext.apply(Ext.ux.BeeCombo, {
 	// private
 	onInternalClear: function() {
 		this.getStore().each(function(record) {
+			if (this.enableMultiSelect !== true) {
+				record.beginEdit();
+			}
 			record.set('checked', 'unchecked');
 			record.commit(true);
+			if (this.enableMultiSelect !== true) {
+				record.endEdit();
+			}
 		});
 		this.refreshDisplay();
 	},
@@ -93,8 +106,14 @@ Ext.ux.BeeCombo = Ext.apply(Ext.ux.BeeCombo, {
 	onInternalRemove: function(obj, key) {
 		var record = this.findRecord(this.valueField, key);
 		if (Ext.isObject(record)) {
+			if (this.enableMultiSelect !== true) {
+				record.beginEdit();
+			}
 			record.set('checked', 'unchecked');
 			record.commit(true);
+			if (this.enableMultiSelect !== true) {
+				record.endEdit();
+			}
 		}
 		this.refreshDisplay();
 	}

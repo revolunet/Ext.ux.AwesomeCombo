@@ -1,0 +1,18 @@
+<div xmlns:ext="http://www.extjs.com" class="body-wrap"><h1>Class <a href="source/ext-all-debug-w-comments.html#cls-Function">Function</a></h1><table cellspacing="0"><tr><td class="label">Package:</td><td class="hd-info">Global</td></tr><tr><td class="label">Defined In:</td><td class="hd-info">ext-all-debug-w-comments.js</td></tr><tr><td class="label">Class:</td><td class="hd-info"><a href="source/ext-all-debug-w-comments.html#cls-Function">Function</a></td></tr><tr><td class="label">Extends:</td><td class="hd-info">Object</td></tr></table><div class="description">These functions are available on every Function object (any JavaScript function).</div><div class="hr"></div><a id="Function-props"></a><h2>Public Properties</h2><div class="no-members">This class has no public properties.</div><a id="Function-methods"></a><h2>Public Methods</h2><table cellspacing="0" class="member-table"><tbody><tr><th colspan="2" class="sig-header">Method</th><th class="msource-header">Defined By</th></tr><tr class="method-row expandable "><td class="micon"><a href="#expand" class="exi">&nbsp;</a></td><td class="sig"><a id="Function-createSequence"></a><b><a href="source/ext-all-debug-w-comments.html#method-Function-createSequence">createSequence</a></b>(&nbsp;<code>Function&nbsp;fcn</code>,&nbsp;<span title="Optional" class="optional">[<code>Object&nbsp;scope</code>]</span>&nbsp;)
+    :
+                                        Function<div class="mdesc"><div class="short">Create a combined function call sequence of the original function + the passed function.
+The resulting function retur...</div><div class="long">Create a combined function call sequence of the original function + the passed function.
+The resulting function returns the results of the original function.
+The passed fcn is called with the parameters of the original function. Example usage:
+<pre><code><b>var</b> sayHi = <b>function</b>(name){
+    alert(<em>'Hi, '</em> + name);
+}
+
+sayHi(<em>'Fred'</em>); <i>// alerts <em>"Hi, Fred"</em></i>
+
+<b>var</b> sayGoodbye = sayHi.createSequence(<b>function</b>(name){
+    alert(<em>'Bye, '</em> + name);
+});
+
+sayGoodbye(<em>'Fred'</em>); <i>// both alerts show</i></code></pre><div class="mdetail-params"><strong>Parameters:</strong><ul><li><code>fcn</code> : Function<div class="sub-desc">The function to sequence</div></li><li><code>scope</code> : Object<div class="sub-desc">(optional) The scope (<code><b>this</b></code> reference) in which the passed function is executed.
+<b>If omitted, defaults to the scope in which the original function is called or the browser window.</b></div></li></ul><strong>Returns:</strong><ul><li><code>Function</code><div class="sub-desc">The new function</div></li></ul></div></div></div></td><td class="msource">Function</td></tr></tbody></table><a id="Function-events"></a><h2>Public Events</h2><div class="no-members">This class has no public events.</div></div>

@@ -1,10 +1,5 @@
-/**
- * Ext.ux.BeeCombo format.
- *
- * @author
- * @version
- */
-Ext.ux.BeeCombo = Ext.apply(Ext.ux.BeeCombo, {
+// private {{classname}} format.
+{{classname}} = Ext.apply({{classname}}, {
 	// private
 	setStringValue: function(value) {
 		var values = value.split(this.formatSeparator);
@@ -16,6 +11,7 @@ Ext.ux.BeeCombo = Ext.apply(Ext.ux.BeeCombo, {
 				item[this.valueField] = values[i];
 				this.internal.add(index, item);
 				if (this.enableMultiSelect !== true) {
+					{{classname}}.superclass.setValue.call(this, values[i]);
 					break;
 				}
 			}
@@ -69,6 +65,9 @@ Ext.ux.BeeCombo = Ext.apply(Ext.ux.BeeCombo, {
 				}
 			}, this);
 		}
+		if (this.enableMultiSelect !== true) {
+			return (values.pop());
+		}
 		return (values.join(this.formatSeparator));
 	},
 
@@ -84,10 +83,13 @@ Ext.ux.BeeCombo = Ext.apply(Ext.ux.BeeCombo, {
 				}
 			}, this);
 		}
+		if (this.enableMultiSelect !== true) {
+			return (values.pop());
+		}
 		return (values);
 	}
 });
 
-Ext.ux.BeeCombo = Ext.extend(Ext.form.ComboBox, Ext.ux.BeeCombo);
+{{classname}} = Ext.extend(Ext.form.ComboBox, {{classname}});
 
-Ext.reg('beecombo', Ext.ux.BeeCombo);
+Ext.reg('{{xtype}}', {{classname}});

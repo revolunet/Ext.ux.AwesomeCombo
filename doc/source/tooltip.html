@@ -1,0 +1,79 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
+  <title>The source code</title>
+    <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+</head>
+<body  onload="prettyPrint();">
+    <pre class="prettyprint lang-js"><div id="prop-Ext.ux.BeeCombo-BeeCombo"></div>/**
+ * BeeCombo tooltip.
+ *
+ * @author
+ * @version
+ */
+Ext.ux.BeeCombo = Ext.apply(Ext.ux.BeeCombo, {
+	// private
+	getTooltip: function() {
+		if (Ext.isDefined(this.itooltip) === false &&
+			Ext.QuickTips.isEnabled()) {
+			this.itooltip = new Ext.ToolTip({
+				title: ' ',
+				html: ' ',
+				target: this.getId(),
+				listeners: {
+					scope: this,
+					show: this.onTooltipShow
+				}
+			});
+		}
+		return (this.itooltip);
+	},
+
+	// private
+	generateTooltipContent: function() {
+		this.tooltipTitle = ' ';
+		this.tooltipContent = ' ';
+		this.internal.each(function(item, index, length) {
+			var value = item[this.displayField];
+			if (Ext.isDefined(value) === false) {
+				value = item[this.valueField];
+			}
+			this.tooltipContent += ' - ' + value.toString() + '<br />';
+		}, this);
+		var len = this.internal.getCount();
+		if (len) {
+			this.tooltipTitle = len.toString() + ' item' +
+				(len > 1 ? 's' : '') + ' selected: ';
+		} else {
+			return (false);
+		}
+		return (true);
+	},
+
+	// private
+	onTooltipShow: function() {
+		if (this.getTooltip().rendered == false) {
+			return (false);
+		}
+		if (this.rendered === false) {
+			this.getTooltip().hide();
+			return (false);
+		}
+		if (this.generateTooltipContent() == false) {
+			this.getTooltip().hide();
+			return (false);
+		}
+		if (this.fireEvent('beforetooltipshow', this, this.getTooltip(),
+			this.tooltipTitle, this.tooltipContent) == false) {
+			this.getTooltip().hide();
+			return (false);
+		}
+		this.getTooltip().setTitle(this.tooltipTitle);
+		this.getTooltip().update(this.tooltipContent);
+		this.fireEvent('tooltipshow', this, this.getTooltip(),
+			this.tooltipTitle, this.tooltipContent);
+	}
+});</pre>    
+</body>
+</html>

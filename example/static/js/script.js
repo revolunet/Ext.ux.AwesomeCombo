@@ -25,10 +25,10 @@ Ext.onReady(function() {
 			,store:arrayData
 			,fieldLabel:"ExtJS Combo"
 		}, {
-			xtype:"beecombo"
+			xtype:"awesomecombo"
 			,store:arrayData
 			,anchor:"0"
-			,fieldLabel:"BeeCombo"
+			,fieldLabel:"Awesome Combo"
 		}]
 	}).render("form1");
 
@@ -48,21 +48,21 @@ Ext.onReady(function() {
 			,fieldLabel:"ExtJS Combo"
 			,emptyText:"select a country..."
 		}, {
-			xtype:"beecombo"
+			xtype:"awesomecombo"
 			,store:Ext.exampledata.states
 			,anchor:"0"
 			,emptyText:"select a country..."
-			,fieldLabel:"BeeCombo"
+			,fieldLabel:"Awesome Combo"
 		}]
 	}).render("form2");
-
+	
 	form2.items.itemAt(0).setValue("NY");
 	form2.items.itemAt(1).setValue("NY");
-
+	
 	/*******************************************************************/
 	/**** LOCAL PAGING STORE *******************************************/
 	/*******************************************************************/
-
+	
 	var form3 = new Ext.form.FormPanel({
 		width:300
 		,autoHeight:true
@@ -83,21 +83,21 @@ Ext.onReady(function() {
 		        ,proxy:new Ext.ux.data.PagingMemoryProxy(Ext.exampledata.states)
 		    })
 		}, {
-			xtype:"beecombo"
+			xtype:"awesomecombo"
 			,triggerAction:"all"
 		    ,pageSize:5
 		    ,store:Ext.exampledata.states
 			,anchor:"0"
 			,emptyText:"select a country..."
-			,fieldLabel:"BeeCombo"
+			,fieldLabel:"Awesome Combo"
 		}]
 	}).render("form3");
-
-
+	
+	
 	/*******************************************************************/
 	/**** AJAX LOAD ****************************************************/
 	/*******************************************************************/
-
+	
 	var form4 = new Ext.form.FormPanel({
 		width:300
 		,autoHeight:true
@@ -116,11 +116,11 @@ Ext.onReady(function() {
 		        ,fields:["id", "name"]
 		    })
 		}, {
-			xtype:"beecombo"
+			xtype:"awesomecombo"
 			,store:Ext.exampledata.states
 			,anchor:"0"
 			,emptyText:"select a country..."
-			,fieldLabel:"BeeCombo"
+			,fieldLabel:"Awesome Combo"
 			,displayField:"name"
 		    ,valueField:"id"
 		    ,triggerAction:"all"
@@ -131,11 +131,11 @@ Ext.onReady(function() {
 		    })
 		}]
 	}).render("form4");
-
+	
 	/*******************************************************************/
 	/**** XTYPE STORE **************************************************/
 	/*******************************************************************/
-
+	
 	var form5 = new Ext.form.FormPanel({
 		width:300
 		,autoHeight:true
@@ -155,9 +155,9 @@ Ext.onReady(function() {
 		        ,fields:["id", "name"]
 		    }
 		}, {
-			xtype:"beecombo"
+			xtype:"awesomecombo"
 			,anchor:"0"
-			,fieldLabel:"BeeCombo"
+			,fieldLabel:"Awesome Combo"
 			,displayField:"name"
 		    ,valueField:"id"
 		    ,triggerAction:"all"
@@ -169,30 +169,30 @@ Ext.onReady(function() {
 		    }
 		}]
 	}).render("form5");
-
-    /*******************************************************************/
-    /**** MULTISELECT & LOCAL PAGING STORE *****************************/
-    /*******************************************************************/
-
+	
+	    /*******************************************************************/
+	    /**** MULTISELECT & LOCAL PAGING STORE *****************************/
+	    /*******************************************************************/
+	
 	var form6 = new Ext.form.FormPanel({
 		width:300
 		,autoHeight:true
 		,border:false
 		,padding:"5"
 		,items:[{
-			xtype:"beecombo"
+			xtype:"awesomecombo"
 			,anchor:"0"
 			,store:Ext.exampledata.states
-			,fieldLabel:"BeeCombo"
+			,fieldLabel:"Awesome Combo"
 			,emptyText:"select a country..."
 			,triggerAction:"all"
 	        ,pageSize:5
 	        ,enableMultiSelect:true
 		}, {
-			xtype:"beecombo"
+			xtype:"awesomecombo"
 			,anchor:"0"
 			,emptyText:"select a country..."
-			,fieldLabel:"BeeCombo"
+			,fieldLabel:"Awesome Combo"
 			,displayField:"name"
 	        ,valueField:"id"
 	        ,triggerAction:"all"
@@ -204,11 +204,11 @@ Ext.onReady(function() {
 	        }
 		}]
 	}).render("form6");
-
-    /*******************************************************************/
-    /**** COMBOBOX IN A COMPOSITE FIELD ********************************/
-    /*******************************************************************/
-
+	
+	    /*******************************************************************/
+	    /**** COMBOBOX IN A COMPOSITE FIELD ********************************/
+	    /*******************************************************************/
+	
 	var form7 = new Ext.form.FormPanel({
 		title:"Form Panel"
 		,width:300
@@ -228,9 +228,9 @@ Ext.onReady(function() {
 			}]
 		}, {
 			xtype:"compositefield"
-			,fieldLabel:"BeeCombo"
+			,fieldLabel:"Awesome Combo"
 			,items:[{
-				xtype:"beecombo"
+				xtype:"awesomecombo"
 				,flex:2
 			}, {
 				xtype:"button"
@@ -239,11 +239,11 @@ Ext.onReady(function() {
 			}]			
 		}]
 	}).render("form7");
-
-    /*******************************************************************/
-    /**** COMBOBOX IN A WINDOW *****************************************/
-    /*******************************************************************/
-
+	
+	    /*******************************************************************/
+	    /**** COMBOBOX IN A WINDOW *****************************************/
+	    /*******************************************************************/
+	
 	new Ext.Button({
 		text:"open window"
 		,handler:function() {
@@ -258,9 +258,9 @@ Ext.onReady(function() {
 					,anchor:"0"
 					,fieldLabel:"ExtJS Combo"
 				}, {
-					xtype:"beecombo"
+					xtype:"awesomecombo"
 					,anchor:"0"
-					,fieldLabel:"BeeCombo"
+					,fieldLabel:"Awesome Combo"
 				}]
 			}).show();
 		}

@@ -497,7 +497,9 @@ Ext.ux.AwesomeCombo = {
 Ext.apply(Ext.ux.AwesomeCombo, {
 	// private
 	beforeBlur: function() {
-		Ext.ux.AwesomeCombo.superclass.beforeBlur.call(this);
+		if (Ext.isDefined(this.store)) {
+			Ext.ux.AwesomeCombo.superclass.beforeBlur.call(this);
+		}
 		this.refreshDisplay();
 	},
 

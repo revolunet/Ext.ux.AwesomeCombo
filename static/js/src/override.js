@@ -2,7 +2,9 @@
 Ext.apply({{classname}}, {
 	// private
 	beforeBlur: function() {
-		{{classname}}.superclass.beforeBlur.call(this);
+		if (Ext.isDefined(this.store)) {
+			{{classname}}.superclass.beforeBlur.call(this);
+		}
 		this.refreshDisplay();
 	},
 

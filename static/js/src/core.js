@@ -119,16 +119,16 @@
 			tag: 'span',
 			cls: 'x-form-twin-triggers',
 			cn: [{
-					tag: 'img',
-					src: Ext.BLANK_IMAGE_URL,
-					alt: '',
-					cls: 'x-form-trigger ' + this.trigger1Class
-				}, {
-					tag: 'img',
-					src: Ext.BLANK_IMAGE_URL,
-					alt: '',
-					cls: 'x-form-trigger ' + this.trigger2Class
-				}]
+				tag: 'img',
+				src: Ext.BLANK_IMAGE_URL,
+				alt: '',
+				cls: 'x-form-trigger ' + this.trigger1Class
+			}, {
+				tag: 'img',
+				src: Ext.BLANK_IMAGE_URL,
+				alt: '',
+				cls: 'x-form-trigger ' + this.trigger2Class
+			}]
 		};
 		this.onTrigger2Click = this.onTriggerClick;
 		this.onTrigger1Click = this.reset;
@@ -445,7 +445,7 @@
 		this.emptyText = this.displayText;
 		this.clearValue();
 		this.fireEvent('displayrefresh', this, this.displayNb,
-		this.displayText, this.valueFound);
+			this.displayText, this.valueFound);
 		return (true);
 	},
 

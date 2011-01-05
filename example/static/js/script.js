@@ -58,6 +58,8 @@ Ext.onReady(function() {
 	
 	form2.items.itemAt(0).setValue("NY");
 	form2.items.itemAt(1).setValue("NY");
+	form2.items.itemAt(0).setReadOnly(true);
+	form2.items.itemAt(1).setReadOnly(true);
 	
 	/*******************************************************************/
 	/**** LOCAL PAGING STORE *******************************************/

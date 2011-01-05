@@ -119,16 +119,16 @@ Ext.ux.AwesomeCombo = {
 			tag: 'span',
 			cls: 'x-form-twin-triggers',
 			cn: [{
-					tag: 'img',
-					src: Ext.BLANK_IMAGE_URL,
-					alt: '',
-					cls: 'x-form-trigger ' + this.trigger1Class
-				}, {
-					tag: 'img',
-					src: Ext.BLANK_IMAGE_URL,
-					alt: '',
-					cls: 'x-form-trigger ' + this.trigger2Class
-				}]
+				tag: 'img',
+				src: Ext.BLANK_IMAGE_URL,
+				alt: '',
+				cls: 'x-form-trigger ' + this.trigger1Class
+			}, {
+				tag: 'img',
+				src: Ext.BLANK_IMAGE_URL,
+				alt: '',
+				cls: 'x-form-trigger ' + this.trigger2Class
+			}]
 		};
 		this.onTrigger2Click = this.onTriggerClick;
 		this.onTrigger1Click = this.reset;
@@ -445,7 +445,7 @@ Ext.ux.AwesomeCombo = {
 		this.emptyText = this.displayText;
 		this.clearValue();
 		this.fireEvent('displayrefresh', this, this.displayNb,
-		this.displayText, this.valueFound);
+			this.displayText, this.valueFound);
 		return (true);
 	},
 
@@ -499,6 +499,7 @@ Ext.ux.AwesomeCombo = {
 Ext.apply(Ext.ux.AwesomeCombo, {
 	// private
 	beforeBlur: function() {
+		Ext.ux.AwesomeCombo.superclass.beforeBlur.call(this);
 		this.refreshDisplay();
 	},
 
@@ -513,12 +514,32 @@ Ext.apply(Ext.ux.AwesomeCombo, {
 		var triggers = this.triggers,
 		i = 0,
 		len = triggers.length;
-
 		for(; i < len; ++i){
 			if(this['hideTrigger' + (i + 1)]){
 				triggers[i].hide();
 			}
+		}
+	},
 
+	setReadOnly: function(readOnly) {
+		if (readOnly != this.readOnly){
+			this.readOnly = readOnly;
+			if (this.rendered) {
+				if (this.readOnly) {
+					this.el.dom.readOnly = true;
+					this.el.addClass('x-trigger-noedit');
+				} else {
+					if (!this.editable) {
+						this.el.dom.readOnly = true;
+						this.el.addClass('x-trigger-noedit');
+					} else {
+						this.el.dom.readOnly = false;
+						this.el.removeClass('x-trigger-noedit');
+					}
+				}
+				this.triggers[0].setReadOnly(this.readOnly);
+				this.triggers[1].setReadOnly(this.readOnly);
+			}
 		}
 	},
 
@@ -531,17 +552,32 @@ Ext.apply(Ext.ux.AwesomeCombo, {
 			var triggerIndex = 'Trigger'+(index+1);
 			t.hide = function() {
 				var w = triggerField.wrap.getWidth();
+				if (triggerField.width) {
+					w = triggerField.width;
+				}
 				this.dom.style.display = 'none';
 				var width = w - triggerField.trigger.getWidth();
 				triggerField.el.setWidth(width);
 				triggerField['hidden' + triggerIndex] = true;
 			};
 			t.show = function() {
+				if (this.readOnly) {
+					return;
+				}
 				var w = triggerField.wrap.getWidth();
+				if (triggerField.width) {
+					w = triggerField.width;
+				}
 				this.dom.style.display = '';
 				var width = w - triggerField.trigger.getWidth();
 				triggerField.el.setWidth(width);
 				triggerField['hidden' + triggerIndex] = false;
+			};
+			t.setReadOnly = function(readOnly) {
+				this.readOnly = readOnly;
+				if (this.readOnly) {
+					this.hide();
+				}
 			};
 			this.mon(t, 'click', this['on'+triggerIndex+'Click'], this, {
 				preventDefault:true

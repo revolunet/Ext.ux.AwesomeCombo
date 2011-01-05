@@ -119,18 +119,16 @@ Ext.onReady(function() {
 		    })
 		}, {
 			xtype:"awesomecombo"
-			,store:Ext.exampledata.states
 			,anchor:"0"
 			,emptyText:"select a country..."
 			,fieldLabel:"Awesome Combo"
 			,displayField:"name"
-		    ,valueField:"id"
-		    ,triggerAction:"all"
-			,store:Ext.exampledata.states
-		    ,store:new Ext.data.JsonStore({
-		        url:"php/data.php"
-		        ,fields:["id", "name"]
-		    })
+	    ,valueField:"id"
+	    ,triggerAction:"all"
+	    ,store:new Ext.data.JsonStore({
+	        url:"php/data.php"
+	        ,fields:["id", "name"]
+	    })
 		}]
 	}).render("form4");
 	

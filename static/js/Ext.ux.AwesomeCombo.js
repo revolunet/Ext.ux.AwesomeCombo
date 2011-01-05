@@ -296,8 +296,6 @@ Ext.ux.AwesomeCombo = {
 		this.internal.clear();
 		if (this.isExpanded()) {
 			this.refreshDisplay(true);
-			this.lastQuery = undefined;
-			this.doQuery('', true);
 		}
 		this.fireEvent('reset', this);
 	},

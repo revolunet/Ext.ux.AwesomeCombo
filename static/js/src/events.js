@@ -62,7 +62,6 @@
 				}
 				records[i].set('checked',
 					(this.isChecked(records[i]) ? 'checked' : 'unchecked'));
-				records[i].commit(true);
 				if (this.enableMultiSelect !== true) {
 					records[i].endEdit();
 				}
@@ -79,7 +78,6 @@
 				record.beginEdit();
 			}
 			record.set('checked', 'checked');
-			record.commit(true);
 			if (this.enableMultiSelect !== true) {
 				record.endEdit();
 			}
@@ -94,7 +92,6 @@
 				record.beginEdit();
 			}
 			record.set('checked', 'unchecked');
-			record.commit(true);
 			if (this.enableMultiSelect !== true) {
 				record.endEdit();
 			}
@@ -110,7 +107,6 @@
 				record.beginEdit();
 			}
 			record.set('checked', 'unchecked');
-			record.commit(true);
 			if (this.enableMultiSelect !== true) {
 				record.endEdit();
 			}

@@ -673,7 +673,6 @@ Ext.ux.AwesomeCombo = Ext.apply(Ext.ux.AwesomeCombo, {
 				}
 				records[i].set('checked',
 					(this.isChecked(records[i]) ? 'checked' : 'unchecked'));
-				records[i].commit(true);
 				if (this.enableMultiSelect !== true) {
 					records[i].endEdit();
 				}
@@ -690,7 +689,6 @@ Ext.ux.AwesomeCombo = Ext.apply(Ext.ux.AwesomeCombo, {
 				record.beginEdit();
 			}
 			record.set('checked', 'checked');
-			record.commit(true);
 			if (this.enableMultiSelect !== true) {
 				record.endEdit();
 			}
@@ -705,7 +703,6 @@ Ext.ux.AwesomeCombo = Ext.apply(Ext.ux.AwesomeCombo, {
 				record.beginEdit();
 			}
 			record.set('checked', 'unchecked');
-			record.commit(true);
 			if (this.enableMultiSelect !== true) {
 				record.endEdit();
 			}
@@ -721,7 +718,6 @@ Ext.ux.AwesomeCombo = Ext.apply(Ext.ux.AwesomeCombo, {
 				record.beginEdit();
 			}
 			record.set('checked', 'unchecked');
-			record.commit(true);
 			if (this.enableMultiSelect !== true) {
 				record.endEdit();
 			}

@@ -130,7 +130,7 @@ Ext.ux.AwesomeCombo = {
 				cls: 'x-form-trigger ' + this.trigger2Class
 			}]
 		};
-		this.onTrigger2Click = this.onTriggerClick;
+		this.onTrigger2Click = this.onTrigger2Click;
 		this.onTrigger1Click = this.reset;
 		var minListWidth = this.minListWidth;
 		if (this.pageSize && minListWidth < 227) {
@@ -256,7 +256,14 @@ Ext.ux.AwesomeCombo = {
 		 * Fires when reset is called.
 		 * @param {Ext.ux.AwesomeCombo} combo This combo box
 		 */
-		'reset'
+		'reset',
+
+		/**
+		 * @event beforetriggerclick
+		 * Fires when expand/toggle trigger was clicked. Return false to cancel the action.
+		 * @param {Ext.ux.AwesomeCombo} combo This combo box
+		 */
+		'beforetriggerclick'
 		);
 		this.internal = new Ext.util.MixedCollection();
 		this.internal.addListener('add', this.onInternalAdd, this);
@@ -501,6 +508,14 @@ Ext.apply(Ext.ux.AwesomeCombo, {
 			Ext.ux.AwesomeCombo.superclass.beforeBlur.call(this);
 		}
 		this.refreshDisplay();
+	},
+
+	// private
+	onTrigger2Click: function() {
+		if (this.fireEvent('beforetriggerclick', this) === false) {
+			return (false);
+		}
+		Ext.ux.AwesomeCombo.superclass.onTriggerClick.call(this);
 	},
 
 	// private

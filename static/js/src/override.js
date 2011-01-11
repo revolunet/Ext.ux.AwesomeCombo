@@ -9,6 +9,14 @@ Ext.apply({{classname}}, {
 	},
 
 	// private
+	onTrigger2Click: function() {
+		if (this.fireEvent('beforetriggerclick', this) === false) {
+			return (false);
+		}
+		{{classname}}.superclass.onTriggerClick.call(this);
+	},
+
+	// private
 	getTrigger : function(index){
 		return this.triggers[index];
 	},

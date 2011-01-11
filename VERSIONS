@@ -4,6 +4,7 @@ Ext.ux.AwesomeCombo versions
 v0.1.1
 ======
  - BugFix refresh display when enableMultiple is true and just one value was checked
+ - Add "beforetriggerclick" event (fires before expand/collapse trigger was clicked).
 
 v0.1
 ====

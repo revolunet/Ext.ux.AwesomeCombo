@@ -130,7 +130,7 @@
 				cls: 'x-form-trigger ' + this.trigger2Class
 			}]
 		};
-		this.onTrigger2Click = this.onTriggerClick;
+		this.onTrigger2Click = this.onTrigger2Click;
 		this.onTrigger1Click = this.reset;
 		var minListWidth = this.minListWidth;
 		if (this.pageSize && minListWidth < 227) {
@@ -256,7 +256,14 @@
 		 * Fires when reset is called.
 		 * @param {{{classname}}} combo This combo box
 		 */
-		'reset'
+		'reset',
+
+		/**
+		 * @event beforetriggerclick
+		 * Fires when expand/toggle trigger was clicked. Return false to cancel the action.
+		 * @param {{{classname}}} combo This combo box
+		 */
+		'beforetriggerclick'
 		);
 		this.internal = new Ext.util.MixedCollection();
 		this.internal.addListener('add', this.onInternalAdd, this);

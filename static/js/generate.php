@@ -2,8 +2,8 @@
 <?php
 
 $data = array(
-	'@version' => (empty($_GET['version']) ? '0.1' : $_GET['version']),
-	'@author' => (empty($_GET['author']) ? 'Revolunet' : $_GET['author'])
+	'@version' => '0.1.1',
+	'@author' => 'Revolunet'
 );
 
 $replace = array('{{classname}}' => 'Ext.ux.AwesomeCombo',

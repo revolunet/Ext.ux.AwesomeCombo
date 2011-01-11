@@ -269,6 +269,7 @@ Ext.ux.AwesomeCombo = {
 		this.on('beforeselect', this.onBeforeSelect, this);
 		this.on('afterrender', this.onAfterRender, this);
 		this.on('expand', this.onExpand, this);
+		this.on('collapse', this.onCollapse, this);
 	},
 
 	/**
@@ -400,15 +401,13 @@ Ext.ux.AwesomeCombo = {
 	// private
 	refreshDisplay: function(forced) {
 		forced = forced || false;
-		if (this.rendered === false ||
-			(forced === false &&
-			(this.isExpanded() ||
+		if (this.rendered === false || (forced === false && (this.isExpanded() ||
 			this.isSettingValue))) {
 			return (false);
 		}
 		this.generateDisplayText();
 		if (this.fireEvent('beforedisplayrefresh', this,
-		this.displayNb, this.displayText, this.valueFound) === false) {
+			this.displayNb, this.displayText, this.valueFound) === false) {
 			return (false);
 		} else {
 			if (this.displayNb == 1) {
@@ -416,6 +415,7 @@ Ext.ux.AwesomeCombo = {
 					this.triggers[0].show();
 				}
 				if (this.valueFound) {
+					this.clearValue();
 					this.el.removeClass(this.emptyClass);
 					this.setRawValue(this.displayText);
 				} else {
@@ -423,7 +423,7 @@ Ext.ux.AwesomeCombo = {
 					this.clearValue();
 				}
 				this.fireEvent('displayrefresh', this, this.displayNb,
-				this.displayText, this.valueFound);
+					this.displayText, this.valueFound);
 				return (true);
 			} else if (this.displayNb > 0) {
 				if (this.disableClearButton === false) {
@@ -632,6 +632,11 @@ Ext.ux.AwesomeCombo = Ext.apply(Ext.ux.AwesomeCombo, {
 		}
 		this.fireEvent('select', this, record, index);
 		return (false);
+	},
+
+	// private
+	onCollapse: function(combo) {
+		this.refreshDisplay(true);
 	},
 
 	// private

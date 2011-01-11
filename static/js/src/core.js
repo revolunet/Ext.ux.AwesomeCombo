@@ -269,6 +269,7 @@
 		this.on('beforeselect', this.onBeforeSelect, this);
 		this.on('afterrender', this.onAfterRender, this);
 		this.on('expand', this.onExpand, this);
+		this.on('collapse', this.onCollapse, this);
 	},
 
 	/**
@@ -400,15 +401,13 @@
 	// private
 	refreshDisplay: function(forced) {
 		forced = forced || false;
-		if (this.rendered === false ||
-			(forced === false &&
-			(this.isExpanded() ||
+		if (this.rendered === false || (forced === false && (this.isExpanded() ||
 			this.isSettingValue))) {
 			return (false);
 		}
 		this.generateDisplayText();
 		if (this.fireEvent('beforedisplayrefresh', this,
-		this.displayNb, this.displayText, this.valueFound) === false) {
+			this.displayNb, this.displayText, this.valueFound) === false) {
 			return (false);
 		} else {
 			if (this.displayNb == 1) {
@@ -416,6 +415,7 @@
 					this.triggers[0].show();
 				}
 				if (this.valueFound) {
+					this.clearValue();
 					this.el.removeClass(this.emptyClass);
 					this.setRawValue(this.displayText);
 				} else {
@@ -423,7 +423,7 @@
 					this.clearValue();
 				}
 				this.fireEvent('displayrefresh', this, this.displayNb,
-				this.displayText, this.valueFound);
+					this.displayText, this.valueFound);
 				return (true);
 			} else if (this.displayNb > 0) {
 				if (this.disableClearButton === false) {

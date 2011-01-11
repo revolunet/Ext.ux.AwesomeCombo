@@ -24,6 +24,11 @@
 	},
 
 	// private
+	onCollapse: function(combo) {
+		this.refreshDisplay(true);
+	},
+
+	// private
 	onAfterRender: function(cmp) {
 		if (this.enableTooltip) {
 			this.getTooltip();

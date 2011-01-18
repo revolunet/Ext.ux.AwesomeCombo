@@ -248,6 +248,9 @@ Ext.onReady(function() {
 			new Ext.Window({
 				layout:"form"
 				,title:"Window"
+				,collapsed:true
+				,expandOnShow:false
+				,collapsible:true
 				,width:300
 				,autoHeight:true
 				,padding:"5"

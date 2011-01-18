@@ -11,7 +11,7 @@ Features
 - Many new events
 
 Requirements
-============
+------------
 >
 - ExtJS library version 3.x
 

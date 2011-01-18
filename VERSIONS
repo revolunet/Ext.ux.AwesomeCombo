@@ -1,16 +1,16 @@
-Ext.ux.AwesomeCombo versions
-----------------------------
+Ext.ux.AwesomeCombo
+===================
 
 v0.1.2
-======
- - BugFix width trigger calculation with one/several config:
-   hideTrigger or disableClearButton or readOnly or disabled set to true
+------
+> BugFix width trigger calculation with one/several config:
+hideTrigger or disableClearButton or readOnly or disabled set to true
 
 v0.1.1
-======
- - BugFix refresh display when enableMultiple is true and just one value was checked
- - Add "beforetriggerclick" event (fires before expand/collapse trigger was clicked).
+------
+> BugFix refresh display when enableMultiple is true and just one value was checked
+> Add "beforetriggerclick" event (fires before expand/collapse trigger was clicked).
 
 v0.1
-====
- - First release
+----
+> First release

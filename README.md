@@ -25,7 +25,7 @@ First of all include css file as below into head tag:
 And then javascript files into body tag:
 
 	<script type="text/javascript" src="static/js/Ext.ux.PagingMemoryProxy.js"></script>
-	<script type="text/javascript" src="../static/js/Ext.ux.AwesomeCombo.js"></script>
+	<script type="text/javascript" src="static/js/Ext.ux.AwesomeCombo.js"></script>
 
 Try:
 

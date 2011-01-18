@@ -59,7 +59,6 @@ Screenshot
 Feedback
 --------
 >
-- ![Github issues][2]
+- [Ext.ux.AwesomeCombo github issues](https://github.com/revolunet/Ext.ux.BeeCombo/issues)
 
 [1]: https://github.com/revolunet/Ext.ux.BeeCombo/raw/master/screenshot.png
-[2]: https://github.com/revolunet/Ext.ux.BeeCombo/issues

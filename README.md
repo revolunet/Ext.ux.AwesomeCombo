@@ -10,15 +10,21 @@ Features
 - Clear button available by default
 - Many new events
 
+Requirements
+============
+>
+- ExtJS library version 3.x
+
 Documentation
 -------------
 >
-- Available via /doc/
-- Examples available via /examples/
+- Available via **doc/**
+- Examples available via **examples/**
 
 Quick setup
 -----------
-First of all include css file as below into head tag:
+First of all copy **static** folder to your library path.
+Include css file as below into head tag:
 
 	<link rel="stylesheet" type="text/css" href="static/css/Ext.ux.AwesomeCombo.css" />
 
@@ -44,8 +50,16 @@ Try:
 		]
 	}
 
+Enjoy :)
+
 Screenshot
 ----------
 ![From examples page][1]
 
+Feedback
+--------
+>
+- ![Github issues][2]
+
 [1]: https://github.com/revolunet/Ext.ux.BeeCombo/raw/master/screenshot.png
+[2]: https://github.com/revolunet/Ext.ux.BeeCombo/issues

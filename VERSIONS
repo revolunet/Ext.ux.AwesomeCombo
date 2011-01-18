@@ -3,8 +3,8 @@ Ext.ux.AwesomeCombo versions
 
 v0.1.2
 ======
- - BugFix width trigger calculation with config: hideTrigger,
-	 disableClearButton, readOnly, disabled to true
+ - BugFix width trigger calculation with one/several config:
+   hideTrigger or disableClearButton or readOnly or disabled set to true
 
 v0.1.1
 ======

@@ -530,13 +530,38 @@ Ext.apply(Ext.ux.AwesomeCombo, {
 		i = 0,
 		len = triggers.length;
 		for(; i < len; ++i){
-			if(this['hideTrigger' + (i + 1)]){
+			var disabled = false;
+			if (i === 0) {
+				disabled = this.disableClearButton;
+			} else if (i === 1) {
+				disabled = this.hideTrigger;
+			}
+			if(disabled || this['hideTrigger' + (i + 1)]){
 				triggers[i].hide();
 			}
 		}
 	},
 
-	setReadOnly: function(readOnly) {
+	updateEditState: function() {
+		if (this.rendered) {
+			if (this.readOnly) {
+				this.el.dom.readOnly = true;
+				this.el.addClass('x-trigger-noedit');
+				this.triggers[0].setReadOnly(this.readOnly);
+				this.triggers[1].setReadOnly(this.readOnly);
+			} else {
+				if (!this.editable) {
+					this.el.dom.readOnly = true;
+					this.el.addClass('x-trigger-noedit');
+				} else {
+					this.el.dom.readOnly = false;
+					this.el.removeClass('x-trigger-noedit');
+				}
+			}
+		}
+	},
+
+	xsetReadOnly: function(readOnly) {
 		if (readOnly != this.readOnly){
 			this.readOnly = readOnly;
 			if (this.rendered) {

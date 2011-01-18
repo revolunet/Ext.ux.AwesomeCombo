@@ -276,7 +276,15 @@ Ext.onReady(function() {
 			,emptyText:"select a country..."
 			,fieldLabel:"Simple"
 			,value: 'NY'
-		},{
+		}, {
+			xtype:"awesomecombo"
+			,store:Ext.exampledata.states
+			,anchor:"0"
+			,emptyText:"select a country..."
+			,fieldLabel:"hideTrigger"
+			,hideTrigger: true
+			,value: 'NY'
+		}, {
 			xtype:"awesomecombo"
 			,store:Ext.exampledata.states
 			,anchor:"0"

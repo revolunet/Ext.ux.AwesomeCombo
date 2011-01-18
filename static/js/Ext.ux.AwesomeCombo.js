@@ -565,35 +565,39 @@ Ext.apply(Ext.ux.AwesomeCombo, {
 
 		ts.each(function(t, all, index){
 			var triggerIndex = 'Trigger'+(index+1);
+
 			t.hide = function() {
 				var w = triggerField.wrap.getWidth();
 				if (triggerField.width) {
 					w = triggerField.width;
 				}
 				this.dom.style.display = 'none';
-				var width = w - triggerField.trigger.getWidth();
-				triggerField.el.setWidth(width);
 				triggerField['hidden' + triggerIndex] = true;
+				var width = w - triggerField.getTriggerWidth();
+				triggerField.el.setWidth(width);
 			};
+
 			t.show = function() {
 				if (this.readOnly) {
-					return;
+					return (this.hide());
 				}
 				var w = triggerField.wrap.getWidth();
 				if (triggerField.width) {
 					w = triggerField.width;
 				}
 				this.dom.style.display = '';
-				var width = w - triggerField.trigger.getWidth();
-				triggerField.el.setWidth(width);
 				triggerField['hidden' + triggerIndex] = false;
+				var width = w - triggerField.getTriggerWidth();
+				triggerField.el.setWidth(width);
 			};
+
 			t.setReadOnly = function(readOnly) {
 				this.readOnly = readOnly;
 				if (this.readOnly) {
 					this.hide();
 				}
 			};
+
 			this.mon(t, 'click', this['on'+triggerIndex+'Click'], this, {
 				preventDefault:true
 			});
@@ -604,18 +608,25 @@ Ext.apply(Ext.ux.AwesomeCombo, {
 	},
 
 	// private
-	getTriggerWidth: function(){
+	getTriggerWidth: function() {
 		var tw = 0;
 		Ext.each(this.triggers, function(t, index){
-			var triggerIndex = 'Trigger' + (index + 1),
-			w = t.getWidth();
-			if(w === 0 && !this['hidden' + triggerIndex]){
-				tw += this.defaultTriggerWidth;
-			}else{
-				tw += w;
+			var triggerIndex = 'Trigger' + (index + 1);
+			var disabled = false;
+			if (triggerIndex === 'Trigger1') {
+				disabled = this.disableClearButton;
+			} else if (triggerIndex === 'Trigger2') {
+				disabled = this.hideTrigger;
+			}
+			if (disabled !== true && this.readOnly !== true) {
+				if (this['hidden' + triggerIndex] !== true) {
+					tw += this.defaultTriggerWidth;
+				} else {
+					tw += t.getWidth();
+				}
 			}
 		}, this);
-		return tw;
+		return (tw);
 	},
 
 	// private

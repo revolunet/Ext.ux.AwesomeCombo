@@ -58,8 +58,6 @@ Ext.onReady(function() {
 	
 	form2.items.itemAt(0).setValue("NY");
 	form2.items.itemAt(1).setValue("NY");
-	form2.items.itemAt(0).setReadOnly(true);
-	form2.items.itemAt(1).setReadOnly(true);
 	
 	/*******************************************************************/
 	/**** LOCAL PAGING STORE *******************************************/
@@ -265,5 +263,44 @@ Ext.onReady(function() {
 			}).show();
 		}
 	}).render("button1");
+
+	var form8 = new Ext.form.FormPanel({
+		width:300
+		,autoHeight:true
+		,border:false
+		,padding:"5"
+		,items:[{
+			xtype:"awesomecombo"
+			,store:Ext.exampledata.states
+			,anchor:"0"
+			,emptyText:"select a country..."
+			,fieldLabel:"Simple"
+			,value: 'NY'
+		},{
+			xtype:"awesomecombo"
+			,store:Ext.exampledata.states
+			,anchor:"0"
+			,emptyText:"select a country..."
+			,fieldLabel:"disableClearButton"
+			,disableClearButton: true
+			,value: 'NY'
+		}, {
+			xtype:"awesomecombo"
+			,store:Ext.exampledata.states
+			,anchor:"0"
+			,emptyText:"select a country..."
+			,fieldLabel:"readOnly"
+			,readOnly:true
+			,value: 'NY'
+		}, {
+			xtype:"awesomecombo"
+			,store:Ext.exampledata.states
+			,anchor:"0"
+			,emptyText:"select a country..."
+			,fieldLabel:"disabled"
+			,disabled:true
+			,value: 'NY'
+		}]
+	}).render("form8");
 
 });

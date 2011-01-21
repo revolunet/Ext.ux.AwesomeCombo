@@ -130,8 +130,6 @@ Ext.ux.AwesomeCombo = {
 				cls: 'x-form-trigger ' + this.trigger2Class
 			}]
 		};
-		this.onTrigger2Click = this.onTrigger2Click;
-		this.onTrigger1Click = this.reset;
 		var minListWidth = this.minListWidth;
 		if (this.pageSize && minListWidth < 227) {
 			minListWidth = 227;
@@ -511,10 +509,15 @@ Ext.apply(Ext.ux.AwesomeCombo, {
 	},
 
 	// private
-	onTrigger2Click: function() {
+	onTrigger1Click: function() {
 		if (this.readOnly || this.disabled) {
 			return;
 		}
+		this.reset();
+	},
+
+	// private
+	onTrigger2Click: function() {
 		if (this.fireEvent('beforetriggerclick', this) === false) {
 			return (false);
 		}

@@ -9,10 +9,15 @@ Ext.apply({{classname}}, {
 	},
 
 	// private
-	onTrigger2Click: function() {
+	onTrigger1Click: function() {
 		if (this.readOnly || this.disabled) {
 			return;
 		}
+		this.reset();
+	},
+
+	// private
+	onTrigger2Click: function() {
 		if (this.fireEvent('beforetriggerclick', this) === false) {
 			return (false);
 		}

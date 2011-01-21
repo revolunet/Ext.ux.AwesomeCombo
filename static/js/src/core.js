@@ -130,8 +130,6 @@
 				cls: 'x-form-trigger ' + this.trigger2Class
 			}]
 		};
-		this.onTrigger2Click = this.onTrigger2Click;
-		this.onTrigger1Click = this.reset;
 		var minListWidth = this.minListWidth;
 		if (this.pageSize && minListWidth < 227) {
 			minListWidth = 227;

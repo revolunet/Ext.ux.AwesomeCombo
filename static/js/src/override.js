@@ -10,6 +10,9 @@ Ext.apply({{classname}}, {
 
 	// private
 	onTrigger2Click: function() {
+		if (this.readOnly || this.disabled) {
+			return;
+		}
 		if (this.fireEvent('beforetriggerclick', this) === false) {
 			return (false);
 		}
@@ -55,28 +58,6 @@ Ext.apply({{classname}}, {
 					this.el.dom.readOnly = false;
 					this.el.removeClass('x-trigger-noedit');
 				}
-			}
-		}
-	},
-
-	xsetReadOnly: function(readOnly) {
-		if (readOnly != this.readOnly){
-			this.readOnly = readOnly;
-			if (this.rendered) {
-				if (this.readOnly) {
-					this.el.dom.readOnly = true;
-					this.el.addClass('x-trigger-noedit');
-				} else {
-					if (!this.editable) {
-						this.el.dom.readOnly = true;
-						this.el.addClass('x-trigger-noedit');
-					} else {
-						this.el.dom.readOnly = false;
-						this.el.removeClass('x-trigger-noedit');
-					}
-				}
-				this.triggers[0].setReadOnly(this.readOnly);
-				this.triggers[1].setReadOnly(this.readOnly);
 			}
 		}
 	},

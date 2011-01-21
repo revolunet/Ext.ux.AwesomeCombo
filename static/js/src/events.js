@@ -54,7 +54,6 @@
 		if (this.hasPageTbButton == false) {
 			this.hasPageTbButton = true;
 			this.defaultCheckRecords();
-			this.customizePageToolbar();
 		}
 	},
 

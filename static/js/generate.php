@@ -2,7 +2,7 @@
 <?php
 
 $data = array(
-	'@version' => '0.1.2',
+	'@version' => '0.1.3',
 	'@author' => 'Revolunet'
 );
 
@@ -17,7 +17,6 @@ $files = array(
 	'override.js',
 	'events.js',
 	'tooltip.js',
-	'paging.js',
 	'format.js'
 );
 

@@ -1,10 +1,14 @@
 Ext.ux.AwesomeCombo
 ===================
 
+v0.1.3
+------
+> BugFix clear trigger button click event when readOnly/disable activated.
+
 v0.1.2
 ------
-> BugFix width trigger calculation with one/several config:
-hideTrigger or disableClearButton or readOnly or disabled set to true
+> BugFix trigger width calculation with one or several config enabled:
+hideTrigger or disableClearButton or readOnly or disabled set to true.
 
 v0.1.1
 ------
@@ -13,4 +17,4 @@ v0.1.1
 
 v0.1
 ----
-> First release
+> First release.

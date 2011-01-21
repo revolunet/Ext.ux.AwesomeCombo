@@ -303,7 +303,7 @@
 		}
 		this.internal.clear();
 		if (this.isExpanded()) {
-			this.refreshDisplay(true);
+			this.refreshDisplay();
 		}
 		this.fireEvent('reset', this);
 	},
@@ -391,8 +391,8 @@
 			this.refreshDisplay();
 			return (this);
 		}
-		this.reset();
 		this.isSettingValue = true;
+		this.reset();
 		if (Ext.isArray(value)) {
 			this.setArrayValue(value);
 		} else if (Ext.isObject(value)) {

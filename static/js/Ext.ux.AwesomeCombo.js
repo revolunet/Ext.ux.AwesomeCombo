@@ -3,7 +3,7 @@
  * with multi-selection options.
  *
  * @author Revolunet
- * @version 0.1.2
+ * @version 0.1.3
  * @class Ext.ux.AwesomeCombo
  * @extends Ext.form.ComboBox
  * @constructor
@@ -303,7 +303,7 @@ Ext.ux.AwesomeCombo = {
 		}
 		this.internal.clear();
 		if (this.isExpanded()) {
-			this.refreshDisplay(true);
+			this.refreshDisplay();
 		}
 		this.fireEvent('reset', this);
 	},
@@ -391,8 +391,8 @@ Ext.ux.AwesomeCombo = {
 			this.refreshDisplay();
 			return (this);
 		}
-		this.reset();
 		this.isSettingValue = true;
+		this.reset();
 		if (Ext.isArray(value)) {
 			this.setArrayValue(value);
 		} else if (Ext.isObject(value)) {
@@ -512,6 +512,9 @@ Ext.apply(Ext.ux.AwesomeCombo, {
 
 	// private
 	onTrigger2Click: function() {
+		if (this.readOnly || this.disabled) {
+			return;
+		}
 		if (this.fireEvent('beforetriggerclick', this) === false) {
 			return (false);
 		}
@@ -557,28 +560,6 @@ Ext.apply(Ext.ux.AwesomeCombo, {
 					this.el.dom.readOnly = false;
 					this.el.removeClass('x-trigger-noedit');
 				}
-			}
-		}
-	},
-
-	xsetReadOnly: function(readOnly) {
-		if (readOnly != this.readOnly){
-			this.readOnly = readOnly;
-			if (this.rendered) {
-				if (this.readOnly) {
-					this.el.dom.readOnly = true;
-					this.el.addClass('x-trigger-noedit');
-				} else {
-					if (!this.editable) {
-						this.el.dom.readOnly = true;
-						this.el.addClass('x-trigger-noedit');
-					} else {
-						this.el.dom.readOnly = false;
-						this.el.removeClass('x-trigger-noedit');
-					}
-				}
-				this.triggers[0].setReadOnly(this.readOnly);
-				this.triggers[1].setReadOnly(this.readOnly);
 			}
 		}
 	},
@@ -716,7 +697,6 @@ Ext.ux.AwesomeCombo = Ext.apply(Ext.ux.AwesomeCombo, {
 		if (this.hasPageTbButton == false) {
 			this.hasPageTbButton = true;
 			this.defaultCheckRecords();
-			this.customizePageToolbar();
 		}
 	},
 
@@ -853,19 +833,6 @@ Ext.ux.AwesomeCombo = Ext.apply(Ext.ux.AwesomeCombo, {
 		this.getTooltip().update(this.tooltipContent);
 		this.fireEvent('tooltipshow', this, this.getTooltip(),
 			this.tooltipTitle, this.tooltipContent);
-	}
-});
-// private Ext.ux.AwesomeCombo paging.
-Ext.ux.AwesomeCombo = Ext.apply(Ext.ux.AwesomeCombo, {
-	// private
-	customizePageToolbar: function() {
-		if (this.pageSize) {
-			// this.pageTb.get(0).setIconClass('icon-arrow-stop-180');
-			// this.pageTb.get(1).setIconClass('icon-arrow-180');
-			// this.pageTb.get(7).setIconClass('icon-arrow');
-			// this.pageTb.get(8).setIconClass('icon-arrow-stop');
-			// this.pageTb.get(10).setIconClass('icon-arrow-circle-double-135');
-		}
 	}
 });
 // private Ext.ux.AwesomeCombo format.

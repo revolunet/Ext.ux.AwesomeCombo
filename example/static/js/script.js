@@ -1,10 +1,10 @@
 var arrayData = ["John", "Mary", "Steve"]
 
-var objectData = [
+var objectData = {data: [
     {id:1, name:"John"}
     ,{id:2, name:"Mary"}
     ,{id:3, name:"Steve"}
-];
+]};
 
 Ext.onReady(function() {
 

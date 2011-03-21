@@ -119,16 +119,16 @@ Ext.ux.AwesomeCombo = {
 			tag: 'span',
 			cls: 'x-form-twin-triggers',
 			cn: [{
-				tag: 'img',
-				src: Ext.BLANK_IMAGE_URL,
-				alt: '',
-				cls: 'x-form-trigger ' + this.trigger1Class
-			}, {
-				tag: 'img',
-				src: Ext.BLANK_IMAGE_URL,
-				alt: '',
-				cls: 'x-form-trigger ' + this.trigger2Class
-			}]
+					tag: 'img',
+					src: Ext.BLANK_IMAGE_URL,
+					alt: '',
+					cls: 'x-form-trigger ' + this.trigger1Class
+				}, {
+					tag: 'img',
+					src: Ext.BLANK_IMAGE_URL,
+					alt: '',
+					cls: 'x-form-trigger ' + this.trigger2Class
+				}]
 		};
 		var minListWidth = this.minListWidth;
 		if (this.pageSize && minListWidth < 227) {
@@ -262,7 +262,7 @@ Ext.ux.AwesomeCombo = {
 		 * @param {Ext.ux.AwesomeCombo} combo This combo box
 		 */
 		'beforetriggerclick'
-		);
+	);
 		this.internal = new Ext.util.MixedCollection();
 		this.internal.addListener('add', this.onInternalAdd, this);
 		this.internal.addListener('clear', this.onInternalClear, this);
@@ -350,9 +350,11 @@ Ext.ux.AwesomeCombo = {
 			forcedFormat = this.format;
 		}
 		if (forcedFormat === 'object') {
-			return (this.getObjectValue());
+			return this.getObjectValue();
+		} else if (forcedFormat === 'array') {
+			return this.getArrayValue();
 		} else {
-			return (this.getStringValue());
+			return this.getStringValue();
 		}
 	},
 
@@ -361,12 +363,12 @@ Ext.ux.AwesomeCombo = {
 		if (this.internal.getCount()) {
 			var item = this.internal.get(0);
 			if (Ext.isDefined(item[this.displayField])) {
-				return (item[this.displayField]);
+				return item[this.displayField];
 			} else {
-				return (item[this.valueField]);
+				return item[this.valueField];
 			}
 		} else {
-			return (false);
+			return false;
 		}
 	},
 
@@ -395,8 +397,8 @@ Ext.ux.AwesomeCombo = {
 			this.setArrayValue(value);
 		} else if (Ext.isObject(value)) {
 			this.setObjectValue(value);
-		} else if (Ext.isString(value)) {
-			this.setStringValue(value);
+		} else {
+			this.setMixedValue(value);
 		}
 		this.isSettingValue = false;
 		this.refreshDisplay();
@@ -412,7 +414,7 @@ Ext.ux.AwesomeCombo = {
 		}
 		this.generateDisplayText();
 		if (this.fireEvent('beforedisplayrefresh', this,
-			this.displayNb, this.displayText, this.valueFound) === false) {
+		this.displayNb, this.displayText, this.valueFound) === false) {
 			return (false);
 		} else {
 			if (this.displayNb == 1) {
@@ -428,7 +430,7 @@ Ext.ux.AwesomeCombo = {
 					this.clearValue();
 				}
 				this.fireEvent('displayrefresh', this, this.displayNb,
-					this.displayText, this.valueFound);
+				this.displayText, this.valueFound);
 				return (true);
 			} else if (this.displayNb > 0) {
 				if (this.disableClearButton === false) {
@@ -448,7 +450,7 @@ Ext.ux.AwesomeCombo = {
 		this.emptyText = this.displayText;
 		this.clearValue();
 		this.fireEvent('displayrefresh', this, this.displayNb,
-			this.displayText, this.valueFound);
+		this.displayText, this.valueFound);
 		return (true);
 	},
 
@@ -474,10 +476,10 @@ Ext.ux.AwesomeCombo = {
 		} else {
 			this.displayText = this.emptyText;
 		}
-	}
+	},
 
 	// private
-	,setMemoryStore:function(store) {
+	setMemoryStore:function(store) {
 		if (this.pageSize > 0 && Ext.isArray(store)) {
 			this.valueField = this.displayField = "field1";
 			var fields = [this.valueField];
@@ -495,11 +497,8 @@ Ext.ux.AwesomeCombo = {
 			});
 		}
 		return store;
-	}
-};
+	},
 
-// private Ext.ux.AwesomeCombo override.
-Ext.apply(Ext.ux.AwesomeCombo, {
 	// private
 	beforeBlur: function() {
 		if (Ext.isDefined(this.store)) {
@@ -642,10 +641,8 @@ Ext.apply(Ext.ux.AwesomeCombo, {
 	onDestroy : function() {
 		Ext.destroy(this.triggers);
 		Ext.ux.AwesomeCombo.superclass.onDestroy.call(this);
-	}
-});
-// private Ext.ux.AwesomeCombo events.
-Ext.ux.AwesomeCombo = Ext.apply(Ext.ux.AwesomeCombo, {
+	},
+
 	// private
 	onBeforeSelect: function(combo, record, index) {
 		if (this.isChecked(record) && this.enableMultiSelect) {
@@ -711,7 +708,7 @@ Ext.ux.AwesomeCombo = Ext.apply(Ext.ux.AwesomeCombo, {
 					records[i].beginEdit();
 				}
 				records[i].set('checked',
-					(this.isChecked(records[i]) ? 'checked' : 'unchecked'));
+				(this.isChecked(records[i]) ? 'checked' : 'unchecked'));
 				if (this.enableMultiSelect !== true) {
 					records[i].endEdit();
 				}
@@ -762,10 +759,8 @@ Ext.ux.AwesomeCombo = Ext.apply(Ext.ux.AwesomeCombo, {
 			}
 		}
 		this.refreshDisplay();
-	}
-});
-// private Ext.ux.AwesomeCombo tooltip.
-Ext.ux.AwesomeCombo = Ext.apply(Ext.ux.AwesomeCombo, {
+	},
+
 	// private
 	getTooltip: function() {
 		if (Ext.isDefined(this.itooltip) === false &&
@@ -782,22 +777,22 @@ Ext.ux.AwesomeCombo = Ext.apply(Ext.ux.AwesomeCombo, {
             if (Ext.isDefined(this.tooltipContentTpl) === false) {
                 this.tooltipContentTpl =
                     new Ext.XTemplate('<tpl for="data">',
-                                      ' - {', this.displayField || 'field1', '} <br />',
-                                      '</tpl>', {compiled: true});
+				' - {', this.displayField || 'field1', '} <br />',
+				'</tpl>', {compiled: true});
             }
             if (Ext.isDefined(this.tooltipTitleTpl) === false) {
                 this.tooltipTitleTpl = new Ext.XTemplate('<tpl for=".">',
-                                                         '<tpl if="count == 0">',
-                                                         'No item selected.',
-                                                         '</tpl>',
-                                                         '<tpl if="count &gt; 0">',
-                                                         '{count} item',
-                                                         '<tpl if="count &gt; 1">',
-                                                         's',
-                                                         '</tpl>',
-                                                         ' selected: ',
-                                                         '</tpl>',
-                                                         '</tpl>', {compiled: true});
+				'<tpl if="count == 0">',
+				'No item selected.',
+				'</tpl>',
+				'<tpl if="count &gt; 0">',
+				'{count} item',
+				'<tpl if="count &gt; 1">',
+				's',
+				'</tpl>',
+				' selected: ',
+				'</tpl>',
+				'</tpl>', {compiled: true});
             }
 		}
 		return (this.itooltip);
@@ -828,18 +823,31 @@ Ext.ux.AwesomeCombo = Ext.apply(Ext.ux.AwesomeCombo, {
 			return (false);
 		}
 		if (this.fireEvent('beforetooltipshow', this, this.getTooltip(),
-			this.tooltipTitle, this.tooltipContent) == false) {
+		this.tooltipTitle, this.tooltipContent) == false) {
 			this.getTooltip().hide();
 			return (false);
 		}
 		this.getTooltip().setTitle(this.tooltipTitle);
 		this.getTooltip().update(this.tooltipContent);
 		this.fireEvent('tooltipshow', this, this.getTooltip(),
-			this.tooltipTitle, this.tooltipContent);
-	}
-});
-// private Ext.ux.AwesomeCombo format.
-Ext.ux.AwesomeCombo = Ext.apply(Ext.ux.AwesomeCombo, {
+		this.tooltipTitle, this.tooltipContent);
+	},
+
+	// private
+	setMixedValue: function(value) {
+		if (Ext.isString(value) && Ext.isDefined(this.formatSeparator)) {
+			this.setStringValue(value);
+		} else {
+			var index = value.toString();
+			var item = {};
+			item[index] = value;
+			this.internal.add(index, item);
+			if (this.enableMultiSelect !== true) {
+				Ext.ux.AwesomeCombo.superclass.setValue.call(this, value);
+			}
+		}
+	},
+
 	// private
 	setStringValue: function(value) {
 		var values = value.split(this.formatSeparator);
@@ -898,10 +906,8 @@ Ext.ux.AwesomeCombo = Ext.apply(Ext.ux.AwesomeCombo, {
 		var values = new Array();
 		if (this.internal.getCount()) {
 			this.internal.eachKey(function(key, item) {
-				if (this.enableMultiSelect) {
-					values.push(key);
-				} else if (values.length == 0) {
-					values.push(key);
+				if (this.enableMultiSelect || values.length == 0) {
+					values.push(item[this.valueField]);
 				}
 			}, this);
 		}
@@ -909,6 +915,19 @@ Ext.ux.AwesomeCombo = Ext.apply(Ext.ux.AwesomeCombo, {
 			return (values.pop());
 		}
 		return (values.join(this.formatSeparator));
+	},
+
+	// private
+	getArrayValue: function() {
+		var values = new Array();
+		if (this.internal.getCount()) {
+			this.internal.eachKey(function(key, item) {
+				if (this.enableMultiSelect || values.length == 0) {
+					values.push(item[this.valueField]);
+				}
+			}, this);
+		}
+		return values;
 	},
 
 	// private
@@ -928,7 +947,7 @@ Ext.ux.AwesomeCombo = Ext.apply(Ext.ux.AwesomeCombo, {
 		}
 		return (values);
 	}
-});
+}
 
 Ext.ux.AwesomeCombo = Ext.extend(Ext.form.ComboBox, Ext.ux.AwesomeCombo);
 

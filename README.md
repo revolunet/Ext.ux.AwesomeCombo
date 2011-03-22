@@ -19,19 +19,19 @@ Documentation
 -------------
 >
 - Available via **doc/**
-- Examples available via **examples/**
+- Examples available via **example/**
 
 Quick setup
 -----------
 First of all copy **static** folder to your library path.
 Include css file as below into head tag:
 
-	<link rel="stylesheet" type="text/css" href="static/css/Ext.ux.AwesomeCombo.css" />
+	<link rel="stylesheet" type="text/css" href="resources/css/Ext.ux.AwesomeCombo.css" />
 
 And then javascript files into body tag:
 
-	<script type="text/javascript" src="static/js/Ext.ux.PagingMemoryProxy.js"></script>
-	<script type="text/javascript" src="static/js/Ext.ux.AwesomeCombo.js"></script>
+	<script type="text/javascript" src="src/Ext.ux.PagingMemoryProxy.js"></script>
+	<script type="text/javascript" src="src/Ext.ux.AwesomeCombo.js"></script>
 
 Try:
 

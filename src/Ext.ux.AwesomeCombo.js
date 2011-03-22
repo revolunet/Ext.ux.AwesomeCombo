@@ -411,6 +411,13 @@ Ext.ux.AwesomeCombo = {
 	},
 
 	// private
+	assertValue: function() {
+		if (Ext.isDefined(this.value)) {
+			this.setValue(this.value);
+		}
+	},
+
+	// private
 	refreshDisplay: function(forced) {
 		forced = forced || false;
 		if (this.rendered === false || (forced === false && (this.isExpanded() ||

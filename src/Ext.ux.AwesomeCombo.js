@@ -304,6 +304,10 @@ Ext.ux.AwesomeCombo = {
 			return false;
 		}
 		this.internal.clear();
+		this.value = '';
+		if (this.hiddenField) {
+            this.hiddenField.value = '';
+        }
 		if (this.isExpanded()) {
 			this.refreshDisplay();
 		}
@@ -405,6 +409,9 @@ Ext.ux.AwesomeCombo = {
 			this.setMixedValue(value);
 		}
 		this.value = value;
+		if (this.hiddenField) {
+            this.hiddenField.value = value;
+        }
 		this.isSettingValue = false;
 		this.refreshDisplay();
 		return this;
@@ -412,10 +419,17 @@ Ext.ux.AwesomeCombo = {
 
 	// private
 	assertValue: function() {
-		if (Ext.isDefined(this.value)) {
+		if (this.value) {
 			this.setValue(this.value);
 		}
 	},
+
+	// private
+	clearRawValue: function(){
+        this.setRawValue('');
+        this.lastSelectionText = '';
+        this.applyEmptyText();
+    },
 
 	// private
 	refreshDisplay: function(forced) {
@@ -434,12 +448,12 @@ Ext.ux.AwesomeCombo = {
 					this.triggers[0].show();
 				}
 				if (this.valueFound) {
-					this.clearValue();
+					this.clearRawValue();
 					this.el.removeClass(this.emptyClass);
 					this.setRawValue(this.displayText);
 				} else {
 					this.emptyText = '1 item selected';
-					this.clearValue();
+					this.clearRawValue();
 				}
 				this.fireEvent('displayrefresh', this, this.displayNb,
 					this.displayText, this.valueFound);
@@ -460,7 +474,7 @@ Ext.ux.AwesomeCombo = {
 			}
 		}
 		this.emptyText = this.displayText;
-		this.clearValue();
+		this.clearRawValue();
 		this.fireEvent('displayrefresh', this, this.displayNb,
 			this.displayText, this.valueFound);
 		return true;

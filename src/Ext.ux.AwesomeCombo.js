@@ -930,7 +930,6 @@ Ext.ux.AwesomeCombo = {
 		var values = new Array();
 		if (this.internal.getCount()) {
 			this.internal.eachKey(function(key, item) {
-				console.log(key, item);
 				if (this.enableMultiSelect || values.length == 0) {
 					values.push(item[this.valueField]);
 				}

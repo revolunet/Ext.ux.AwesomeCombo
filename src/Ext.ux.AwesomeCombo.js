@@ -334,7 +334,7 @@ Ext.ux.AwesomeCombo = {
 	checkRecord: function(record) {
 		if (this.enableMultiSelect !== true) {
 			this.internal.clear();
-			this.setValue(record.get(this.valueField));
+			this.setValue(record.data);
 		} else {
 			var index = record.get(this.valueField).toString();
 			var item = {};

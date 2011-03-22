@@ -391,7 +391,7 @@ Ext.ux.AwesomeCombo = {
 	 * - Could be single/multiple javascript object values
 	 */
 	setValue: function(value) {
-		if (value == this.getRawValue()) {
+		if (value == this.getRawValue() || Ext.isEmpty(value)) {
 			this.refreshDisplay();
 			return this;
 		}

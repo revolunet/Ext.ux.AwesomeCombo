@@ -404,6 +404,7 @@ Ext.ux.AwesomeCombo = {
 		} else {
 			this.setMixedValue(value);
 		}
+		this.value = value;
 		this.isSettingValue = false;
 		this.refreshDisplay();
 		return this;

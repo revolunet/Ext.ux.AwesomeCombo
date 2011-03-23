@@ -320,10 +320,11 @@ Ext.ux.AwesomeCombo = {
 	 */
 	uncheckRecord: function(record) {
 		if (this.enableMultiSelect !== true) {
-			this.internal.clear();
+			this.reset();
 		} else {
 			var index = record.get(this.valueField).toString();
 			this.internal.removeKey(index);
+			this.setValue(this.internal.getRange());
 		}
 	},
 
@@ -333,7 +334,6 @@ Ext.ux.AwesomeCombo = {
 	 */
 	checkRecord: function(record) {
 		if (this.enableMultiSelect !== true) {
-			this.internal.clear();
 			this.setValue(record.get(this.valueField));
 		} else {
 			var index = record.get(this.valueField).toString();
@@ -341,6 +341,7 @@ Ext.ux.AwesomeCombo = {
 			item[this.valueField] = record.get(this.valueField);
 			item[this.displayField] = record.get(this.displayField);
 			this.internal.add(index, item);
+			this.setValue(this.internal.getRange());
 		}
 	},
 
@@ -419,9 +420,12 @@ Ext.ux.AwesomeCombo = {
 
 	// private
 	assertValue: function() {
+		this.setValue(this.internal);
+		/*
 		if (this.value) {
 			this.setValue(this.value);
 		}
+		*/
 	},
 
 	// private

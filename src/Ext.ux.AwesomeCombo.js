@@ -306,8 +306,8 @@ Ext.ux.AwesomeCombo = {
 		this.internal.clear();
 		this.value = '';
 		if (this.hiddenField) {
-            this.hiddenField.value = '';
-        }
+			this.hiddenField.value = '';
+		}
 		if (this.isExpanded()) {
 			this.refreshDisplay();
 		}
@@ -334,14 +334,12 @@ Ext.ux.AwesomeCombo = {
 	checkRecord: function(record) {
 		if (this.enableMultiSelect !== true) {
 			this.internal.clear();
-			this.setValue(record.data);
-		} else {
-			var index = record.get(this.valueField).toString();
-			var item = {};
-			item[this.valueField] = record.get(this.valueField);
-			item[this.displayField] = record.get(this.displayField);
-			this.internal.add(index, item);
 		}
+		var index = record.get(this.valueField).toString();
+		var item = {};
+		item[this.valueField] = record.get(this.valueField);
+		item[this.displayField] = record.get(this.displayField);
+		this.internal.add(index, item);
 	},
 
 	/**
@@ -410,8 +408,8 @@ Ext.ux.AwesomeCombo = {
 		}
 		this.value = value;
 		if (this.hiddenField) {
-            this.hiddenField.value = value;
-        }
+			this.hiddenField.value = value;
+		}
 		this.isSettingValue = false;
 		this.refreshDisplay();
 		return this;
@@ -419,17 +417,15 @@ Ext.ux.AwesomeCombo = {
 
 	// private
 	assertValue: function() {
-		if (this.value) {
-			this.setValue(this.value);
-		}
+		this.setValue(this.internal.getRange());
 	},
 
 	// private
 	clearRawValue: function(){
-        this.setRawValue('');
-        this.lastSelectionText = '';
-        this.applyEmptyText();
-    },
+		this.setRawValue('');
+		this.lastSelectionText = '';
+		this.applyEmptyText();
+	},
 
 	// private
 	refreshDisplay: function(forced) {

@@ -149,10 +149,6 @@ Ext.ux.AwesomeCombo = {
 			});
 			this.on('keyup', this.onFieldKeyUp, this);
 		}
-		this.internal = new Ext.util.MixedCollection();
-		this.internal.addListener('add', this.onInternalAdd, this);
-		this.internal.addListener('clear', this.onInternalClear, this);
-		this.internal.addListener('remove', this.onInternalRemove, this);
 		Ext.ux.AwesomeCombo.superclass.initComponent.call(this);
 		var config = {
 			tpl: new Ext.XTemplate(
@@ -281,6 +277,17 @@ Ext.ux.AwesomeCombo = {
 		this.on('collapse', this.onCollapse, this);
 	},
 
+	// private
+	getInternal: function() {
+		if (Ext.isDefined(this.internal) === false) {
+			this.internal = new Ext.util.MixedCollection();
+			this.internal.addListener('add', this.onInternalAdd, this);
+			this.internal.addListener('clear', this.onInternalClear, this);
+			this.internal.addListener('remove', this.onInternalRemove, this);
+		}
+		return this.internal;
+	},
+
 	/**
 	 * Check if given record is checked.
 	 * @param {Ext.data.Record} record The record to check
@@ -288,9 +295,9 @@ Ext.ux.AwesomeCombo = {
 	 */
 	isChecked: function(record) {
 		var index = record.get(this.valueField).toString();
-		var success = this.internal.containsKey(index);
+		var success = this.getInternal().containsKey(index);
 		if (success) {
-			var item = this.internal.get(index);
+			var item = this.getInternal().get(index);
 			item[this.displayField] = record.get(this.displayField);
 		}
 		return success;
@@ -303,7 +310,7 @@ Ext.ux.AwesomeCombo = {
 		if (this.fireEvent('beforereset', this) === false) {
 			return false;
 		}
-		this.internal.clear();
+		this.getInternal().clear();
 		this.value = '';
 		if (this.hiddenField) {
 			this.hiddenField.value = '';
@@ -320,10 +327,10 @@ Ext.ux.AwesomeCombo = {
 	 */
 	uncheckRecord: function(record) {
 		if (this.enableMultiSelect !== true) {
-			this.internal.clear();
+			this.getInternal().clear();
 		} else {
 			var index = record.get(this.valueField).toString();
-			this.internal.removeKey(index);
+			this.getInternal().removeKey(index);
 		}
 	},
 
@@ -333,13 +340,13 @@ Ext.ux.AwesomeCombo = {
 	 */
 	checkRecord: function(record) {
 		if (this.enableMultiSelect !== true) {
-			this.internal.clear();
+			this.getInternal().clear();
 		}
 		var index = record.get(this.valueField).toString();
 		var item = {};
 		item[this.valueField] = record.get(this.valueField);
 		item[this.displayField] = record.get(this.displayField);
-		this.internal.add(index, item);
+		this.getInternal().add(index, item);
 	},
 
 	/**
@@ -366,8 +373,8 @@ Ext.ux.AwesomeCombo = {
 
 	// private
 	getDisplayValue: function() {
-		if (this.internal.getCount()) {
-			var item = this.internal.get(0);
+		if (this.getInternal().getCount()) {
+			var item = this.getInternal().get(0);
 			if (Ext.isDefined(item[this.displayField])) {
 				return item[this.displayField];
 			} else {
@@ -417,7 +424,7 @@ Ext.ux.AwesomeCombo = {
 
 	// private
 	assertValue: function() {
-		this.setValue(this.internal.getRange());
+		this.setValue(this.getInternal().getRange());
 	},
 
 	// private
@@ -478,11 +485,11 @@ Ext.ux.AwesomeCombo = {
 
 	// private
 	generateDisplayText: function() {
-		this.displayNb = this.internal.getCount();
+		this.displayNb = this.getInternal().getCount();
 		this.displayText = '';
 		this.valueFound = false;
 		var selectedValue = '';
-		this.internal.each(function(item, index, length) {
+		this.getInternal().each(function(item, index, length) {
 			if (Ext.isDefined(item[this.displayField])) {
 				selectedValue = item[this.displayField];
 				this.valueFound = true;
@@ -827,8 +834,8 @@ Ext.ux.AwesomeCombo = {
 	// private
 	generateTooltipContent: function() {
 		var data = {
-			data: this.internal.getRange(),
-			count: this.internal.getCount()
+			data: this.getInternal().getRange(),
+			count: this.getInternal().getCount()
 		};
 		this.tooltipTitle = this.tooltipTitleTpl.apply(data);
 		this.tooltipContent = this.tooltipContentTpl.apply(data);
@@ -867,7 +874,7 @@ Ext.ux.AwesomeCombo = {
 			var index = value.toString();
 			var item = {};
 			item[this.valueField] = value;
-			this.internal.add(index, item);
+			this.getInternal().add(index, item);
 			if (this.enableMultiSelect !== true) {
 				Ext.ux.AwesomeCombo.superclass.setValue.call(this, value);
 			}
@@ -883,7 +890,7 @@ Ext.ux.AwesomeCombo = {
 			if (Ext.isEmpty(index) === false) {
 				var item = {};
 				item[this.valueField] = values[i];
-				this.internal.add(index, item);
+				this.getInternal().add(index, item);
 				if (this.enableMultiSelect !== true) {
 					Ext.ux.AwesomeCombo.superclass.setValue.call(this, values[i]);
 					break;
@@ -920,7 +927,7 @@ Ext.ux.AwesomeCombo = {
 				if (Ext.isDefined(value[this.displayField])) {
 					item[this.displayField] = value[this.displayField];
 				}
-				this.internal.add(index, item);
+				this.getInternal().add(index, item);
 				return true;
 			}
 		}
@@ -930,8 +937,8 @@ Ext.ux.AwesomeCombo = {
 	// private
 	getStringValue: function() {
 		var values = new Array();
-		if (this.internal.getCount()) {
-			this.internal.eachKey(function(key, item) {
+		if (this.getInternal().getCount()) {
+			this.getInternal().eachKey(function(key, item) {
 				if (this.enableMultiSelect || values.length == 0) {
 					values.push(item[this.valueField]);
 				}
@@ -946,8 +953,8 @@ Ext.ux.AwesomeCombo = {
 	// private
 	getArrayValue: function() {
 		var values = new Array();
-		if (this.internal.getCount()) {
-			this.internal.eachKey(function(key, item) {
+		if (this.getInternal().getCount()) {
+			this.getInternal().eachKey(function(key, item) {
 				if (this.enableMultiSelect || values.length == 0) {
 					values.push(item[this.valueField]);
 				}
@@ -959,8 +966,8 @@ Ext.ux.AwesomeCombo = {
 	// private
 	getObjectValue: function() {
 		var values = new Array();
-		if (this.internal.getCount()) {
-			this.internal.eachKey(function(key, item) {
+		if (this.getInternal().getCount()) {
+			this.getInternal().eachKey(function(key, item) {
 				if (this.enableMultiSelect || values.length == 0) {
 					values.push(item);
 				}

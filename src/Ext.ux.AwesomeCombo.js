@@ -149,6 +149,10 @@ Ext.ux.AwesomeCombo = {
 			});
 			this.on('keyup', this.onFieldKeyUp, this);
 		}
+		this.internal = new Ext.util.MixedCollection();
+		this.internal.addListener('add', this.onInternalAdd, this);
+		this.internal.addListener('clear', this.onInternalClear, this);
+		this.internal.addListener('remove', this.onInternalRemove, this);
 		Ext.ux.AwesomeCombo.superclass.initComponent.call(this);
 		var config = {
 			tpl: new Ext.XTemplate(
@@ -267,10 +271,6 @@ Ext.ux.AwesomeCombo = {
 			 */
 			beforetriggerclick: true
 		});
-		this.internal = new Ext.util.MixedCollection();
-		this.internal.addListener('add', this.onInternalAdd, this);
-		this.internal.addListener('clear', this.onInternalClear, this);
-		this.internal.addListener('remove', this.onInternalRemove, this);
 		this.hasPageTbButton = false;
 		if (Ext.isDefined(this.store)) {
 			this.store.on('load', this.onStoreLoad, this);

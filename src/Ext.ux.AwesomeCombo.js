@@ -416,7 +416,7 @@ Ext.ux.AwesomeCombo = {
 		}
 		this.value = value;
 		if (this.hiddenField) {
-			this.hiddenField.value = this.getValue();
+			this.hiddenField.value = Ext.encode(this.getValue());
 		}
 		this.isSettingValue = false;
 		this.refreshDisplay();

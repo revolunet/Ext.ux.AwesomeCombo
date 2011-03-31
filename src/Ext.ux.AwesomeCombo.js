@@ -149,6 +149,7 @@ Ext.ux.AwesomeCombo = {
 			});
 			this.on('keyup', this.onFieldKeyUp, this);
 		}
+		this.getInternal();
 		Ext.ux.AwesomeCombo.superclass.initComponent.call(this);
 		var config = {
 			tpl: new Ext.XTemplate(
@@ -415,7 +416,7 @@ Ext.ux.AwesomeCombo = {
 		}
 		this.value = value;
 		if (this.hiddenField) {
-			this.hiddenField.value = value;
+			this.hiddenField.value = this.getValue();
 		}
 		this.isSettingValue = false;
 		this.refreshDisplay();
@@ -508,7 +509,7 @@ Ext.ux.AwesomeCombo = {
 	},
 
 	// private
-	setMemoryStore:function(store) {
+	setMemoryStore: function(store) {
 		if (this.pageSize > 0 && Ext.isArray(store)) {
 			this.valueField = this.displayField = "field1";
 			var fields = [this.valueField];

@@ -314,4 +314,12 @@ Ext.onReady(function() {
 		}]
 	}).render("form8");
 
+	var form9 = new Ext.ux.AwesomeCombo({
+		anchor:"0"
+		,store:Ext.exampledata.states
+		,emptyText:"select a country..."
+		,value: 'NY'
+		,renderTo: 'form9'
+	});
+
 });

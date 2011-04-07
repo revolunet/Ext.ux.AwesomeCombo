@@ -852,6 +852,11 @@ Ext.ux.AwesomeCombo = {
 			this.getTooltip().hide();
 			return false;
 		}
+		if (this.getActiveError() !== "") {
+                    // dont display the tooltip is there is already an error message (assume quicktips)
+                    this.getTooltip().hide();
+                    return false;
+		}
 		if (this.generateTooltipContent() == false) {
 			this.getTooltip().hide();
 			return false;

@@ -6,6 +6,8 @@ var objectData = {data: [
     ,{id:3, name:"Steve"}
 ]};
 
+var JSON_URL = 'php/data.php';
+
 Ext.onReady(function() {
 
     Ext.QuickTips.init();
@@ -112,7 +114,7 @@ Ext.onReady(function() {
 		    ,triggerAction:"all"
 		    ,emptyText:"select a country..."
 		    ,store:new Ext.data.JsonStore({
-		        url:"php/data.php"
+		        url:JSON_URL
 		        ,fields:["id", "name"]
 		    })
 		}, {
@@ -124,7 +126,7 @@ Ext.onReady(function() {
 	    ,valueField:"id"
 	    ,triggerAction:"all"
 	    ,store:new Ext.data.JsonStore({
-	        url:"php/data.php"
+	        url:JSON_URL
 	        ,fields:["id", "name"]
 	    })
 		}]
@@ -149,7 +151,7 @@ Ext.onReady(function() {
 		    ,emptyText:"select a country..."
 		    ,store:{
 		        xtype:"jsonstore"
-		        ,url:"php/data.php"
+		        ,url:JSON_URL
 		        ,fields:["id", "name"]
 		    }
 		}, {
@@ -162,7 +164,7 @@ Ext.onReady(function() {
 		    ,emptyText:"select a country..."
 		    ,store:{
 		        xtype:"jsonstore"
-		        ,url:"php/data.php"
+		        ,url:JSON_URL
 		        ,fields:["id", "name"]
 		    }
 		}]
@@ -197,7 +199,7 @@ Ext.onReady(function() {
 	        ,enableMultiSelect:true
 	        ,store:{
 	            xtype:"jsonstore"
-	            ,url:"php/data.php"
+	            ,url:JSON_URL
 	            ,fields:["id", "name"]
 	        }
 		}]

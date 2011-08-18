@@ -1,10 +1,10 @@
 var arrayData = ["John", "Mary", "Steve"]
 
-var objectData = [
+var objectData = {data: [
     {id:1, name:"John"}
     ,{id:2, name:"Mary"}
     ,{id:3, name:"Steve"}
-];
+]};
 
 Ext.onReady(function() {
 
@@ -313,5 +313,13 @@ Ext.onReady(function() {
 			,value: 'NY'
 		}]
 	}).render("form8");
+
+	var form9 = new Ext.ux.AwesomeCombo({
+		anchor:"0"
+		,store:Ext.exampledata.states
+		,emptyText:"select a country..."
+		,value: 'NY'
+		,renderTo: 'form9'
+	});
 
 });

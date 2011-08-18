@@ -1,6 +1,10 @@
 Ext.ux.AwesomeCombo
 ===================
 
+v0.1.4
+------
+> BugFix when using awesomecombo with editor grid.
+
 v0.1.3
 ------
 > BugFix clear trigger button click event when readOnly/disable activated.

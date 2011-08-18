@@ -3,7 +3,7 @@
  * with multi-selection options.
  *
  * @author Revolunet
- * @version 0.1.3
+ * @version 0.1.4
  * @class Ext.ux.AwesomeCombo
  * @extends Ext.form.ComboBox
  * @constructor
@@ -141,132 +141,133 @@ Ext.ux.AwesomeCombo = {
 			this.store = this.setMemoryStore(this.store);
 		}
 		if (this.enableMultiSelect === false) {
-			Ext.apply(this, { enableKeyEvents: true });
-			Ext.apply(this.initialConfig, { enableKeyEvents: true });
+			Ext.apply(this, {
+				enableKeyEvents: true
+			});
+			Ext.apply(this.initialConfig, {
+				enableKeyEvents: true
+			});
 			this.on('keyup', this.onFieldKeyUp, this);
 		}
+		this.getInternal();
 		Ext.ux.AwesomeCombo.superclass.initComponent.call(this);
 		var config = {
 			tpl: new Ext.XTemplate(
-			'<tpl for="."><div class="awesomecombo-item {checked}">',
-			'{[this.wordwrap(values.', this.displayField || 'field1', ')]}',
-			'</div></tpl>', {
-				compiled: true,
-				wordwrap: function(value) {
-					if (value.length > 45) {
-						return (value.substr(0, 45) + '...');
+				'<tpl for="."><div class="awesomecombo-item {checked}">',
+				'{[this.wordwrap(values.', this.displayField || 'field1', ')]}',
+				'</div></tpl>', {
+					compiled: true,
+					wordwrap: function(value) {
+						if (value.length > 45) {
+							return value.substr(0, 45) + '...';
+						}
+						return value;
 					}
-					return (value);
-				}
-			}),
+				}),
 			itemSelector: 'div.awesomecombo-item'
 		};
 		if (this.enableMultiSelect && Ext.isDefined(this.tpl) === false) {
 			Ext.apply(this, config);
 			Ext.apply(this.initialConfig, config);
 		}
-		this.addEvents(
-		/**
-		 * @event beforeentrycheck
-		 * Fires before an entry is checked. Return false to cancel the action.
-		 * @param {Ext.ux.AwesomeCombo} combo This combo box
-		 * @param {Ext.data.Record} record The data record returned from the underlying store
-		 * @param {Number} index The index of the selected item in the dropdown list
-		 */
-		'beforeentrycheck',
+		this.addEvents({
+			/**
+			 * @event beforeentrycheck
+			 * Fires before an entry is checked. Return false to cancel the action.
+			 * @param {Ext.ux.AwesomeCombo} combo This combo box
+			 * @param {Ext.data.Record} record The data record returned from the underlying store
+			 * @param {Number} index The index of the selected item in the dropdown list
+			 */
+			beforeentrycheck: true,
 
-		/**
-		 * @event entrycheck
-		 * Fires when an entry is checked.
-		 * @param {Ext.ux.AwesomeCombo} combo This combo box
-		 * @param {Ext.data.Record} record The data record returned from the underlying store
-		 * @param {Number} index The index of the selected item in the dropdown list
-		 */
-		'entrycheck',
+			/**
+			 * @event entrycheck
+			 * Fires when an entry is checked.
+			 * @param {Ext.ux.AwesomeCombo} combo This combo box
+			 * @param {Ext.data.Record} record The data record returned from the underlying store
+			 * @param {Number} index The index of the selected item in the dropdown list
+			 */
+			entrycheck: true,
 
-		/**
-		 * @event beforeentryuncheck
-		 * Fires before an entry is unchecked. Return false to cancel the action.
-		 * @param {Ext.ux.AwesomeCombo} combo This combo box
-		 * @param {Ext.data.Record} record The data record returned from the underlying store
-		 * @param {Number} index The index of the selected item in the dropdown list
-		 */
-		'beforeentryuncheck',
+			/**
+			 * @event beforeentryuncheck
+			 * Fires before an entry is unchecked. Return false to cancel the action.
+			 * @param {Ext.ux.AwesomeCombo} combo This combo box
+			 * @param {Ext.data.Record} record The data record returned from the underlying store
+			 * @param {Number} index The index of the selected item in the dropdown list
+			 */
+			beforeentryuncheck: true,
 
-		/**
-		 * @event entryuncheck
-		 * Fires when an entry is unchecked.
-		 * @param {Ext.ux.AwesomeCombo} combo This combo box
-		 * @param {Ext.data.Record} record The data record returned from the underlying store
-		 * @param {Number} index The index of the selected item in the dropdown list
-		 */
-		'entryuncheck',
+			/**
+			 * @event entryuncheck
+			 * Fires when an entry is unchecked.
+			 * @param {Ext.ux.AwesomeCombo} combo This combo box
+			 * @param {Ext.data.Record} record The data record returned from the underlying store
+			 * @param {Number} index The index of the selected item in the dropdown list
+			 */
+			entryuncheck: true,
 
-		/**
-		 * @event beforetooltipshow
-		 * Fires before tooltip show. Return false to cancel the action.
-		 * @param {Ext.ux.AwesomeCombo} combo This combo box
-		 * @param {Ext.Tooltip} tooltip This combo box tooltip
-		 * @param {String} title The tooltip title
-		 * @param {String} content The tooltip content
-		 */
-		'beforetooltipshow',
+			/**
+			 * @event beforetooltipshow
+			 * Fires before tooltip show. Return false to cancel the action.
+			 * @param {Ext.ux.AwesomeCombo} combo This combo box
+			 * @param {Ext.Tooltip} tooltip This combo box tooltip
+			 * @param {String} title The tooltip title
+			 * @param {String} content The tooltip content
+			 */
+			beforetooltipshow: true,
 
-		/**
-		 * @event tooltipshow
-		 * Fires when tooltip show.
-		 * @param {Ext.ux.AwesomeCombo} combo This combo box
-		 * @param {Ext.Tooltip} tooltip This combo box tooltip
-		 * @param {String} title The tooltip title
-		 * @param {String} content The tooltip content
-		 */
-		'tooltipshow',
+			/**
+			 * @event tooltipshow
+			 * Fires when tooltip show.
+			 * @param {Ext.ux.AwesomeCombo} combo This combo box
+			 * @param {Ext.Tooltip} tooltip This combo box tooltip
+			 * @param {String} title The tooltip title
+			 * @param {String} content The tooltip content
+			 */
+			tooltipshow: true,
 
-		/**
-		 * @event beforedisplayrefresh
-		 * Fires before display is refreshed. Return false to cancel the action.
-		 * @param {Ext.ux.AwesomeCombo} combo This combo box
-		 * @param {Number} nb Number of selected items
-		 * @param {String} text The generated value
-		 * @param {Boolean} valueFound True if value was found else false
-		 */
-		'beforedisplayrefresh',
+			/**
+			 * @event beforedisplayrefresh
+			 * Fires before display is refreshed. Return false to cancel the action.
+			 * @param {Ext.ux.AwesomeCombo} combo This combo box
+			 * @param {Number} nb Number of selected items
+			 * @param {String} text The generated value
+			 * @param {Boolean} valueFound True if value was found else false
+			 */
+			beforedisplayrefresh: true,
 
-		/**
-		 * @event displayrefresh
-		 * Fires when display is refreshed.
-		 * @param {Ext.ux.AwesomeCombo} combo This combo box
-		 * @param {Number} nb Number of selected items
-		 * @param {String} text The generated text
-		 * @param {Boolean} valueFound True if value was found else false
-		 */
-		'displayrefresh',
+			/**
+			 * @event displayrefresh
+			 * Fires when display is refreshed.
+			 * @param {Ext.ux.AwesomeCombo} combo This combo box
+			 * @param {Number} nb Number of selected items
+			 * @param {String} text The generated text
+			 * @param {Boolean} valueFound True if value was found else false
+			 */
+			displayrefresh: true,
 
-		/**
-		 * @event beforereset
-		 * Fires before reset is called. Return false to cancel the action.
-		 * @param {Ext.ux.AwesomeCombo} combo This combo box
-		 */
-		'beforereset',
+			/**
+			 * @event beforereset
+			 * Fires before reset is called. Return false to cancel the action.
+			 * @param {Ext.ux.AwesomeCombo} combo This combo box
+			 */
+			beforereset: true,
 
-		/**
-		 * @event reset
-		 * Fires when reset is called.
-		 * @param {Ext.ux.AwesomeCombo} combo This combo box
-		 */
-		'reset',
+			/**
+			 * @event reset
+			 * Fires when reset is called.
+			 * @param {Ext.ux.AwesomeCombo} combo This combo box
+			 */
+			reset: true,
 
-		/**
-		 * @event beforetriggerclick
-		 * Fires when expand/toggle trigger was clicked. Return false to cancel the action.
-		 * @param {Ext.ux.AwesomeCombo} combo This combo box
-		 */
-		'beforetriggerclick'
-		);
-		this.internal = new Ext.util.MixedCollection();
-		this.internal.addListener('add', this.onInternalAdd, this);
-		this.internal.addListener('clear', this.onInternalClear, this);
-		this.internal.addListener('remove', this.onInternalRemove, this);
+			/**
+			 * @event beforetriggerclick
+			 * Fires when expand/toggle trigger was clicked. Return false to cancel the action.
+			 * @param {Ext.ux.AwesomeCombo} combo This combo box
+			 */
+			beforetriggerclick: true
+		});
 		this.hasPageTbButton = false;
 		if (Ext.isDefined(this.store)) {
 			this.store.on('load', this.onStoreLoad, this);
@@ -277,6 +278,17 @@ Ext.ux.AwesomeCombo = {
 		this.on('collapse', this.onCollapse, this);
 	},
 
+	// private
+	getInternal: function() {
+		if (Ext.isDefined(this.internal) === false) {
+			this.internal = new Ext.util.MixedCollection();
+			this.internal.addListener('add', this.onInternalAdd, this);
+			this.internal.addListener('clear', this.onInternalClear, this);
+			this.internal.addListener('remove', this.onInternalRemove, this);
+		}
+		return this.internal;
+	},
+
 	/**
 	 * Check if given record is checked.
 	 * @param {Ext.data.Record} record The record to check
@@ -284,12 +296,12 @@ Ext.ux.AwesomeCombo = {
 	 */
 	isChecked: function(record) {
 		var index = record.get(this.valueField).toString();
-		var success = this.internal.containsKey(index);
+		var success = this.getInternal().containsKey(index);
 		if (success) {
-			var item = this.internal.get(index);
+			var item = this.getInternal().get(index);
 			item[this.displayField] = record.get(this.displayField);
 		}
-		return (success);
+		return success;
 	},
 
 	/**
@@ -297,9 +309,13 @@ Ext.ux.AwesomeCombo = {
 	 */
 	reset: function() {
 		if (this.fireEvent('beforereset', this) === false) {
-			return (false);
+			return false;
 		}
-		this.internal.clear();
+		this.getInternal().clear();
+		this.value = '';
+		if (this.hiddenField) {
+			this.hiddenField.value = '';
+		}
 		if (this.isExpanded()) {
 			this.refreshDisplay();
 		}
@@ -312,10 +328,10 @@ Ext.ux.AwesomeCombo = {
 	 */
 	uncheckRecord: function(record) {
 		if (this.enableMultiSelect !== true) {
-			this.internal.clear();
+			this.getInternal().clear();
 		} else {
 			var index = record.get(this.valueField).toString();
-			this.internal.removeKey(index);
+			this.getInternal().removeKey(index);
 		}
 	},
 
@@ -325,15 +341,13 @@ Ext.ux.AwesomeCombo = {
 	 */
 	checkRecord: function(record) {
 		if (this.enableMultiSelect !== true) {
-			this.internal.clear();
-			this.setValue(record.get(this.valueField));
-		} else {
-			var index = record.get(this.valueField).toString();
-			var item = {};
-			item[this.valueField] = record.get(this.valueField);
-			item[this.displayField] = record.get(this.displayField);
-			this.internal.add(index, item);
+			this.getInternal().clear();
 		}
+		var index = record.get(this.valueField).toString();
+		var item = {};
+		item[this.valueField] = record.get(this.valueField);
+		item[this.displayField] = record.get(this.displayField);
+		this.getInternal().add(index, item);
 	},
 
 	/**
@@ -350,23 +364,25 @@ Ext.ux.AwesomeCombo = {
 			forcedFormat = this.format;
 		}
 		if (forcedFormat === 'object') {
-			return (this.getObjectValue());
+			return this.getObjectValue();
+		} else if (forcedFormat === 'array') {
+			return this.getArrayValue();
 		} else {
-			return (this.getStringValue());
+			return this.getStringValue();
 		}
 	},
 
 	// private
 	getDisplayValue: function() {
-		if (this.internal.getCount()) {
-			var item = this.internal.get(0);
+		if (this.getInternal().getCount()) {
+			var item = this.getInternal().get(0);
 			if (Ext.isDefined(item[this.displayField])) {
-				return (item[this.displayField]);
+				return item[this.displayField];
 			} else {
-				return (item[this.valueField]);
+				return item[this.valueField];
 			}
 		} else {
-			return (false);
+			return false;
 		}
 	},
 
@@ -385,9 +401,9 @@ Ext.ux.AwesomeCombo = {
 	 * - Could be single/multiple javascript object values
 	 */
 	setValue: function(value) {
-		if (value == this.getRawValue()) {
+		if (value == this.getRawValue() || Ext.isEmpty(value)) {
 			this.refreshDisplay();
-			return (this);
+			return this;
 		}
 		this.isSettingValue = true;
 		this.reset();
@@ -395,12 +411,28 @@ Ext.ux.AwesomeCombo = {
 			this.setArrayValue(value);
 		} else if (Ext.isObject(value)) {
 			this.setObjectValue(value);
-		} else if (Ext.isString(value)) {
-			this.setStringValue(value);
+		} else {
+			this.setMixedValue(value);
+		}
+		this.value = value;
+		if (this.hiddenField) {
+			this.hiddenField.value = Ext.encode(this.getValue());
 		}
 		this.isSettingValue = false;
 		this.refreshDisplay();
-		return (this);
+		return this;
+	},
+
+	// private
+	assertValue: function() {
+		this.setValue(this.getInternal().getRange());
+	},
+
+	// private
+	clearRawValue: function(){
+		this.setRawValue('');
+		this.lastSelectionText = '';
+		this.applyEmptyText();
 	},
 
 	// private
@@ -408,28 +440,28 @@ Ext.ux.AwesomeCombo = {
 		forced = forced || false;
 		if (this.rendered === false || (forced === false && (this.isExpanded() ||
 			this.isSettingValue))) {
-			return (false);
+			return false;
 		}
 		this.generateDisplayText();
 		if (this.fireEvent('beforedisplayrefresh', this,
 			this.displayNb, this.displayText, this.valueFound) === false) {
-			return (false);
+			return false;
 		} else {
 			if (this.displayNb == 1) {
 				if (this.disableClearButton === false) {
 					this.triggers[0].show();
 				}
 				if (this.valueFound) {
-					this.clearValue();
+					this.clearRawValue();
 					this.el.removeClass(this.emptyClass);
 					this.setRawValue(this.displayText);
 				} else {
 					this.emptyText = '1 item selected';
-					this.clearValue();
+					this.clearRawValue();
 				}
 				this.fireEvent('displayrefresh', this, this.displayNb,
 					this.displayText, this.valueFound);
-				return (true);
+				return true;
 			} else if (this.displayNb > 0) {
 				if (this.disableClearButton === false) {
 					this.triggers[0].show();
@@ -446,19 +478,19 @@ Ext.ux.AwesomeCombo = {
 			}
 		}
 		this.emptyText = this.displayText;
-		this.clearValue();
+		this.clearRawValue();
 		this.fireEvent('displayrefresh', this, this.displayNb,
 			this.displayText, this.valueFound);
-		return (true);
+		return true;
 	},
 
 	// private
 	generateDisplayText: function() {
-		this.displayNb = this.internal.getCount();
+		this.displayNb = this.getInternal().getCount();
 		this.displayText = '';
 		this.valueFound = false;
 		var selectedValue = '';
-		this.internal.each(function(item, index, length) {
+		this.getInternal().each(function(item, index, length) {
 			if (Ext.isDefined(item[this.displayField])) {
 				selectedValue = item[this.displayField];
 				this.valueFound = true;
@@ -469,15 +501,15 @@ Ext.ux.AwesomeCombo = {
 				this.displayText = selectedValue;
 			} else {
 				this.displayText = this.displayNb + ' item' +
-					(this.displayNb > 1 ? 's' : '') + ' selected';
+				(this.displayNb > 1 ? 's' : '') + ' selected';
 			}
 		} else {
 			this.displayText = this.emptyText;
 		}
-	}
+	},
 
 	// private
-	,setMemoryStore:function(store) {
+	setMemoryStore: function(store) {
 		if (this.pageSize > 0 && Ext.isArray(store)) {
 			this.valueField = this.displayField = "field1";
 			var fields = [this.valueField];
@@ -495,11 +527,8 @@ Ext.ux.AwesomeCombo = {
 			});
 		}
 		return store;
-	}
-};
+	},
 
-// private Ext.ux.AwesomeCombo override.
-Ext.apply(Ext.ux.AwesomeCombo, {
 	// private
 	beforeBlur: function() {
 		if (Ext.isDefined(this.store)) {
@@ -519,7 +548,7 @@ Ext.apply(Ext.ux.AwesomeCombo, {
 	// private
 	onTrigger2Click: function() {
 		if (this.fireEvent('beforetriggerclick', this) === false) {
-			return (false);
+			return false;
 		}
 		Ext.ux.AwesomeCombo.superclass.onTriggerClick.call(this);
 	},
@@ -588,7 +617,7 @@ Ext.apply(Ext.ux.AwesomeCombo, {
 
 			t.show = function() {
 				if (this.readOnly) {
-					return (this.hide());
+					return this.hide();
 				}
 				var w = triggerField.wrap.getWidth();
 				if (triggerField.width) {
@@ -635,28 +664,26 @@ Ext.apply(Ext.ux.AwesomeCombo, {
 				}
 			}
 		}, this);
-		return (tw);
+		return tw;
 	},
 
 	// private
 	onDestroy : function() {
 		Ext.destroy(this.triggers);
 		Ext.ux.AwesomeCombo.superclass.onDestroy.call(this);
-	}
-});
-// private Ext.ux.AwesomeCombo events.
-Ext.ux.AwesomeCombo = Ext.apply(Ext.ux.AwesomeCombo, {
+	},
+
 	// private
 	onBeforeSelect: function(combo, record, index) {
 		if (this.isChecked(record) && this.enableMultiSelect) {
 			if (this.fireEvent('beforeentryuncheck', this, record, index) === false) {
-				return (false);
+				return false;
 			}
 			this.uncheckRecord(record);
 			this.fireEvent('entryuncheck', this, record, index);
 		} else {
 			if (this.fireEvent('beforeentrycheck', this, record, index) === false) {
-				return (false);
+				return false;
 			}
 			this.checkRecord(record);
 			if (this.enableMultiSelect !== true) {
@@ -666,7 +693,7 @@ Ext.ux.AwesomeCombo = Ext.apply(Ext.ux.AwesomeCombo, {
 			this.fireEvent('entrycheck', this, record, index);
 		}
 		this.fireEvent('select', this, record, index);
-		return (false);
+		return false;
 	},
 
 	// private
@@ -762,10 +789,8 @@ Ext.ux.AwesomeCombo = Ext.apply(Ext.ux.AwesomeCombo, {
 			}
 		}
 		this.refreshDisplay();
-	}
-});
-// private Ext.ux.AwesomeCombo tooltip.
-Ext.ux.AwesomeCombo = Ext.apply(Ext.ux.AwesomeCombo, {
+	},
+
 	// private
 	getTooltip: function() {
 		if (Ext.isDefined(this.itooltip) === false &&
@@ -779,67 +804,89 @@ Ext.ux.AwesomeCombo = Ext.apply(Ext.ux.AwesomeCombo, {
 					show: this.onTooltipShow
 				}
 			});
-            if (Ext.isDefined(this.tooltipContentTpl) === false) {
-                this.tooltipContentTpl =
-                    new Ext.XTemplate('<tpl for="data">',
-                                      ' - {', this.displayField || 'field1', '} <br />',
-                                      '</tpl>', {compiled: true});
-            }
-            if (Ext.isDefined(this.tooltipTitleTpl) === false) {
-                this.tooltipTitleTpl = new Ext.XTemplate('<tpl for=".">',
-                                                         '<tpl if="count == 0">',
-                                                         'No item selected.',
-                                                         '</tpl>',
-                                                         '<tpl if="count &gt; 0">',
-                                                         '{count} item',
-                                                         '<tpl if="count &gt; 1">',
-                                                         's',
-                                                         '</tpl>',
-                                                         ' selected: ',
-                                                         '</tpl>',
-                                                         '</tpl>', {compiled: true});
-            }
+			if (Ext.isDefined(this.tooltipContentTpl) === false) {
+				this.tooltipContentTpl =
+				new Ext.XTemplate('<tpl for="data">',
+					' - {', this.displayField || 'field1', '} <br />',
+					'</tpl>', {
+						compiled: true
+					});
+			}
+			if (Ext.isDefined(this.tooltipTitleTpl) === false) {
+				this.tooltipTitleTpl = new Ext.XTemplate('<tpl for=".">',
+					'<tpl if="count == 0">',
+					'No item selected.',
+					'</tpl>',
+					'<tpl if="count &gt; 0">',
+					'{count} item',
+					'<tpl if="count &gt; 1">',
+					's',
+					'</tpl>',
+					' selected: ',
+					'</tpl>',
+					'</tpl>', {
+						compiled: true
+					});
+			}
 		}
-		return (this.itooltip);
+		return this.itooltip;
 	},
 
 	// private
 	generateTooltipContent: function() {
-        var data = {
-            data: this.internal.getRange(),
-            count: this.internal.getCount()
-        };
+		var data = {
+			data: this.getInternal().getRange(),
+			count: this.getInternal().getCount()
+		};
 		this.tooltipTitle = this.tooltipTitleTpl.apply(data);
-        this.tooltipContent = this.tooltipContentTpl.apply(data);
-		return (true);
+		this.tooltipContent = this.tooltipContentTpl.apply(data);
+		return true;
 	},
 
 	// private
 	onTooltipShow: function() {
 		if (this.getTooltip().rendered == false) {
-			return (false);
+			return false;
 		}
 		if (this.rendered === false) {
 			this.getTooltip().hide();
-			return (false);
+			return false;
+		}
+		if (this.getActiveError() !== "") {
+                    // dont display the tooltip is there is already an error message (assume quicktips)
+                    this.getTooltip().hide();
+                    return false;
 		}
 		if (this.generateTooltipContent() == false) {
 			this.getTooltip().hide();
-			return (false);
+			return false;
 		}
 		if (this.fireEvent('beforetooltipshow', this, this.getTooltip(),
 			this.tooltipTitle, this.tooltipContent) == false) {
 			this.getTooltip().hide();
-			return (false);
+			return false;
 		}
 		this.getTooltip().setTitle(this.tooltipTitle);
 		this.getTooltip().update(this.tooltipContent);
 		this.fireEvent('tooltipshow', this, this.getTooltip(),
 			this.tooltipTitle, this.tooltipContent);
-	}
-});
-// private Ext.ux.AwesomeCombo format.
-Ext.ux.AwesomeCombo = Ext.apply(Ext.ux.AwesomeCombo, {
+	},
+
+	// private
+	setMixedValue: function(value) {
+		if (Ext.isString(value) && Ext.isDefined(this.formatSeparator)) {
+			this.setStringValue(value);
+		} else {
+			var index = value.toString();
+			var item = {};
+			item[this.valueField] = value;
+			this.getInternal().add(index, item);
+			if (this.enableMultiSelect !== true) {
+				Ext.ux.AwesomeCombo.superclass.setValue.call(this, value);
+			}
+		}
+	},
+
 	// private
 	setStringValue: function(value) {
 		var values = value.split(this.formatSeparator);
@@ -849,7 +896,7 @@ Ext.ux.AwesomeCombo = Ext.apply(Ext.ux.AwesomeCombo, {
 			if (Ext.isEmpty(index) === false) {
 				var item = {};
 				item[this.valueField] = values[i];
-				this.internal.add(index, item);
+				this.getInternal().add(index, item);
 				if (this.enableMultiSelect !== true) {
 					Ext.ux.AwesomeCombo.superclass.setValue.call(this, values[i]);
 					break;
@@ -873,7 +920,7 @@ Ext.ux.AwesomeCombo = Ext.apply(Ext.ux.AwesomeCombo, {
 				break;
 			}
 		}
-		return (success);
+		return success;
 	},
 
 	// private
@@ -883,52 +930,61 @@ Ext.ux.AwesomeCombo = Ext.apply(Ext.ux.AwesomeCombo, {
 			if (Ext.isEmpty(index) === false) {
 				var item = {};
 				item[this.valueField] = value[this.valueField];
-				this.internal.add(index, item);
 				if (Ext.isDefined(value[this.displayField])) {
-					this.internal.get(index)[this.displayField] = value[this.displayField];
+					item[this.displayField] = value[this.displayField];
 				}
-				return (true);
+				this.getInternal().add(index, item);
+				return true;
 			}
 		}
-		return (false);
+		return false;
 	},
 
 	// private
 	getStringValue: function() {
 		var values = new Array();
-		if (this.internal.getCount()) {
-			this.internal.eachKey(function(key, item) {
-				if (this.enableMultiSelect) {
-					values.push(key);
-				} else if (values.length == 0) {
-					values.push(key);
+		if (this.getInternal().getCount()) {
+			this.getInternal().eachKey(function(key, item) {
+				if (this.enableMultiSelect || values.length == 0) {
+					values.push(item[this.valueField]);
 				}
 			}, this);
 		}
 		if (this.enableMultiSelect !== true) {
-			return (values.pop());
+			return values.pop();
 		}
-		return (values.join(this.formatSeparator));
+		return values.join(this.formatSeparator);
+	},
+
+	// private
+	getArrayValue: function() {
+		var values = new Array();
+		if (this.getInternal().getCount()) {
+			this.getInternal().eachKey(function(key, item) {
+				if (this.enableMultiSelect || values.length == 0) {
+					values.push(item[this.valueField]);
+				}
+			}, this);
+		}
+		return values;
 	},
 
 	// private
 	getObjectValue: function() {
 		var values = new Array();
-		if (this.internal.getCount()) {
-			this.internal.eachKey(function(key, item) {
-				if (this.enableMultiSelect) {
-					values.push(item);
-				} else if (values.length == 0) {
+		if (this.getInternal().getCount()) {
+			this.getInternal().eachKey(function(key, item) {
+				if (this.enableMultiSelect || values.length == 0) {
 					values.push(item);
 				}
 			}, this);
 		}
 		if (this.enableMultiSelect !== true) {
-			return (values.pop());
+			return values.pop();
 		}
-		return (values);
+		return values;
 	}
-});
+}
 
 Ext.ux.AwesomeCombo = Ext.extend(Ext.form.ComboBox, Ext.ux.AwesomeCombo);
 
